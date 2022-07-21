@@ -1,0 +1,21 @@
+"""
+    GA(f, pop, k_max, S, C, M)
+
+Genetic Algorithm.
+
+# Arguments
+- `f`: Objective function to minimise
+- `pop`: Population—a list of individuals.
+- `k_max`: maximum iterations
+- `S::SelectionMethod`: a selection method. See selection.
+- `C::CrossoverMethod`: a crossover method. See crossover.
+- `M::MutationMethod`: a mutation method. See mutation.
+"""
+function GA(f, pop, k_max, S, C, M)
+	for _ in 1:k_max
+		parents = select(S, f.(pop))
+		offspring = [cross(C, pop[p[1]], pop[p[2]]) for p in parents]
+		pop .= mutate.(Ref(M), offspring)
+	end
+	pop[argmin(f.(pop))]
+end
