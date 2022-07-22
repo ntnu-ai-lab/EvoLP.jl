@@ -27,9 +27,9 @@ struct RouletteWheelSelection <: SelectionMethod end
 Selects two random parents (from the top `k`) in the population
 for each fitness in `y`.
 """
-function select(t::TruncationSelection, y)
+function select(t::TruncationSelection, y; rng = Random.GLOBAL_RNG)
 	p = sortperm(y)
-	return [p[rand(1:t.k, 2)] for _ in y]
+	return [p[rand(rng, 1:t.k, 2)] for _ in y]
 end
 
 """
@@ -38,9 +38,9 @@ end
 Selects two random parents from a tournament of size `k` for each
 fitness in `y`.
 """
-function select(t::TournamentSelection, y)
+function select(t::TournamentSelection, y; rng = Random.GLOBAL_RNG)
 	getparent() = begin
-		p = randperm(length(y))
+		p = randperm(rng, length(y))
 		p[argmin(y[p[1:t.k]])]
 	end
 	return [[getparent(), getparent()] for _ in y]
@@ -52,8 +52,8 @@ end
 Selects two random parents with proportional probability, for each
 fitness in `y`
 """
-function select(::RouletteWheelSelection, y)
+function select(::RouletteWheelSelection, y; rng = Random.GLOBAL_RNG)
 	y = maximum(y) .- y
 	cat = Categorical(normalize(y, 1))
-	return [rand(cat, 2) for _ in y]
+	return [rand(rng, cat, 2) for _ in y]
 end

@@ -23,8 +23,8 @@ operators return a new individual. No individual is modified.
 Single point crossover between parents `a` and `b`, at a
 random point in the chromosome.
 """
-function cross(::SinglePointCrossover, a, b)
-	i = rand(1:length(a))
+function cross(::SinglePointCrossover, a, b; rng = Random.GLOBAL_RNG)
+	i = rand(rng, 1:length(a))
 	return vcat(a[1:i], b[i+1:end])
 end
 
@@ -34,7 +34,7 @@ end
 Two point crossover between parents `a` and `b`, at two
 random points in the chromosome.
 """
-function cross(::TwoPointCrossover, a, b)
+function cross(::TwoPointCrossover, a, b; rng = Random.GLOBAL_RNG)
 	n = length(a)
 	i, j = rand(1:n, 2)
 	if i > j
@@ -49,7 +49,7 @@ end
 Uniform crossover between parents `a` and `b`. Each gene
 of the chromosome is randomly selected from one of the parents.
 """
-function cross(::UniformCrossover, a, b)
+function cross(::UniformCrossover, a, b; rng = Random.GLOBAL_RNG)
 	child = copy(a)
 	for i in 1:length(a)
 		if rand() < 0.5

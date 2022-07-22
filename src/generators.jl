@@ -14,9 +14,9 @@ and upper bounds `ub`.
 
 Both `lb` and `ub` should be arrays of the same dimensions.
 """
-function rand_pop_uniform(n, lb, ub)
+function rand_pop_uniform(n, lb, ub; rng = Random.GLOBAL_RNG)
 	d = length(lb)
-	return [lb + rand(d) .* (ub - lb) for i in 1:n]
+	return [lb + rand(rng, d) .* (ub - lb) for i in 1:n]
 end
 
 """
@@ -28,9 +28,9 @@ normal distribution with means `μ` and covariance `Σ`.
 `μ` expects a vector of length _l_ (i.e. length of an individual)
 while `Σ` expects an _l x l_ matrix of covariances
 """
-function rand_pop_normal(n, μ, Σ)
+function rand_pop_normal(n, μ, Σ; rng = Random.GLOBAL_RNG)
 	D = MvNormal(μ, Σ)
-	return [rand(D) for i in 1:n]
+	return [rand(rng, D) for i in 1:n]
 end
 
 """
@@ -38,4 +38,6 @@ end
 
 Generates a population of `n` binary individuals, each of length `l`.
 """
-rand_pop_binary(l, n) = [bitrand(l) for _ in 1:n]
+function rand_pop_binary(l, n; rng = Random.GLOBAL_RNG)
+	return [bitrand(rng, l) for _ in 1:n]
+end

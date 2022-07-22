@@ -9,20 +9,20 @@ myrng = StableRNG(123)
 @info "Testing generators"
 @testset verbose = true "Generator test" begin
     @testset "Binary pop generator" begin
-        pop = rand_pop_binary(10, 50)
+        pop = rand_pop_binary(10, 50, rng=myrng)
         @test length(pop) == 50
         @test length(pop[1]) == 10
         @test typeof(pop[1]) == BitVector
     end
     @testset "Uniform pop generator" begin
-        pop = rand_pop_uniform(300, [0, 0], [1, 1])
+        pop = rand_pop_uniform(300, [0, 0], [1, 1], rng=myrng)
         @test length(pop) == 300
         @test length(pop[1]) == 2
         @test typeof(pop[1]) == Vector{Float64}
         @test sum(sum.(pop)) / 300 ≈ 1 rtol=0.1
     end
     @testset "Normal pop generator" begin
-        pop = rand_pop_normal(3000, [0, 0], [1 0; 0 1])
+        pop = rand_pop_normal(3000, [0, 0], [1 0; 0 1], rng=myrng)
         @test length(pop) == 3000
         @test length(pop[1]) == 2
         @test typeof(pop[1]) == Vector{Float64}
@@ -36,7 +36,7 @@ end
         S = SinglePointCrossover()
         a = [0, 0, 0, 0, 1, 1, 1, 1]
         b = [1, 1, 1, 1, 0, 0, 0, 0]
-        c = cross(S, a, b)
+        c = cross(S, a, b, rng=myrng)
         @test c == [0, 0, 0, 0, 1, 1, 1, 0]
         @test length(c) == length(a)
     end
@@ -44,16 +44,16 @@ end
         T = TwoPointCrossover()
         a = [0, 0, 0, 0, 1, 1, 1, 1]
         b = [1, 1, 1, 1, 0, 0, 0, 0]
-        c = cross(T, a, b)
-        @test c == [0, 1, 1, 1, 0, 0, 0, 1]
+        c = cross(T, a, b, rng=myrng)
+        @test c == [0, 0, 0, 0, 1, 0, 0, 1]
         @test length(c) == length(a)
     end
     @testset "Uniform crossover" begin
         U = UniformCrossover()
         a = [0, 0, 0, 0, 1, 1, 1, 1]
         b = [1, 1, 1, 1, 0, 0, 0, 0]
-        c = cross(U, a, b)
-        @test c == [0, 1, 1, 1, 0, 0, 0, 0]
+        c = cross(U, a, b, rng=myrng)
+        @test c == [0, 0, 0, 0, 1, 1, 1, 0]
         @test length(c) == length(a)
     end
     @testset "Interpolation crossover" begin
