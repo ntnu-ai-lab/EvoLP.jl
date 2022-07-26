@@ -19,3 +19,18 @@ function GA(f, pop, k_max, S, C, M)
 	end
 	pop[argmin(f.(pop))]
 end
+
+
+function GA(stats::AbstractVector{EvoStat}, f, pop, k_max, S, C, M)
+	for k in 1:k_max
+		parents = select(S, f.(pop))
+		offspring = [cross(C, pop[p[1]], pop[p[2]]) for p in parents]
+		pop .= mutate.(Ref(M), offspring)
+	end
+	fitnesses = f.(pop)
+	best = pop[argmin(fitnesses)]
+	for m in stats
+		computeStat!(m, fitnesses)
+	end
+	return best, stats
+end
