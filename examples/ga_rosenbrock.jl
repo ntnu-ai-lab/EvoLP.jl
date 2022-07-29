@@ -3,7 +3,7 @@ include("../src/selection.jl")
 include("../src/crossover.jl")
 include("../src/mutation.jl")
 include("../src/stats.jl")
-include("../src/ga.jl")
+include("../src/algorithms/ga.jl")
 include("../src/benchmarks.jl")
 using Statistics
 
