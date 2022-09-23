@@ -1,9 +1,9 @@
 module EvoLP
 
-using Distributions, Random
+using Distributions, Random, Statistics
 import LinearAlgebra:normalize
 
-export rand_pop_binary, rand_pop_normal, rand_pop_uniform
+export rand_pop_binary, rand_pop_normal, rand_pop_uniform,
        # algorithms
        GA, oneplusone,
        # selection

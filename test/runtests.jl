@@ -1,9 +1,6 @@
+using EvoLP
 using Test
-using Statistics
-using StableRNGs
 
-include("../src/generators.jl")
-include("../src/crossover.jl")
 myrng = StableRNG(123)
 
 @info "Testing generators"
