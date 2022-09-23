@@ -1,6 +1,3 @@
-using Random
-import LinearAlgebra:normalize
-
 """
 Selection methods here are based on fitness. An array of
 fitnesses `y` is passed as a parameter and is used to

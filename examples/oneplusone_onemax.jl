@@ -1,9 +1,3 @@
-include("../src/generators.jl")
-include("../src/selection.jl")
-include("../src/crossover.jl")
-include("../src/mutation.jl")
-include("../src/oneplusone.jl")
-include("../src/benchmarks.jl")
 using Random
 
 firstborn = rand_pop_binary(10,1)[1]
