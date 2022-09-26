@@ -1,9 +1,9 @@
 """
     GA(f, pop, k_max, S, C, M)
 
-Genetic Algorithm.
+Generational Genetic Algorithm.
 
-# Arguments
+## Arguments
 - `f`: Objective function to minimise
 - `pop`: Population—a list of individuals.
 - `k_max`: maximum iterations
@@ -15,7 +15,7 @@ function GA(f, pop, k_max, S, C, M)
 	for _ in 1:k_max
 		parents = select(S, f.(pop))
 		offspring = [cross(C, pop[p[1]], pop[p[2]]) for p in parents]
-		pop .= mutate.(Ref(M), offspring)
+		pop .= mutate.(Ref(M), offspring)  # whole population is replaced
 	end
 	pop[argmin(f.(pop))]
 end
@@ -25,7 +25,7 @@ function GA(stats::AbstractVector{EvoStat}, f, pop, k_max, S, C, M)
 	for k in 1:k_max
 		parents = select(S, f.(pop))
 		offspring = [cross(C, pop[p[1]], pop[p[2]]) for p in parents]
-		pop .= mutate.(Ref(M), offspring)
+		pop .= mutate.(Ref(M), offspring) # whole population is replaced
 	end
 	fitnesses = f.(pop)
 	best = pop[argmin(fitnesses)]

@@ -1,14 +1,15 @@
 module EvoLP
 
 using Distributions, Random, Statistics
-import LinearAlgebra:normalize
+import LinearAlgebra: normalize
+import StatsBase: ordinalrank
 
 export rand_pop_binary, rand_pop_normal, rand_pop_uniform,
        # algorithms
        GA, oneplusone,
        # selection
        SelectionMethod, TournamentSelection, TruncationSelection,
-       RouletteWheelSelection,
+       RouletteWheelSelection, RankBasedSelection,
        select,
        # mutation
        MutationMethod, BitwiseMutation, GaussianMutation,

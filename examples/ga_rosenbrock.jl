@@ -4,7 +4,7 @@ function main()
     m = 500
     k_max = 100
     population = rand_pop_normal(m, [0, 0], [1 0; 0 1])
-    S = TournamentSelection(5)
+    S = RankBasedSelection()
     C = SinglePointCrossover()
     M = GaussianMutation(0.5)
     s1 = meanFit()

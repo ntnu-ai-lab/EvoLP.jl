@@ -18,6 +18,8 @@ end
 
 struct RouletteWheelSelection <: SelectionMethod end
 
+struct RankBasedSelection <: SelectionMethod end
+
 """
     select(t::TruncationSelection, y)
 
@@ -46,11 +48,23 @@ end
 """
     select(::RouletteWheelSelection, y)
 
-Selects two random parents with proportional probability, for each
-fitness in `y`
+Selects two random parents with probability proportional to their fitness,
+for each fitness in `y`
 """
 function select(::RouletteWheelSelection, y; rng = Random.GLOBAL_RNG)
 	y = maximum(y) .- y
 	cat = Categorical(normalize(y, 1))
+	return [rand(rng, cat, 2) for _ in y]
+end
+
+"""
+	select(::RankBasedSelection, y)
+
+Select two random parents with probability proportional to their ranks,
+for each fitness in `y`
+"""
+function select(::RankBasedSelection, y; rng = Random.GLOBAL_RNG)
+	ranks = ordinalrank(y, rev = true)
+	cat = Categorical(normalize(ranks, 1))
 	return [rand(rng, cat, 2) for _ in y]
 end
