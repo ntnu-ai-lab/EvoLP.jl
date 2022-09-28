@@ -24,3 +24,13 @@ function leadingones(x)::Int
     end
     return s
 end
+
+"""
+Michalewicz function is a d-dimensional function with several
+steep valleys, where `m` controls the steepness. `m` is usually
+set at 10. For 2 dimensions, x* = [2.20, 1.57], with f(x*) = -1.8011.
+"""
+function michalewicz(x; m=10)
+    return -sum(sin(v) * sin(i*v^2/π)^(2m) for
+                (i, v) in enumerate(x))
+end

@@ -18,7 +18,7 @@ export rand_pop_binary, rand_pop_normal, rand_pop_uniform,
        InterpolationCrossover, InterpolationCrossover,
        cross,
        # benchmark functions
-       onemax, leading_ones, rosenbrock,
+       onemax, leading_ones, rosenbrock, michalewicz,
        # stats
        meanFit, bestFit, computeStat!
 
