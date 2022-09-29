@@ -10,7 +10,8 @@ function main()
     s1 = meanFit()
     s2 = bestFit()
     measures = [s1, s2]
-    mystats, _ = GA(measures, rosenbrock, population, k_max, S, C, M)
+    best, pop, mystats = GA(measures, rosenbrock, population, k_max, S, C, M)
+    @show best
     @show mystats
 end
 

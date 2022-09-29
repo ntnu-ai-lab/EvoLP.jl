@@ -7,8 +7,9 @@ function main()
     S = RankBasedSelection()
     C = SinglePointCrossover()
     M = GaussianMutation(0.5)
-    result = GA(michalewicz, population, k_max, S, C, M)
+    result, thepop = GA(michalewicz, population, k_max, S, C, M)
     @show result
+    @show thepop[1:5]
 end
 
 main()

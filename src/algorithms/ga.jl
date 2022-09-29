@@ -17,7 +17,8 @@ function GA(f, pop, k_max, S, C, M)
 		offspring = [cross(C, pop[p[1]], pop[p[2]]) for p in parents]
 		pop .= mutate.(Ref(M), offspring)  # whole population is replaced
 	end
-	pop[argmin(f.(pop))]
+	best = pop[argmin(f.(pop))]
+	return best, pop
 end
 
 
@@ -32,5 +33,5 @@ function GA(stats::AbstractVector{EvoStat}, f, pop, k_max, S, C, M)
 	for m in stats
 		computeStat!(m, fitnesses)
 	end
-	return best, stats
+	return best, pop, stats
 end

@@ -5,8 +5,9 @@ import LinearAlgebra: normalize
 import StatsBase: ordinalrank
 
 export rand_pop_binary, rand_pop_normal, rand_pop_uniform,
+       rand_particle_uniform, rand_particle_normal,
        # algorithms
-       GA, oneplusone,
+       GA, oneplusone, Particle, PSO,
        # selection
        SelectionMethod, TournamentSelection, TruncationSelection,
        RouletteWheelSelection, RankBasedSelection,
@@ -31,6 +32,7 @@ include("selection.jl")
 include("stats.jl")
 
 include("algorithms/ga.jl")
-include("algorithms/oneplusone.jl")
+include("algorithms/ea.jl")
+include("algorithms/swarm.jl")
 
 end
