@@ -12,9 +12,10 @@ onemax(x) = sum(x)
 
 """
 LeadingOnes function.
+
 ```math
 \\text{LO}(\\mathbf{x}) = \\sum_{i=1}^n \\prod_j^i x_j
-````
+```
 """
 function leadingones(x)::Int
     s = 0
