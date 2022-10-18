@@ -12,11 +12,11 @@ mutable struct Particle
 end
 
 """
-PSO(f, population, k_max; w=1, c1=1, c2=1)
+    PSO(f, population, k_max; w = 1, c1 = 1, c2 = 1)
 
 ## Arguments
 - `f`: Objective function to minimise
-- `pop`: Population—a list of individuals.
+- `population`: Population—a list of `Particle` individuals.
 - `k_max`: maximum iterations
 - `w`: Inertia weight. Optional, by default 1.
 - `c1`: Cognitive coefficient (my position). Optional, by default 1
