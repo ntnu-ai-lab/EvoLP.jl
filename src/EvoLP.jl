@@ -14,12 +14,13 @@ export rand_pop_binary, rand_pop_normal, rand_pop_uniform,
        select,
        # mutation
        MutationMethod, BitwiseMutation, GaussianMutation,
+       mutate,
        # crossover
        CrossoverMethod, SinglePointCrossover, TwoPointCrossover,
-       InterpolationCrossover, InterpolationCrossover,
+       UniformCrossover, InterpolationCrossover,
        cross,
        # benchmark functions
-       onemax, leading_ones, rosenbrock, michalewicz,
+       onemax, leadingones, rosenbrock, michalewicz,
        # stats
        meanFit, bestFit, computeStat!
 

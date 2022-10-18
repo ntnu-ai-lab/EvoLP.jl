@@ -7,7 +7,7 @@ Population generators.
 """
     rand_pop_uniform(n, lb, ub)
 
-Generate a population of `n` individuals using
+Generate a population of `n` vector individuals using
 a uniformly random distribution between lower bounds `lb`
 and upper bounds `ub`.
 
@@ -21,7 +21,7 @@ end
 """
     function rand_pop_normal(n, μ, Σ)
 
-Generate a population of `n` individuals using a
+Generate a population of `n` vector individuals using a
 normal distribution with means `μ` and covariance `Σ`.
 
 `μ` expects a vector of length _l_ (i.e. length of an individual)
@@ -35,7 +35,7 @@ end
 """
     rand_pop_binary(l, n)
 
-Generate a population of `n` binary individuals, each of length `l`.
+Generate a population of `n` vector binary individuals, each of length `l`.
 """
 function rand_pop_binary(l, n; rng = Random.GLOBAL_RNG)
 	return [bitrand(rng, l) for _ in 1:n]
@@ -64,7 +64,7 @@ function rand_particle_uniform(n, lb, ub; rng = Random.GLOBAL_RNG)
 end
 
 """
-    function rand_particle_normal(n, μ, Σ)
+	rand_particle_normal(n, μ, Σ)
 
 Generate a population of `n` particles using a
 normal distribution with means `μ` and covariance `Σ`.

@@ -1,11 +1,26 @@
+"""
+Abstract CrossoverMethod.
+"""
 abstract type CrossoverMethod end
 
+"""
+Single point crossover.
+"""
 struct SinglePointCrossover <: CrossoverMethod end
 
+"""
+Two point crossover.
+"""
 struct TwoPointCrossover <: CrossoverMethod end
 
+"""
+Uniform crossover.
+"""
 struct UniformCrossover <: CrossoverMethod end
 
+"""
+Interpolation crossover with scaling parameter `λ`.
+"""
 struct InterpolationCrossover <: CrossoverMethod
     λ
 end
@@ -60,8 +75,10 @@ function cross(::UniformCrossover, a, b; rng = Random.GLOBAL_RNG)
 end
 
 """
+	cross(C::InterpolationCrossover, a, b)
+
 Linear Interpolation crossover between parents `a` and `b`.
 The resulting individual is the addition of a scaled version of
-each of the parents, using `λ` as a control parameter.
+each of the parents, using `C.λ` as a control parameter.
 """
 cross(C::InterpolationCrossover, a, b) = (1 - C.λ)*a + C.λ*b

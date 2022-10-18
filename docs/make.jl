@@ -8,6 +8,15 @@ makedocs(
     clean = true,
     sitename = "EvoLP.jl",
     pages =[
-        "Home" => "index.md"
-    ]
+        "Home" => "index.md",
+        "Algorithms" => "algorithms.md",
+        "Selection operators" => "selection.md",
+        "Crossover operators" => "cross.md",
+        "Mutation operators" => "mutation.md",
+        "Population generators" => "generators.md",
+        "Benchmark functions" => "benchmarks.md"
+    ],
+    format = Documenter.HTML(prettyurls = false,
+                             mathengine = MathJax3()
+    )
 )
