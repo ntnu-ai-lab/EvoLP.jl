@@ -1,4 +1,4 @@
-using Random
+using Random, EvoLP
 
 firstborn = rand_pop_binary(10,1)[1]
 @show firstborn
