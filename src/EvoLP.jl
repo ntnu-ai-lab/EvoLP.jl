@@ -4,25 +4,30 @@ using Distributions, Random, Statistics
 import LinearAlgebra: normalize
 import StatsBase: ordinalrank
 
-export rand_pop_binary, rand_pop_normal, rand_pop_uniform,
-       rand_particle_uniform, rand_particle_normal,
-       # algorithms
-       GA, oneplusone, Particle, PSO,
-       # selection
-       SelectionMethod, TournamentSelection, TruncationSelection,
-       RouletteWheelSelection, RankBasedSelection,
-       select,
-       # mutation
-       MutationMethod, BitwiseMutation, GaussianMutation,
-       mutate,
-       # crossover
-       CrossoverMethod, SinglePointCrossover, TwoPointCrossover,
-       UniformCrossover, InterpolationCrossover,
-       cross,
-       # benchmark functions
-       onemax, leadingones, rosenbrock, michalewicz,
-       # stats
-       meanFit, bestFit, computeStat!
+# generators
+export rand_pop_binary, rand_pop_normal, rand_pop_uniform
+export rand_particle_uniform, rand_particle_normal
+# algorithms
+export GA
+export oneplusone
+export Particle, PSO
+# selection
+export SelectionMethod
+export TournamentSelection, TruncationSelection, RouletteWheelSelection, RankBasedSelection
+export select
+# mutation
+export MutationMethod
+export BitwiseMutation, GaussianMutation
+export mutate
+# crossover
+export CrossoverMethod
+export SinglePointCrossover, TwoPointCrossover, UniformCrossover, InterpolationCrossover
+export cross
+# benchmark functions
+export onemax, leadingones, jumpk
+export rosenbrock, michalewicz
+# stats
+export meanFit, bestFit, computeStat!
 
 
 include("benchmarks.jl")
