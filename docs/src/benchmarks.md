@@ -15,6 +15,8 @@ jumpk
 ```@docs
 ackley
 booth
+circle
+flower
 michalewicz
 rosenbrock
 ```
