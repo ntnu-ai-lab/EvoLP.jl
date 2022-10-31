@@ -25,7 +25,7 @@ export SinglePointCrossover, TwoPointCrossover, UniformCrossover, InterpolationC
 export cross
 # benchmark functions
 export onemax, leadingones, jumpk
-export rosenbrock, michalewicz
+export ackley, booth, michalewicz, rosenbrock
 # stats
 export meanFit, bestFit, computeStat!
 

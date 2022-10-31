@@ -13,6 +13,8 @@ jumpk
 ## Continuous functions
 
 ```@docs
+ackley
+booth
 michalewicz
 rosenbrock
 ```

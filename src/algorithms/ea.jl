@@ -13,9 +13,11 @@
 function oneplusone(f, ind, k_max, M)
 	for _ in 1:k_max
         c = mutate(M, ind)
+
         if f(c) <= f(ind)
             ind = c
         end
 	end
+
 	return ind
 end
