@@ -18,5 +18,5 @@ makedocs(
     ],
     format = Documenter.HTML(prettyurls = false,
                              mathengine = MathJax3()
-    )
+                            )
 )

@@ -17,7 +17,7 @@ trial = empty(pop)
 f(x) = rosenbrock(x)
 
 for k in k_max
-    for i = 1:N
+    for i in 1:N
         pool = deleteat!(Vector(1:N), i)
         r = sample(rng, pool, 3, replace = false)
         mutant = pop[r[1]] + F * (pop[r[2]] - pop[r[3]])
@@ -28,11 +28,12 @@ for k in k_max
             if (rand(rng) < c || j == Ir)
                 trial[i][j] = mutant[j]
             end
-        end       
+        end
     end
+
     popfit = f.(pop)
     trialfit = f.(trial)
-    
+
     for i in 1:N
         if trialfit[i] < popfit[i]
             pop[i] = trial[i]

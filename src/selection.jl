@@ -42,7 +42,7 @@ struct RankBasedSelection <: SelectionMethod end
 Selects two random parents (from the top `t.k`) in the population
 for each fitness in `y`.
 """
-function select(t::TruncationSelection, y; rng = Random.GLOBAL_RNG)
+function select(t::TruncationSelection, y; rng=Random.GLOBAL_RNG)
 	p = sortperm(y)
 	return [p[rand(rng, 1:t.k, 2)] for _ in y]
 end
@@ -53,11 +53,12 @@ end
 Selects two random parents from a tournament of size `t.k` for each
 fitness in `y`.
 """
-function select(t::TournamentSelection, y; rng = Random.GLOBAL_RNG)
+function select(t::TournamentSelection, y; rng=Random.GLOBAL_RNG)
 	getparent() = begin
 		p = randperm(rng, length(y))
 		p[argmin(y[p[1:t.k]])]
 	end
+
 	return [[getparent(), getparent()] for _ in y]
 end
 
@@ -67,7 +68,7 @@ end
 Selects two random parents with probability proportional to their fitness,
 for each fitness in `y`.
 """
-function select(::RouletteWheelSelection, y; rng = Random.GLOBAL_RNG)
+function select(::RouletteWheelSelection, y; rng=Random.GLOBAL_RNG)
 	y = maximum(y) .- y
 	cat = Categorical(normalize(y, 1))
 	return [rand(rng, cat, 2) for _ in y]
@@ -79,7 +80,7 @@ end
 Select two random parents with probability proportional to their ranks,
 for each fitness in `y`.
 """
-function select(::RankBasedSelection, y; rng = Random.GLOBAL_RNG)
+function select(::RankBasedSelection, y; rng=Random.GLOBAL_RNG)
 	ranks = ordinalrank(y, rev = true)
 	cat = Categorical(normalize(ranks, 1))
 	return [rand(rng, cat, 2) for _ in y]

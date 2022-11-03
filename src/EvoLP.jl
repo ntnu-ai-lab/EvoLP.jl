@@ -1,7 +1,7 @@
 module EvoLP
 
 using Distributions, Random, Statistics
-import LinearAlgebra: normalize
+import LinearAlgebra: norm, normalize
 import StatsBase: ordinalrank
 
 # generators
@@ -25,7 +25,7 @@ export SinglePointCrossover, TwoPointCrossover, UniformCrossover, InterpolationC
 export cross
 # benchmark functions
 export onemax, leadingones, jumpk
-export rosenbrock, michalewicz
+export ackley, booth, circle, flower, michalewicz, rosenbrock
 # stats
 export meanFit, bestFit, computeStat!
 
