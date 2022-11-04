@@ -9,3 +9,4 @@ A playground for evolutionary computation in Julia.
 - Selection operators
 - Crossover operators
 - Benchmark functions
+- Stats logbook

@@ -1,7 +1,9 @@
 module EvoLP
 
 using Distributions, Random, Statistics
+import OrderedCollections: LittleDict
 import LinearAlgebra: norm, normalize
+import NamedTupleTools: namedtuple
 import StatsBase: ordinalrank
 
 # generators
@@ -26,8 +28,8 @@ export cross
 # benchmark functions
 export onemax, leadingones, jumpk
 export ackley, booth, circle, flower, michalewicz, rosenbrock
-# stats
-export meanFit, bestFit, computeStat!
+# logbook
+export Logbook, compute!
 
 
 include("benchmarks.jl")
@@ -35,7 +37,7 @@ include("crossover.jl")
 include("generators.jl")
 include("mutation.jl")
 include("selection.jl")
-include("stats.jl")
+include("logbook.jl")
 
 include("algorithms/ga.jl")
 include("algorithms/ea.jl")

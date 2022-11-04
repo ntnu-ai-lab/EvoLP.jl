@@ -1,4 +1,5 @@
 using Statistics, EvoLP
+import OrderedCollections: LittleDict
 
 function main()
     m = 500
@@ -7,9 +8,19 @@ function main()
     S = RankBasedSelection()
     C = SinglePointCrossover()
     M = GaussianMutation(0.5)
-    result, thepop = GA(michalewicz, population, k_max, S, C, M)
-    @show result
+
+    statnames = ["mean_eval", "max_f", "min_f", "median_f"]
+    fns = [mean, maximum, minimum, median]
+    thedict = LittleDict(statnames, fns)
+    thelogger = Logbook(thedict)
+
+    best, thepop = GA(thelogger, michalewicz, population, k_max, S, C, M)
+
+    @show best
     @show thepop[1:5]
+    @show thelogger.records[end]
+
+    return nothing
 end
 
 main()
