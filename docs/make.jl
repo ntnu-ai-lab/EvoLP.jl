@@ -14,9 +14,8 @@ makedocs(
         "Crossover operators" => "cross.md",
         "Mutation operators" => "mutation.md",
         "Population generators" => "generators.md",
-        "Benchmark functions" => "benchmarks.md"
+        "Benchmark functions" => "benchmarks.md",
+        "Stats logbook" => "logbook.md",
     ],
-    format = Documenter.HTML(prettyurls = false,
-                             mathengine = MathJax3()
-                            )
+    format = Documenter.HTML(prettyurls = false, mathengine = MathJax3())
 )

@@ -1,5 +1,6 @@
 """
-    GA(f, pop, k_max, S, C, M)
+    GA(f::Function, pop, k_max, S, C, M)
+    GA(logbook::Logbook, f::Function, pop, k_max, S, C, M)
 
 Generational Genetic Algorithm.
 
@@ -11,7 +12,7 @@ Generational Genetic Algorithm.
 - `C::CrossoverMethod`: a crossover method. See crossover.
 - `M::MutationMethod`: a mutation method. See mutation.
 """
-function GA(f, pop, k_max, S, C, M)
+function GA(f::Function, pop, k_max, S, C, M)
 	for _ in 1:k_max
 		parents = select(S, f.(pop))
 		offspring = [cross(C, pop[p[1]], pop[p[2]]) for p in parents]
@@ -23,19 +24,17 @@ function GA(f, pop, k_max, S, C, M)
 end
 
 
-function GA(stats::AbstractVector{EvoStat}, f, pop, k_max, S, C, M)
+function GA(logbook::Logbook, f::Function, pop, k_max, S, C, M)
 	for k in 1:k_max
 		parents = select(S, f.(pop))
 		offspring = [cross(C, pop[p[1]], pop[p[2]]) for p in parents]
 		pop .= mutate.(Ref(M), offspring) # whole population is replaced
+
+        fitnesses = f.(pop)
+
+        compute!(logbook, fitnesses)
 	end
 
-	fitnesses = f.(pop)
-	best = pop[argmin(fitnesses)]
-
-	for m in stats
-		computeStat!(m, fitnesses)
-	end
-
-	return best, pop, stats
+    best = pop[argmin(f.(pop))]
+	return best, pop
 end
