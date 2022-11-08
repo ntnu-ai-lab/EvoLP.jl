@@ -16,8 +16,8 @@ mutable struct Logbook
 	records::AbstractVector
 
 	function Logbook(S::LittleDict)
-        thenames = join([":" * expr for expr in [k for k in keys(S)]], ", ")
-		d = Vector{NamedTuple{eval(Meta.parse(thenames))}}()
+        thenames = [k for k in keys(S)]
+		d = Vector{namedtuple(thenames)}()
 		L = new(S,d)
 		return L
 	end
