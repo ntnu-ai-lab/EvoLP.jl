@@ -22,6 +22,8 @@ end
 - `w`: Inertia weight. Optional, by default 1.
 - `c1`: Cognitive coefficient (my position). Optional, by default 1
 - `c2`: Social coefficient (swarm position). Optional, by default 1
+
+Returns a 2-tuple of the form `(best, pop)` of the best individual and the population.
 """
 function PSO(f::Function, population, k_max; w=1, c1=1, c2=1)
     n = length(population[1].x)

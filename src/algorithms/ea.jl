@@ -10,6 +10,8 @@
 - `ind`: Individual to start the evolution
 - `k_max`: Maximum number of iterations
 - `M::MutationMethod`: A mutation method. See mutation.
+
+Returns the fittest `ind` found.
 """
 function oneplusone(f::Function, ind, k_max, M)
 	for _ in 1:k_max
