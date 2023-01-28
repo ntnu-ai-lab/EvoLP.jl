@@ -10,7 +10,7 @@ struct Result
     xstar  # optimizer
     fxstar  # optimum
     population  # population at last state
-    n_iters # right now it's just the value of k_max # TODO
+    n_iters # pass the number of iterations
     n_evals  # number of individual evaluations
     # runtime? # TODO
 end
@@ -34,7 +34,7 @@ optimum(res) = res.fxstar
 
 Returns the number of iterations of a result.
 """
-iterations(res) = res.n_evals
+iterations(res) = res.n_iters
 
 """
     f_calls(res)
