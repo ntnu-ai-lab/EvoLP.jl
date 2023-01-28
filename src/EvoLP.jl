@@ -28,6 +28,8 @@ export cross
 # benchmark functions
 export onemax, leadingones, jumpk
 export ackley, booth, circle, flower, michalewicz, rosenbrock
+# results
+export Result, optimizer, optimum, f_calls, population
 # logbook
 export Logbook, compute!
 
@@ -37,6 +39,7 @@ include("crossover.jl")
 include("generators.jl")
 include("mutation.jl")
 include("selection.jl")
+include("result.jl")
 include("logbook.jl")
 
 include("algorithms/ga.jl")
