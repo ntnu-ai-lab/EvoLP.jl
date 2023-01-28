@@ -6,7 +6,6 @@ The result of an algorithm. The result contains information about the optimizer 
 its evaluation ``f(x^*)``, the last state of the population, the number of iterations and
 the number of function calls.
 """
-
 struct Result
     xstar  # optimizer
     fxstar  # optimum
@@ -31,15 +30,22 @@ Returns evaluation of solution found ``f(x^*)``.
 optimum(res) = res.fxstar
 
 """
+    iterations(res)
+
+Returns the number of iterations of a result.
+"""
+iterations(res) = res.n_evals
+
+"""
     f_calls(res)
 
-Returns number of function evaluation calls of the result.
+Returns number of function evaluation calls of a result.
 """
 f_calls(res) = res.n_evals
 
 """
     population(res)
 
-Returns the final population of the algorithm.
+Returns the resulting population of the algorithm.
 """
 population(res) = res.population

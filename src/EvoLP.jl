@@ -29,7 +29,7 @@ export cross
 export onemax, leadingones, jumpk
 export ackley, booth, circle, flower, michalewicz, rosenbrock
 # results
-export Result, optimizer, optimum, f_calls, population
+export Result, optimizer, optimum, iterations, f_calls, population
 # logbook
 export Logbook, compute!
 
