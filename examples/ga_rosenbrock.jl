@@ -14,8 +14,10 @@ function main()
     thedict = LittleDict(statnames, fns)
     thelogger = Logbook(thedict)
 
-    best, pop = GA(thelogger, rosenbrock, population, k_max, S, C, M)
-    @show best
+    result = GA(thelogger, rosenbrock, population, k_max, S, C, M)
+    @show optimum(result)
+    @show optimizer(result)
+    @show f_calls(result)
     @show thelogger.records[end]
     return nothing
 end
