@@ -31,7 +31,7 @@ function PSO(f::Function, population, k_max; w=1, c1=1, c2=1)
 
     # evaluation loop
     for P in population
-        y = f(P.x)
+        y = f(P.x)  # O(pop)
 
         if y < y_best
             x_best[:] = P.x
@@ -39,26 +39,31 @@ function PSO(f::Function, population, k_max; w=1, c1=1, c2=1)
         end
     end
 
-    for k in 1:k_max
+    for _ in 1:k_max
         for P in population
             r1, r2 = rand(n), rand(n)
             P.x += P.v
             P.v = w*P.v + c1*r1 .* (P.x_best - P.x) + c2*r2 .* (x_best - P.x)
-            y = f(P.x)
+            y = f(P.x)  # O(k_max * pop)
 
             if y < y_best
                 x_best[:] = P.x
                 y_best = y
             end
 
-            if y < f(P.x_best)
+            if y < f(P.x_best)  # O(k_max * pop)
                 P.x_best[:] = P.x
             end
         end
     end
 
-    best = population[argmin([f(P.x) for P in population])]
-    return best, population
+
+    best_i = argmin([f(P.x_best) for P in population])
+    best = population[best_i]
+    n_evals = 2 * length(population) + 2 * k_max  * length(population) + 1
+
+    result = Result(best, f(best.x_best), population, k_max, n_evals)
+    return result
 end
 
 function PSO(logger::Logbook, f::Function, population, k_max; w=1, c1=1, c2=1)
@@ -67,7 +72,7 @@ function PSO(logger::Logbook, f::Function, population, k_max; w=1, c1=1, c2=1)
 
     # evaluation loop
     for P in population
-        y = f(P.x)
+        y = f(P.x)  # O(pop)
 
         if y < y_best
             x_best[:] = P.x
@@ -75,25 +80,29 @@ function PSO(logger::Logbook, f::Function, population, k_max; w=1, c1=1, c2=1)
         end
     end
 
-    for k in 1:k_max
+    for _ in 1:k_max
         for P in population
             r1, r2 = rand(n), rand(n)
             P.x += P.v
             P.v = w*P.v + c1*r1 .* (P.x_best - P.x) + c2*r2 .* (x_best - P.x)
-            y = f(P.x)
+            y = f(P.x)  # O(k_max * pop)
 
             if y < y_best
                 x_best[:] = P.x
                 y_best = y
             end
 
-            if y < f(P.x_best)
+            if y < f(P.x_best)  # O(k_max * pop)
                 P.x_best[:] = P.x
             end
         end
-        compute!(logger, [f(P.x) for P in population])
+        compute!(logger, [f(P.x) for P in population])  # O(k_max * pop)
     end
 
-    best = population[argmin([f(P.x) for P in population])]
-    return best, population
+    best_i = argmin([f(P.x_best) for P in population]) # O(pop)
+    best = population[best_i]
+    n_evals = 2 * length(population) + 3 * k_max  * length(population) + 1
+
+    result = Result(best, f(best.x_best), population, k_max, n_evals)
+    return result
 end

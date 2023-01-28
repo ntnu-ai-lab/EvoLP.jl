@@ -17,24 +17,32 @@ function oneplusone(f::Function, ind, k_max, M)
 	for _ in 1:k_max
         c = mutate(M, ind)
 
-        if f(c) <= f(ind)
+        if f(c) <= f(ind)  # O(2 * k_max)
             ind = c
         end
 	end
 
-	return ind
+    f_ind = f(ind) # O(1)
+    n_evals = 2 * k_max + 1
+    result = Result(ind, f_ind, [ind], k_max, n_evals)
+
+	return result
 end
 
 function oneplusone(logger::Logbook, f::Function, ind, k_max, M)
 	for _ in 1:k_max
         c = mutate(M, ind)
 
-        if f(c) <= f(ind)
+        if f(c) <= f(ind)  # O(2 * k_max)
             ind = c
         end
 
-        compute!(logger, [f(ind)])
+        compute!(logger, [f(ind)])  # O(1)
 	end
 
-	return ind
+	f_ind = f(ind) # O(1)
+    n_evals = 2 * k_max + 2
+    result = Result(ind, f_ind, [ind], k_max, n_evals)
+
+	return result
 end
