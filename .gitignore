@@ -1,3 +1,4 @@
 Manifest.toml
 docs/build
 misc
+*.ipynb_checkpoints
