@@ -10,9 +10,9 @@ Result
 Additionally, some functions are included to obtain specific information about the results of an algorithm.
 
 ```@docs
-optimizer
 optimum
+optimizer
+population
 iterations
 f_calls
-population
 ```
