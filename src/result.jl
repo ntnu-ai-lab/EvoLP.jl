@@ -2,9 +2,9 @@
 
 
 """
-The result of an algorithm. The result contains information about the optimizer ``x^*``,
-its evaluation ``f(x^*)``, the last state of the population, the number of iterations and
-the number of function calls.
+The result of an algorithm. The result contains information about the optimum ``f(x^*)``,
+the optimizer ``x^*``, the population, the number of iterations and the number of
+function calls.
 """
 struct Result
     fxstar  # optimum

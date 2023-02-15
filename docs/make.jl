@@ -15,8 +15,8 @@ makedocs(
         "Mutation operators" => "mutation.md",
         "Population generators" => "generators.md",
         "Benchmark functions" => "benchmarks.md",
-        "Stats logbook" => "logbook.md",
-        "Reporting results" => "results.md"
+        "Reporting results" => "results.md",
+        "Logging statistics" => "logbook.md"
     ],
     format = Documenter.HTML(prettyurls = false, mathengine = MathJax3())
 )
