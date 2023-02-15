@@ -7,8 +7,8 @@ its evaluation ``f(x^*)``, the last state of the population, the number of itera
 the number of function calls.
 """
 struct Result
-    xstar  # optimizer
     fxstar  # optimum
+    xstar  # optimizer
     population  # population at last state
     n_iters # pass the number of iterations
     n_evals  # number of individual evaluations
@@ -16,18 +16,18 @@ struct Result
 end
 
 """
-    optimizer(result)
-
-Returns solution found ``x^*``.
-"""
-optimizer(res) = res.xstar
-
-"""
     optimum(result)
 
 Returns evaluation of solution found ``f(x^*)``.
 """
 optimum(res) = res.fxstar
+
+"""
+    optimizer(result)
+
+Returns solution found ``x^*``.
+"""
+optimizer(res) = res.xstar
 
 """
     iterations(res)

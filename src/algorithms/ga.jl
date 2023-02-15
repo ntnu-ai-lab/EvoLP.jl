@@ -12,7 +12,11 @@ Generational Genetic Algorithm.
 - `C::CrossoverMethod`: a crossover method. See crossover.
 - `M::MutationMethod`: a mutation method. See mutation.
 
-Returns a 2-tuple of the form `(best, pop)` of the best individual and the population.
+Returns a `Result` type of the form:
+
+```math
+\\big( f(x^*), x^*, pop, k_{max}, f_{calls} \\big)
+```
 """
 function GA(f::Function, pop, k_max, S, C, M)
     n = length(pop)
