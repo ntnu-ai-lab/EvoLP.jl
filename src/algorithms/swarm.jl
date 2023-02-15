@@ -23,7 +23,11 @@ end
 - `c1`: Cognitive coefficient (my position). Optional, by default 1
 - `c2`: Social coefficient (swarm position). Optional, by default 1
 
-Returns a 2-tuple of the form `(best, pop)` of the best individual and the population.
+Returns a `Result` type of the form:
+
+```math
+\\big( f(x^*), x^*, pop, k_{max}, f_{calls} \\big)
+```
 """
 function PSO(f::Function, population, k_max; w=1, c1=1, c2=1)
     n = length(population[1].x)
@@ -62,7 +66,7 @@ function PSO(f::Function, population, k_max; w=1, c1=1, c2=1)
     best = population[best_i]
     n_evals = 2 * length(population) + 2 * k_max  * length(population) + 1
 
-    result = Result(best, f(best.x_best), population, k_max, n_evals)
+    result = Result(f(best.x_best), best, population, k_max, n_evals)
     return result
 end
 
@@ -103,6 +107,6 @@ function PSO(logger::Logbook, f::Function, population, k_max; w=1, c1=1, c2=1)
     best = population[best_i]
     n_evals = 2 * length(population) + 3 * k_max  * length(population) + 1
 
-    result = Result(best, f(best.x_best), population, k_max, n_evals)
+    result = Result(f(best.x_best), best, population, k_max, n_evals)
     return result
 end
