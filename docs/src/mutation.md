@@ -10,6 +10,10 @@ MutationMethod
 ```@docs
 BitwiseMutation
 GaussianMutation
+SwapMutation
+InsertMutation
+ScrambleMutation
+InversionMutation
 ```
 
 After "instantiating" a mutation method, you can use `mutate` on a single individual `ind`.
