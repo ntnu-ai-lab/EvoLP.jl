@@ -17,6 +17,10 @@ TwoPointCrossover
 UniformCrossover
 ```
 
+```@docs
+OrderOneCrossover
+```
+
 After "instantiating" a crossover method, you can use the `cross`function.
 `cross` operates on two parents `a` and `b` to generate a new candidate solution.
 Some of the `CrossoverMethod`s .

@@ -31,6 +31,7 @@ export mutate
 # Crossover
 export CrossoverMethod  # Do we need this?
 export SinglePointCrossover, TwoPointCrossover, UniformCrossover, InterpolationCrossover
+export OrderOneCrossover
 export cross
 # Benchmark functions
 export onemax, leadingones, jumpk  # Pseudoboolean
