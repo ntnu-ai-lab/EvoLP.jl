@@ -1,46 +1,56 @@
 module EvoLP
 
-using Distributions, Random, Statistics
-import OrderedCollections: LittleDict
 import LinearAlgebra: norm, normalize
 import NamedTupleTools: namedtuple
-import StatsBase: ordinalrank
+import OrderedCollections: LittleDict
+import StatsBase: ordinalrank, sample
 
-# generators
-export rand_pop_binary, rand_pop_normal, rand_pop_uniform
-export rand_particle_uniform, rand_particle_normal
-# algorithms
+using Distributions
+using Random
+using Statistics
+
+# Generators
+export rand_pop_binary  # Binary
+export rand_pop_normal, rand_pop_uniform  # Continuous
+export rand_pop_int_perm  # Permutation
+export rand_particle_normal, rand_particle_uniform  # Particles
+# Algorithms
 export GA
 export oneplusone
 export Particle, PSO
-# selection
-export SelectionMethod
-export TournamentSelection, TruncationSelection, RouletteWheelSelection, RankBasedSelection
+# Selection
+export SelectionMethod  # Do we need this?
+export RankBasedSelection, RouletteWheelSelection, TournamentSelection, TruncationSelection
 export select
-# mutation
-export MutationMethod
-export BitwiseMutation, GaussianMutation
+# Mutation
+export MutationMethod  # Do we need this?
+export BitwiseMutation  # Binary
+export GaussianMutation  # Continuous
+export InsertMutation, InversionMutation, ScrambleMutation, SwapMutation  # Permutation
 export mutate
-# crossover
-export CrossoverMethod
+# Crossover
+export CrossoverMethod  # Do we need this?
 export SinglePointCrossover, TwoPointCrossover, UniformCrossover, InterpolationCrossover
+export OrderOneCrossover
 export cross
-# benchmark functions
-export onemax, leadingones, jumpk
-export ackley, booth, circle, flower, michalewicz, rosenbrock
-# results
-export Result, optimizer, optimum, iterations, f_calls, population
-# logbook
-export Logbook, compute!
+# Benchmark functions
+export onemax, leadingones, jumpk  # Pseudoboolean
+export ackley, booth, circle, flower, michalewicz, rosenbrock  # Continuous
+# Results
+export Result
+export optimum, optimizer, iterations, f_calls, population
+# Logbook
+export Logbook
+export compute!
 
 
 include("benchmarks.jl")
 include("crossover.jl")
 include("generators.jl")
-include("mutation.jl")
-include("selection.jl")
-include("result.jl")
 include("logbook.jl")
+include("mutation.jl")
+include("result.jl")
+include("selection.jl")
 
 include("algorithms/ga.jl")
 include("algorithms/ea.jl")

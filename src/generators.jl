@@ -19,7 +19,7 @@ function rand_pop_uniform(n, lb, ub; rng=Random.GLOBAL_RNG)
 end
 
 """
-    function rand_pop_normal(n, μ, Σ)
+    rand_pop_normal(n, μ, Σ)
 
 Generate a population of `n` vector individuals using a
 normal distribution with means `μ` and covariance `Σ`.
@@ -39,6 +39,18 @@ Generate a population of `n` vector binary individuals, each of length `l`.
 """
 function rand_pop_binary(l, n; rng=Random.GLOBAL_RNG)
 	return [bitrand(rng, l) for _ in 1:n]
+end
+
+"""
+    rand_pop_int_perm(n, d, pool)
+
+Generate a population of `n` permutation vector individuals, of size `d`
+and with values sampled from `pool`.
+
+Usually `d` would be equal to `length(pool)`.
+"""
+function rand_pop_int_perm(n, d, pool; rng=Random.GLOBAL_RNG)
+    return [sample(rng, pool, d, replace=false, ordered=false) for i in 1:n]
 end
 
 # Particles

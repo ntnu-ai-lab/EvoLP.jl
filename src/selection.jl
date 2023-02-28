@@ -50,7 +50,7 @@ end
 """
     select(t::TournamentSelection, y)
 
-Selects two random parents from a tournament of size `t.k` for each
+Selects two winner parents from random tournaments of size `t.k` for each
 fitness in `y`.
 """
 function select(t::TournamentSelection, y; rng=Random.GLOBAL_RNG)

@@ -8,6 +8,7 @@ To initialise the population, a number of random generators are provided.
 rand_pop_uniform
 rand_pop_normal
 rand_pop_binary
+rand_pop_int_perm
 ```
 
 ## Particle-based populations
