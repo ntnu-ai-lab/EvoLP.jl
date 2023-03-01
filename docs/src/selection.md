@@ -1,25 +1,31 @@
 # Selection operators
 
-Selection methods are based on fitness and are used to select individual for **crossover**.
-All operators are derived from the `SelectionMethod` abstract type and some of them have parameters you can adjust.
+Parent selection operators are based on fitness and are used to select individuals for **crossover**.
+
+These methods come in two variants: _steady-state_ and _generational_.
+_Steady-state_ operators return two parent indices, while _generational_ operators return a list of two parent indices for each fitness in the population.
+
+Regardless of the variant, all operators are derived from the `SelectionMethod` abstract type and some of them have parameters you can adjust.
 
 ```@docs
 SelectionMethod
 ```
 
 ```@docs
-TournamentSelection
-TruncationSelection
+TournamentSelectionSteady
+TournamentSelectionGenerational
+TruncationSelectionSteady
+TruncationSelectionGenerational
 ```
 
 ```@docs
-RouletteWheelSelection
-RankBasedSelection
+RouletteWheelSelectionSteady
+RouletteWheelSelectionGenerational
+RankBasedSelectionSteady
+RankBasedSelectionGenerational
 ```
 
-After "instantiating" a selection method, you can use `select` on an array of fitnesses `y` to obtain a pair of parents' indices (to be sliced from the population later).
-
-All methods return a list of lists, which are **two parent indices** for every fitness passed.
+After "instantiating" a selection method, you can use the `select` function on an array of fitnesses `y` to obtain **parents' indices** (to be sliced from the population in your algorithm).
 
 ```@docs
 select

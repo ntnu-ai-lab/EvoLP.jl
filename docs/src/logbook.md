@@ -14,12 +14,14 @@ LittleDict("statname"::String => callable::Function)
 
 For example, using some of the `Statistics` built-in functions:
 
-```julia
+```jldoctest
 julia> statnames = ["mean_eval", "max_f", "min_f", "median_f"];
 
 julia> fns = [mean, maximum, minimum, median];
 
 julia> thedict = LittleDict(statnames, fns)
+
+# output
 
 LittleDict{String, Function, Vector{String}, Vector{Function}} with 4 entries:
   "mean_eval" => mean

@@ -20,7 +20,10 @@ export oneplusone
 export Particle, PSO
 # Selection
 export SelectionMethod  # Do we need this?
-export RankBasedSelection, RouletteWheelSelection, TournamentSelection, TruncationSelection
+export RankBasedSelectionGenerational, RouletteWheelSelectionGenerational
+export TournamentSelectionGenerational, TruncationSelectionGenerational
+export RankBasedSelectionSteady, RouletteWheelSelectionSteady
+export TournamentSelectionSteady, TruncationSelectionSteady
 export select
 # Mutation
 export MutationMethod  # Do we need this?
