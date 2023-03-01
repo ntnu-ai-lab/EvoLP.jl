@@ -23,7 +23,6 @@ OrderOneCrossover
 
 After "instantiating" a crossover method, you can use the `cross`function.
 `cross` operates on two parents `a` and `b` to generate a new candidate solution.
-Some of the `CrossoverMethod`s .
 All operators return a new individual, and in the process no individual is modified.
 
 Currently, crossover is only implemented for _vector_ individuals.
