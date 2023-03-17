@@ -12,7 +12,7 @@ a copy. No individual is being modified.
 
 # For binary individuals
 """
-Bitwise mutation with probability `λ`.
+Bitwise mutation with probability `λ` of flipping each bit.
 """
 struct BitwiseMutation <: MutationMethod
     λ
@@ -29,7 +29,7 @@ end
 
 # For continuous individuals
 """
-Gaussian mutation with standard deviation `σ`.
+Gaussian mutation with standard deviation `σ`, which should be a real number.
 """
 struct GaussianMutation <: MutationMethod
     σ
@@ -38,8 +38,8 @@ end
 """
     mutate(M::GaussianMutation, ind)
 
-Randomly add Gaussian noise to the `ind` candidate solution,
-with a standard deviation of `σ`.
+Randomly add Gaussian noise to the `ind` candidate solution, with a standard
+deviation of `σ`.
 """
 function mutate(M::GaussianMutation, ind; rng=Random.GLOBAL_RNG)
 	return ind + randn(rng, length(ind)) * M.σ

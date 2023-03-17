@@ -38,7 +38,7 @@ export OrderOneCrossover
 export cross
 # Benchmark functions
 export onemax, leadingones, jumpk  # Pseudoboolean
-export ackley, booth, circle, flower, michalewicz, rosenbrock  # Continuous
+export ackley, booth, branin, circle, flower, michalewicz, rosenbrock, wheeler  # Continuous
 # Results
 export Result
 export optimum, optimizer, iterations, f_calls, population
