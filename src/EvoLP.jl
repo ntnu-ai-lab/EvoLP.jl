@@ -9,15 +9,15 @@ using Distributions
 using Random
 using Statistics
 
-# Generators
-export rand_pop_binary  # Binary
-export rand_pop_normal, rand_pop_uniform  # Continuous
-export rand_pop_int_perm  # Permutation
-export rand_particle_normal, rand_particle_uniform  # Particles
+# Random population generators
+export binary_vector_pop  # Binary vectors
+export normal_rand_vector_pop, unif_rand_vector_pop  # Continuous vectors
+export permutation_vector_pop  # Permutation vectors
+export Particle, normal_rand_particle_pop, unif_rand_particle_pop  # Particles
 # Algorithms
 export GA
 export oneplusone
-export Particle, PSO
+export PSO
 # Selection
 export SelectionMethod  # Do we need this?
 export RankBasedSelectionGenerational, RouletteWheelSelectionGenerational

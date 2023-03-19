@@ -1,6 +1,8 @@
 push!(LOAD_PATH, "../src/")
 
-using Documenter, EvoLP
+using EvoLP, Documenter
+
+DocMeta.setdocmeta!(EvoLP, :DocTestSetup, :(using EvoLP); recursive=true)
 
 makedocs(
     modules = [EvoLP],

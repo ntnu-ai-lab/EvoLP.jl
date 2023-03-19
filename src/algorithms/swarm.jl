@@ -1,33 +1,18 @@
 "Swarm-based algorithms"
 
-
-"""
-A single particle in the swarm, with a position `x`,
-a velocity `v` and the best position it has encountered `x_best`.
-"""
-mutable struct Particle
-    x
-    v
-    x_best
-end
-
 """
     PSO(f::Function, population, k_max; w=1, c1=1, c2=1)
     PSO(logger::Logbook, f::Function, population, k_max; w=1, c1=1, c2=1)
 
 ## Arguments
 - `f::Function`: Objective function to minimise
-- `population`: Population—a list of `Particle` individuals
+- `population`: Population—a list of [`Particle`](@ref) individuals
 - `k_max`: maximum iterations
 - `w`: Inertia weight. Optional, by default 1.
 - `c1`: Cognitive coefficient (my position). Optional, by default 1
 - `c2`: Social coefficient (swarm position). Optional, by default 1
 
-Returns a `Result` type of the form:
-
-```math
-\\big( f(x^*), x^*, pop, k_{max}, f_{calls} \\big)
-```
+Returns a [`Result`](@ref).
 """
 function PSO(f::Function, population, k_max; w=1, c1=1, c2=1)
     n = length(population[1].x)
