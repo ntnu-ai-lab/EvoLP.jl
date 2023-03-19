@@ -1,24 +1,27 @@
 """
-    GA(f::Function, pop, k_max, S, C, M)
-    GA(logbook::Logbook, f::Function, pop, k_max, S, C, M)
+    GA(f, pop, k_max, S, C, M)
+    GA(logbook::Logbook, f, pop, k_max, S, C, M)
 
 Generational Genetic Algorithm.
 
 ## Arguments
-- `f`: Objective function to minimise
-- `pop`: Population—a list of individuals.
-- `k_max`: maximum iterations
-- `S::SelectionMethod`: a selection method. See selection.
-- `C::CrossoverMethod`: a crossover method. See crossover.
-- `M::MutationMethod`: a mutation method. See mutation.
+- `f::Function`: objective function to **minimise**.
+- `pop::AbstractVector`: population—a list of vector individuals.
+- `k_max::Integer`: number of iterations.
+- `S::SelectionMethod`: one of the available [`SelectionMethod`](@ref).
+- `C::CrossoverMethod`: one of the available [`CrossoverMethod`](@ref).
+- `M::MutationMethod`: one of the available [`MutationMethod`](@ref).
 
-Returns a `Result` type of the form:
-
-```math
-\\big( f(x^*), x^*, pop, k_{max}, f_{calls} \\big)
-```
+Returns a [`Result`](@ref).
 """
-function GA(f::Function, pop, k_max, S, C, M)
+function GA(
+    f::Function,
+    pop::AbstractVector,
+    k_max::Integer,
+    S::SelectionMethod,
+    C::CrossoverMethod,
+    M::MutationMethod
+)
     n = length(pop)
 	for _ in 1:k_max
 		parents = select(S, f.(pop)) # O(k_max * n)
@@ -34,7 +37,15 @@ function GA(f::Function, pop, k_max, S, C, M)
 end
 
 
-function GA(logbook::Logbook, f::Function, pop, k_max, S, C, M)
+function GA(
+    logbook::Logbook,
+    f::Function,
+    pop::AbstractVector,
+    k_max::Integer,
+    S::SelectionMethod,
+    C::CrossoverMethod,
+    M::MutationMethod
+)
     n = length(pop)
 	for _ in 1:k_max
 		parents = select(S, f.(pop)) # O(k_max * n)

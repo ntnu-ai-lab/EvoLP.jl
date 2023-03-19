@@ -97,6 +97,10 @@ booth(x) = (x[1] + 2*x[2] - 7)^2 + (2*x[1] + x[2] - 5)^2
 The **Branin** (a.k.a. Branin-Hoo) function has six optional parameters, and features
 multiple global minima. Some of them are at ``x^* = [-\\pi, 12.275]``, ``x^* = [\\pi, 2.275]``,
 ``x^* = [3\\pi, 2.475]`` and ``x^* = [5\\pi, 12.875]``, with ``f(x^*) \\approx 0.397887``.
+
+```math
+f(x) = a(x_2 - bx_1^2 + cx_1 - r)^2 + s(1 - t)\\cos(x_1) + s
+```
 """
 function branin(x; a=1, b=5.1/(4π^2), c=5/π, r=6, s=10, t=1/(8π))
     return a * (x[2] - b * x[1]^2 + c * x[1] - r)^2 + s * (1 - t) * cos(x[1]) + s
@@ -177,7 +181,7 @@ The **Wheeler's ridge** is a 2-d function with a single global minimum in a curv
 With ``a`` (by default at 1.5) ``x^* = [1, 1.5]``, with ``f(x^*) = -1``.
 
 ```math
-f(x) = - \exp(- (x_1 x_2 - a)^2 - (x_2 - a)^2 )
+f(x) = - \\exp(- (x_1 x_2 - a)^2 - (x_2 - a)^2 )
 ```
 """
 wheeler(x, a=1.5) = -exp(-(x[1]*x[2] - a)^2 - (x[2] - a)^2)

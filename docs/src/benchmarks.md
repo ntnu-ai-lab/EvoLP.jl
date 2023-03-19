@@ -16,8 +16,10 @@ jumpk
 ```@docs
 ackley
 booth
+branin
 circle
 flower
 michalewicz
 rosenbrock
+wheeler
 ```
