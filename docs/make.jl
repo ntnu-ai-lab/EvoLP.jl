@@ -11,6 +11,7 @@ makedocs(
     sitename = "EvoLP.jl",
     pages =[
         "Home" => "index.md",
+        "Getting Started" => "quickstart.md",
         "Algorithms" => "algorithms.md",
         "Selection operators" => "selection.md",
         "Crossover operators" => "cross.md",
@@ -18,7 +19,8 @@ makedocs(
         "Population generators" => "generators.md",
         "Benchmark functions" => "benchmarks.md",
         "Reporting results" => "results.md",
-        "Logging statistics" => "logbook.md"
+        "Logging statistics" => "logbook.md",
+        "References" => "references.md"
     ],
     format = Documenter.HTML(prettyurls = false, mathengine = MathJax3())
 )

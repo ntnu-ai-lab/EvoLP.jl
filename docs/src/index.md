@@ -10,3 +10,11 @@ A playground for evolutionary computation in Julia.
 - Crossover operators
 - Benchmark functions
 - Stats logbook
+
+## Installation info
+
+## How to cite
+
+## Acknowledgements
+
+This is a project by NTNU and the OpenAILab.
