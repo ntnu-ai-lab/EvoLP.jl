@@ -9,18 +9,27 @@ makedocs(
     doctest = false,
     clean = true,
     sitename = "EvoLP.jl",
-    pages =[
+    format = Documenter.HTML(
+        prettyurls = false,
+        mathengine = MathJax3()
+    ),
+    pages = [
         "Home" => "index.md",
-        "Getting Started" => "quickstart.md",
-        "Algorithms" => "algorithms.md",
-        "Selection operators" => "selection.md",
-        "Crossover operators" => "cross.md",
-        "Mutation operators" => "mutation.md",
-        "Population generators" => "generators.md",
-        "Benchmark functions" => "benchmarks.md",
-        "Reporting results" => "results.md",
-        "Logging statistics" => "logbook.md",
+        "User Guide" => [
+            "Workflow" => "man/quickstart.md",
+            "Algorithms" => "man/algorithms.md",
+            "Selection operators" => "man/selection.md",
+            "Crossover operators" => "man/cross.md",
+            "Mutation operators" => "man/mutation.md",
+            "Population generators" => "man/generators.md",
+            "Benchmark functions" => "man/benchmarks.md",
+            "Reporting results" => "man/results.md",
+            "Logging statistics" => "man/logbook.md",
+        ],
+        "API" => [
+            "Types" => "lib/types.md",
+            "Functions" => "lib/functions.md",
+        ],
         "References" => "references.md"
-    ],
-    format = Documenter.HTML(prettyurls = false, mathengine = MathJax3())
+    ]
 )
