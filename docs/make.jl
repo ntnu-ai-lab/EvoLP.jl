@@ -8,13 +8,13 @@ makedocs(
     modules = [EvoLP],
     doctest = false,
     clean = true,
-    sitename = "EvoLP.jl",
+    sitename = "EvoLP",
     format = Documenter.HTML(
         prettyurls = false,
         mathengine = MathJax3()
     ),
     pages = [
-        "Home" => "index.md",
+        "Introduction" => "index.md",
         "User Guide" => [
             "Workflow" => "man/quickstart.md",
             "Algorithms" => "man/algorithms.md",
