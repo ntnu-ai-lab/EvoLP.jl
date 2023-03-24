@@ -26,6 +26,9 @@ makedocs(
             "Reporting results" => "man/results.md",
             "Logging statistics" => "man/logbook.md",
         ],
+        "Tutorials" => [
+            "The 8 queens problem" => "tuto/8_queen.md"
+        ],
         "API" => [
             "Types" => "lib/types.md",
             "Functions" => "lib/functions.md",
