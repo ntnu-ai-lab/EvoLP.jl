@@ -27,7 +27,9 @@ makedocs(
             "Logging statistics" => "man/logbook.md",
         ],
         "Tutorials" => [
-            "The 8 queens problem" => "tuto/8_queen.md"
+            "The 8 queens problem" => "tuto/8_queen.md",
+            "Using PSO for continuous optimisation" => "tuto/pso_michalewicz.md",
+            "Solving the OneMax problem with an EA" => "tuto/oneplusone_onemax.md"
         ],
         "API" => [
             "Types" => "lib/types.md",
