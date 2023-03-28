@@ -27,14 +27,15 @@ makedocs(
             "Logging statistics" => "man/logbook.md",
         ],
         "Tutorials" => [
+            "The OneMax problem" => "tuto/oneplusone_onemax.md",
             "The 8 queens problem" => "tuto/8_queen.md",
-            "Using PSO for continuous optimisation" => "tuto/pso_michalewicz.md",
-            "Solving the OneMax problem with an EA" => "tuto/oneplusone_onemax.md"
+            "GA for continuous optimisation" => "tuto/ga_rosenbrock.md",
+            "PSO for continuous optimisation" => "tuto/pso_michalewicz.md",
         ],
         "API" => [
             "Types" => "lib/types.md",
             "Functions" => "lib/functions.md",
         ],
-        "References" => "references.md"
+        "References" => "references.md",
     ]
 )

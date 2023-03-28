@@ -8,13 +8,13 @@ Welcome to the documentation for EvoLP!
 
 ### Features
 
-- Random population generators (vectors and particles)
-- Parent selection operators
-- Several crossover and mutation methods
-- Test functions for benchmarking
-- Convenient result reporting and a statistics logbook
+- Random [population generators](man/generators.md) (vectors and particles)
+- Parent [selection operators](man/selection.md)
+- Several [crossover](man/cross.md) and [mutation](man/mutation.md) methods
+- [Test functions](man/benchmarks.md) for benchmarking
+- Convenient [result reporting](man/results.md) and a [statistics logbook](man/logbook.md)
 
-Combine these blocks to make your own algorithms or use some of the included algorithms: GA, 1+1EA and PSO.
+Combine these blocks to make your own algorithms or use some of the included: GA, 1+1EA and PSO.
 Additionally, you can extend EvoLP to create new operators.
 
 !!! note
@@ -26,7 +26,7 @@ Additionally, you can extend EvoLP to create new operators.
     TODO: Submit it to the package repository and make it installable.
 
 - Read the Installation Guide.
-- Read the tutorial.
+- Read the Tutorial.
 - Browse some of the examples.
 
 ## Citing EvoLP

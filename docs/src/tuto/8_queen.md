@@ -119,15 +119,7 @@ diag_constraints(test)
 ```
 
 Going through each queen $q_i$ (with $i$ being the column number), we have the following number of conflicts:
-
-1. $q_1 = 2$
-2. $q_2 = 1$
-3. $q_3 = 0$
-4. $q_4 = 1$
-5. $q_5 = 1$
-6. $q_6 = 1$
-7. $q_7 = 2$
-8. $q_8 = 2$
+$q_1 = 2$, $q_2 = 1$, $q_3 = 0$, $q_4 = 1$, $q_5 = 1$, $q_6 = 1$, $q_7 = 2$,  $q_8 = 2$
 
 ### Evolutionary operators
 
