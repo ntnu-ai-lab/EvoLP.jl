@@ -146,7 +146,7 @@ end
 """
     normal_rand_particle_pop(n, μ, Σ; rng=Random.GLOBAL_RNG)
 
-Generate a population of `n` [`Particle`](@ref) using a normal distribution with means `μ
+Generate a population of `n` [`Particle`](@ref) using a normal distribution with means `μ``
 and covariance `Σ`.
 
 `μ` expects a vector of length _l_ (i.e. number of dimensions) while `Σ` expects an _l x l_

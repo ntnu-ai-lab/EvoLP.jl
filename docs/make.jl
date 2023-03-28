@@ -8,17 +8,34 @@ makedocs(
     modules = [EvoLP],
     doctest = false,
     clean = true,
-    sitename = "EvoLP.jl",
-    pages =[
-        "Home" => "index.md",
-        "Algorithms" => "algorithms.md",
-        "Selection operators" => "selection.md",
-        "Crossover operators" => "cross.md",
-        "Mutation operators" => "mutation.md",
-        "Population generators" => "generators.md",
-        "Benchmark functions" => "benchmarks.md",
-        "Reporting results" => "results.md",
-        "Logging statistics" => "logbook.md"
-    ],
-    format = Documenter.HTML(prettyurls = false, mathengine = MathJax3())
+    sitename = "EvoLP",
+    format = Documenter.HTML(
+        prettyurls = false,
+        mathengine = MathJax3()
+    ),
+    pages = [
+        "Introduction" => "index.md",
+        "User Guide" => [
+            "Workflow" => "man/quickstart.md",
+            "Algorithms" => "man/algorithms.md",
+            "Selection operators" => "man/selection.md",
+            "Crossover operators" => "man/cross.md",
+            "Mutation operators" => "man/mutation.md",
+            "Population generators" => "man/generators.md",
+            "Benchmark functions" => "man/benchmarks.md",
+            "Reporting results" => "man/results.md",
+            "Logging statistics" => "man/logbook.md",
+        ],
+        "Tutorials" => [
+            "The OneMax problem" => "tuto/oneplusone_onemax.md",
+            "The 8 queens problem" => "tuto/8_queen.md",
+            "GA for continuous optimisation" => "tuto/ga_rosenbrock.md",
+            "PSO for continuous optimisation" => "tuto/pso_michalewicz.md",
+        ],
+        "API" => [
+            "Types" => "lib/types.md",
+            "Functions" => "lib/functions.md",
+        ],
+        "References" => "references.md",
+    ]
 )

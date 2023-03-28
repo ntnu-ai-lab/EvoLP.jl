@@ -1,21 +1,28 @@
 "Swarm-based algorithms"
 
 """
-    PSO(f::Function, population, k_max; w=1, c1=1, c2=1)
-    PSO(logger::Logbook, f::Function, population, k_max; w=1, c1=1, c2=1)
+    PSO(f, population, k_max; w=1, c1=1, c2=1)
+    PSO(logger::Logbook, f, population, k_max; w=1, c1=1, c2=1)
 
 ## Arguments
-- `f::Function`: Objective function to minimise
-- `population`: Population—a list of [`Particle`](@ref) individuals
-- `k_max`: maximum iterations
-- `w`: Inertia weight. Optional, by default 1.
-- `c1`: Cognitive coefficient (my position). Optional, by default 1
-- `c2`: Social coefficient (swarm position). Optional, by default 1
+
+- `f::Function`: Objective function to **minimise**.
+- `population::Vector{Particle}`: a list of [`Particle`](@ref) individuals.
+- `k_max::Integer`: number of iterations.
+
+## Keywords
+
+- `w`: inertia weight. Optional, by default 1.
+- `c1`: cognitive coefficient (own's position). Optional, by default 1.
+- `c2`: social coefficient (others' position). Optional, by default 1.
 
 Returns a [`Result`](@ref).
 """
-function PSO(f::Function, population, k_max; w=1, c1=1, c2=1)
-    n = length(population[1].x)
+function PSO(
+    f::Function, population::Vector{Particle}, k_max::Integer;
+    w=1, c1=1, c2=1
+)
+    d = length(population[1].x)
     x_best, y_best = copy(population[1].x_best), Inf
 
     # evaluation loop
@@ -30,7 +37,7 @@ function PSO(f::Function, population, k_max; w=1, c1=1, c2=1)
 
     for _ in 1:k_max
         for P in population
-            r1, r2 = rand(n), rand(n)
+            r1, r2 = rand(d), rand(d)
             P.x += P.v
             P.v = w*P.v + c1*r1 .* (P.x_best - P.x) + c2*r2 .* (x_best - P.x)
             y = f(P.x)  # O(k_max * pop)
@@ -46,7 +53,6 @@ function PSO(f::Function, population, k_max; w=1, c1=1, c2=1)
         end
     end
 
-
     best_i = argmin([f(P.x_best) for P in population])
     best = population[best_i]
     n_evals = 2 * length(population) + 2 * k_max  * length(population) + 1
@@ -55,8 +61,11 @@ function PSO(f::Function, population, k_max; w=1, c1=1, c2=1)
     return result
 end
 
-function PSO(logger::Logbook, f::Function, population, k_max; w=1, c1=1, c2=1)
-    n = length(population[1].x)
+function PSO(
+    logger::Logbook, f::Function, population::Vector{Particle},
+    k_max::Integer; w=1, c1=1, c2=1
+)
+    d = length(population[1].x)
     x_best, y_best = copy(population[1].x_best), Inf
 
     # evaluation loop
@@ -71,7 +80,7 @@ function PSO(logger::Logbook, f::Function, population, k_max; w=1, c1=1, c2=1)
 
     for _ in 1:k_max
         for P in population
-            r1, r2 = rand(n), rand(n)
+            r1, r2 = rand(d), rand(d)
             P.x += P.v
             P.v = w*P.v + c1*r1 .* (P.x_best - P.x) + c2*r2 .* (x_best - P.x)
             y = f(P.x)  # O(k_max * pop)

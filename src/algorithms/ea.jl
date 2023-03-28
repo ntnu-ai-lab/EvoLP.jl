@@ -1,23 +1,19 @@
 """
-    oneplusone(f::Function, ind, k_max, M)
-    oneplusone(logger::Logbook, f::Function, ind, k_max, M)
+    oneplusone(f, ind, k_max, M)
+    oneplusone(logger::Logbook, f, ind, k_max, M)
 
-1+1 EA algorithm.
+1+1 Evolutionary Algorithm.
 
 # Arguments
 
-- `f`: Objective function to minimise
-- `ind`: Individual to start the evolution
-- `k_max`: Maximum number of iterations
-- `M::MutationMethod`: A mutation method. See mutation.
+- `f::Function`: objective function to **minimise**.
+- `ind::AbstractVector`: individual to start the evolution.
+- `k_max::Integer`: number of iterations.
+- `M::MutationMethod`: one of the available [`MutationMethod`](@ref).
 
-Returns a `Result` type of the form:
-
-```math
-\\big( f(x^*), x^*, pop, k_{max}, f_{calls} \\big)
-```
+Returns a [`Result`](@ref).
 """
-function oneplusone(f::Function, ind, k_max, M)
+function oneplusone(f::Function, ind::AbstractVector, k_max::Integer, M::MutationMethod)
 	for _ in 1:k_max
         c = mutate(M, ind)
 
@@ -33,7 +29,9 @@ function oneplusone(f::Function, ind, k_max, M)
 	return result
 end
 
-function oneplusone(logger::Logbook, f::Function, ind, k_max, M)
+function oneplusone(
+    logger::Logbook, f::Function, ind::AbstractVector, k_max::Integer, M::MutationMethod
+)
 	for _ in 1:k_max
         c = mutate(M, ind)
 
