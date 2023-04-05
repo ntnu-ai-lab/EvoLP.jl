@@ -19,20 +19,17 @@ export GA
 export oneplusone
 export PSO
 # Selection
-export SelectionMethod  # Do we need this?
 export RankBasedSelectionGenerational, RouletteWheelSelectionGenerational
 export TournamentSelectionGenerational, TruncationSelectionGenerational
 export RankBasedSelectionSteady, RouletteWheelSelectionSteady
 export TournamentSelectionSteady, TruncationSelectionSteady
 export select
 # Mutation
-export MutationMethod  # Do we need this?
 export BitwiseMutation  # Binary
 export GaussianMutation  # Continuous
 export InsertMutation, InversionMutation, ScrambleMutation, SwapMutation  # Permutation
 export mutate
 # Crossover
-export CrossoverMethod  # Do we need this?
 export SinglePointCrossover, TwoPointCrossover, UniformCrossover, InterpolationCrossover
 export OrderOneCrossover
 export cross

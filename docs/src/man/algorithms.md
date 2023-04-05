@@ -1,6 +1,6 @@
 # Algorithms
 
-EvoLP provides some basic built-in algorithms to get you started.
+EvoLP provides some basic built-in algorithms to get you started. All algorithms are built for **minimisation**.
 
 ## Evolutionary Algorithms (EA)
 
@@ -13,7 +13,7 @@ oneplusone
 ## Genetic Algorithms (GA)
 
 In a GA a population of _vector_ solutions is simulated, where individuals get selected, recombined, and mutated.
-The built-in implementation in EvoLP is a _generational_ GA taken from [Kochenderfer, M.J. and Wheeler, T.A. 2019](https://algorithmsbook.com/optimization/), in which means the whole population is replaced by its offspring at every iteration.
+The built-in implementation in EvoLP is a _generational_ GA taken from [Kochenderfer, M.J. and Wheeler, T.A. 2019](https://algorithmsbook.com/optimization/), which means the whole population is replaced by its offspring at every iteration.
 
 ```@docs
 GA

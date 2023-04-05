@@ -40,7 +40,7 @@ random points in the chromosome.
 """
 function cross(::TwoPointCrossover, a, b; rng=Random.GLOBAL_RNG)
 	n = length(a)
-	i, j = rand(1:n, 2)
+	i, j = rand(rng, 1:n, 2)
 
 	if i > j
 		(i, j) = (j, i)
@@ -64,7 +64,7 @@ function cross(::UniformCrossover, a, b; rng=Random.GLOBAL_RNG)
 	child = copy(a)
 
 	for i in 1:length(a)
-		if rand() < 0.5
+		if rand(rng) < 0.5
 			child[i] = b[i]
 		end
 	end
