@@ -13,6 +13,8 @@ jumpk
 
 ## Continuous functions
 
+Continuous functions implementations were taken from [Kochenderfer, M.J. and Wheeler, T.A. (2019)](https://algorithmsbook.com/optimization/). Most of these can be visualised in [Surjanovic, S. & Bingham, D. (2013)](https://www.sfu.ca/~ssurjano/optimization.html).
+
 ```@docs
 ackley
 booth

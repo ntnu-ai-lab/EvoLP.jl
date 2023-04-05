@@ -7,11 +7,7 @@ _Steady-state_ operators return two parent indices, while _generational_ operato
 
 In other words, _steady-state_ variants perform one selection, while _generational_ variants perform $n$ selections.
 
-Regardless of the variant, all operators are derived from the `SelectionMethod` abstract type and some of them have parameters you can adjust.
-
-```@docs
-SelectionMethod
-```
+Regardless of the variant, all operators are derived from the [`EvoLP.SelectionMethod`](@ref) abstract type and some of them have parameters you can adjust.
 
 ## Choosing a selection operator
 

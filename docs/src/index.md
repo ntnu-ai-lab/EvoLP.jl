@@ -1,4 +1,4 @@
-# Introduction
+# EvoLP - An evolutionary computation playground
 
 Welcome to the documentation for EvoLP!
 
@@ -14,33 +14,24 @@ Welcome to the documentation for EvoLP!
 - [Test functions](man/benchmarks.md) for benchmarking
 - Convenient [result reporting](man/results.md) and a [statistics logbook](man/logbook.md)
 
-Combine these blocks to make your own algorithms or use some of the included: GA, 1+1EA and PSO.
-Additionally, you can extend EvoLP to create new operators.
-
-!!! note
-    TODO: add info about extending EvoLP
+Combine these blocks to make your own algorithms or use some of the [included](man/algorithms.md) _minimisers_: GA, 1+1EA and PSO.
+Additionally, you can extend EvoLP to create [new operators](man/extending.md).
 
 ## Getting started
 
 !!! note
     TODO: Submit it to the package repository and make it installable.
 
-- Read the Installation Guide.
-- Read the Tutorial.
-- Browse some of the examples.
+- Read the [quick start](man/quickstart.md) page.
+- Browse some of the [examples](tuto/oneplusone_onemax.md) to see how to use the built-in algorithms.
+- For a more comprehensive tutorial, read the [8-queen problem](tuto/8_queen.md) where we make an algorithm from scratch.
 
-## Citing EvoLP
-
-!!! note
-    TODO: Get it published somewhere and include that information here.
+Alternatively, you can browse the [type](lib/types.md) and [functions](lib/functions.md) indices to view all available functionality.
 
 ## Acknowledgements
 
-!!! note
-    TODO: Mention that this is a project by NTNU and the OpenAILab.
-    Should I mention Fund number from NFR and such?
+EvoLP was initially created as a toolbox for internal use by PhD students of [NTNU's Open AI Lab](https://www.ntnu.edu/ailab/ai-lab), and whose funding is provided by [Project no. 311284](https://prosjektbanken.forskningsradet.no/en/project/FORISS/311284) by [The Research Council of Norway](https://www.forskningsradet.no/).
 
 ## License
 
-!!! note
-    TODO: Include information about license.
+EvoLP is licensed under the [MIT License](https://github.com/ntnu-ai-lab/EvoLP/blob/main/LICENSE) which makes it free and open source.

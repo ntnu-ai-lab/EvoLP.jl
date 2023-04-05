@@ -74,7 +74,7 @@ struct InsertMutation <: MutationMethod end
     mutate(::InsertMutation, ind)
 
 Randomly choose two positions `a` and `b` from `ind`,
-insert at a+1 the element at position b, and shift the rest of the elements.
+insert at `a`+1 the element at position `b``, and shift the rest of the elements.
 """
  function mutate(::InsertMutation, ind; rng=Random.GLOBAL_RNG)
     indices = sample(rng, 1:length(ind), 2, replace=false, ordered=true)

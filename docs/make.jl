@@ -9,9 +9,11 @@ makedocs(
     doctest = false,
     clean = true,
     sitename = "EvoLP",
+    highlightsig = true,
     format = Documenter.HTML(
         prettyurls = false,
-        mathengine = MathJax3()
+        mathengine = MathJax3(),
+
     ),
     pages = [
         "Introduction" => "index.md",
@@ -25,6 +27,7 @@ makedocs(
             "Benchmark functions" => "man/benchmarks.md",
             "Reporting results" => "man/results.md",
             "Logging statistics" => "man/logbook.md",
+            "Custom operators"  => "man/extending.md",
         ],
         "Tutorials" => [
             "The OneMax problem" => "tuto/oneplusone_onemax.md",
