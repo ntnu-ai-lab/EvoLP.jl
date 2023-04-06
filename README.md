@@ -1,8 +1,9 @@
 # EvoLP - an evolutionary computation playground
 
-[![Code Style: Blue](https://img.shields.io/badge/code%20style-blue-blue.svg)](https://github.com/invenia/BlueStyle)
-[![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://github.com/ntnu-ai-lab/EvoLP/blob/main/docs/src/index.md)
+[![Stable](https://img.shields.io/badge/docs-latest-blue.svg)](https://ntnu-ai-lab.github.io/EvoLP.jl/)
+[![Julia version](https://img.shields.io/badge/Julia-1.8-blueviolet.svg?logo=julia)](https://julialang.org)
 [![GitHub](https://img.shields.io/github/license/ntnu-ai-lab/EvoLP)](https://github.com/ntnu-ai-lab/EvoLP/blob/main/LICENSE)
+[![Code Style: Blue](https://img.shields.io/badge/code%20style-blue-blue.svg)](https://github.com/invenia/BlueStyle)
 
 ---
 
@@ -21,9 +22,6 @@ Additionally, you can extend EvoLP to create new operators.
 
 ## Installation
 
-> **Warning**
-> WIP: The package is in the process of being submitted to the Julia Registry. Expect things to change a bit :)
-
 You can install EvoLP from the REPL using the built-in package manager:
 
 ```julia
@@ -40,7 +38,7 @@ pkg> add EvoLP
 
 ## Getting started
 
-- Read the documentation in this link as soon as it is hosted :^)
+- Read the [documentation](https://ntnu-ai-lab.github.io/EvoLP.jl/).
 - Browse some of the [examples](https://github.com/ntnu-ai-lab/EvoLP/tree/main/examples/) to see how to use the built-in algorithms.
 - For a more comprehensive tutorial, read [the 8-queen problem](/examples/ga_k_queens.ipynb) where we construct an algorithm from scratch.
 
