@@ -6,6 +6,13 @@ EvoLP includes a [`Logbook`](@ref) type which can be used to log statistics duri
 Logbook
 ```
 
+```@meta
+DocTestSetup = quote
+  using OrderedCollections
+  using Statistics
+end
+```
+
 The `Logbook` receives an [OrderedCollections.jl](https://github.com/JuliaCollections/OrderedCollections.jl) `LittleDict` (ordered dictionary for a _small number_ of items) with the following format:
 
 ```julia
@@ -20,9 +27,6 @@ julia> statnames = ["mean_eval", "max_f", "min_f", "median_f"];
 julia> fns = [mean, maximum, minimum, median];
 
 julia> thedict = LittleDict(statnames, fns)
-
-# output
-
 LittleDict{String, Function, Vector{String}, Vector{Function}} with 4 entries:
   "mean_eval" => mean
   "max_f"     => maximum

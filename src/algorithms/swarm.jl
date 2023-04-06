@@ -62,8 +62,8 @@ function PSO(
 end
 
 function PSO(
-    logger::Logbook, f::Function, population::Vector{Particle},
-    k_max::Integer; w=1, c1=1, c2=1
+    logger::Logbook, f::Function, population::Vector{Particle}, k_max::Integer;
+    w=1, c1=1, c2=1
 )
     d = length(population[1].x)
     x_best, y_best = copy(population[1].x_best), Inf

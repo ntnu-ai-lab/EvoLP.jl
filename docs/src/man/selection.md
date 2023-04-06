@@ -5,7 +5,7 @@ Parent selection operators (a.k.a. _selectors_) in EvoLP are based on fitness an
 These methods come in two variants: _steady-state_ and _generational_.
 _Steady-state_ operators return two parent indices, while _generational_ operators return a list of two parent indices for each fitness in the population.
 
-In other words, _steady-state_ variants perform one selection, while _generational_ variants perform $n$ selections.
+In other words, _steady-state_ variants perform one selection, while _generational_ variants perform ``n`` selections.
 
 Regardless of the variant, all operators are derived from the [`EvoLP.SelectionMethod`](@ref) abstract type and some of them have parameters you can adjust.
 

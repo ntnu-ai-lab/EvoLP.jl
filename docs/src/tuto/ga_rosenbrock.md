@@ -20,9 +20,9 @@ For this example we will use the **Rosenbrock** function, which is already inclu
 rosenbrock(x; a=1, b=5)
 ```
 
-> **Rosenbrock** benchmark function. With $a=1$ and $b=5$, minimum is at $f([a, a^2]) = 0$
+> **Rosenbrock** benchmark function. With ``a=1`` and ``b=5``, minimum is at ``f([a, a^2]) = 0``
 >
-> $f(x) = (a - x_1)^2 + b(x_2 - x_1^2)^2$
+> ``f(x) = (a - x_1)^2 + b(x_2 - x_1^2)^2``
 
 ## Implementing the solution
 
@@ -62,7 +62,7 @@ We can easily set up these operators using the built-ins provided by EvoLP. Let'
 @doc InterpolationCrossover
 ```
 
-> Interpolation crossover with scaling parameter `λ`.
+> Interpolation crossover with scaling parameter ``λ``.
 
 ```julia
 S = RankBasedSelectionGenerational()
