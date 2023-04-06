@@ -13,7 +13,6 @@ makedocs(
     format = Documenter.HTML(
         prettyurls = false,
         mathengine = MathJax3(),
-
     ),
     pages = [
         "Introduction" => "index.md",
@@ -41,4 +40,8 @@ makedocs(
         ],
         "References & related links" => "references.md",
     ]
+)
+
+deploydocs(
+    repo = "github.com/ntnu-ai-lab/EvoLP.jl.git",
 )
