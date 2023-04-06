@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>The 8 queens problem · EvoLP</title><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.045/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.24/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../index.html">EvoLP</a></span></div><form class="docs-search" action="../search.html"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../index.html">Introduction</a></li><li><span class="tocitem">User Guide</span><ul><li><a class="tocitem" href="../man/quickstart.html">Workflow</a></li><li><a class="tocitem" href="../man/algorithms.html">Algorithms</a></li><li><a class="tocitem" href="../man/selection.html">Selection operators</a></li><li><a class="tocitem" href="../man/cross.html">Crossover operators</a></li><li><a class="tocitem" href="../man/mutation.html">Mutation operators</a></li><li><a class="tocitem" href="../man/generators.html">Population generators</a></li><li><a class="tocitem" href="../man/benchmarks.html">Benchmark functions</a></li><li><a class="tocitem" href="../man/results.html">Reporting results</a></li><li><a class="tocitem" href="../man/logbook.html">Logging statistics</a></li><li><a class="tocitem" href="../man/extending.html">Custom operators</a></li></ul></li><li><span class="tocitem">Tutorials</span><ul><li><a class="tocitem" href="oneplusone_onemax.html">The OneMax problem</a></li><li class="is-active"><a class="tocitem" href="8_queen.html">The 8 queens problem</a><ul class="internal"><li><a class="tocitem" href="#Implementing-the-solution"><span>Implementing the solution</span></a></li></ul></li><li><a class="tocitem" href="ga_rosenbrock.html">GA for continuous optimisation</a></li><li><a class="tocitem" href="pso_michalewicz.html">PSO for continuous optimisation</a></li></ul></li><li><span class="tocitem">API</span><ul><li><a class="tocitem" href="../lib/types.html">Types</a></li><li><a class="tocitem" href="../lib/functions.html">Functions</a></li></ul></li><li><a class="tocitem" href="../references.html">References &amp; related links</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Tutorials</a></li><li class="is-active"><a href="8_queen.html">The 8 queens problem</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href="8_queen.html">The 8 queens problem</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/ntnu-ai-lab/EvoLP.jl/blob/main/docs/src/tuto/8_queen.md" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h1 id="Solving-the-8-queens-problem"><a class="docs-heading-anchor" href="#Solving-the-8-queens-problem">Solving the 8-queens problem</a><a id="Solving-the-8-queens-problem-1"></a><a class="docs-heading-anchor-permalink" href="#Solving-the-8-queens-problem" title="Permalink"></a></h1><p>This tutorial will showcase how to use some of the building blocks provided by LP to solve a combinatorial problem.</p><p>In this example,  we will solve the <a href="https://en.wikipedia.org/wiki/Eight_queens_puzzle">8-queens puzzle</a>. This is a constraint satisfaction problem in which the goal is to place 8 queens in a chess board such that neither of them <em>check</em> each other.</p><p><img src="../assets/8-queens01.png" alt="One queen on the board"/></p><p>In the figure above, we have placed a queen represented by a blue dot. All conflicting cells have been highlighted. The problem becomes harder when we add more queens to the board:</p><p><img src="../assets/8-queens02.png" alt="2 queens on the board"/></p><h2 id="Implementing-the-solution"><a class="docs-heading-anchor" href="#Implementing-the-solution">Implementing the solution</a><a id="Implementing-the-solution-1"></a><a class="docs-heading-anchor-permalink" href="#Implementing-the-solution" title="Permalink"></a></h2><p>We can solve this problem using a <strong>Genetic Algorithm (GA)</strong> that deals with the constraints, using a steady-state approach and logging statistics on every iteration.</p><p>We will use the following modules:</p><pre><code class="language-julia hljs">using Statistics
+using EvoLP
+using OrderedCollections</code></pre><h3 id="Dealing-with-constraints"><a class="docs-heading-anchor" href="#Dealing-with-constraints">Dealing with constraints</a><a id="Dealing-with-constraints-1"></a><a class="docs-heading-anchor-permalink" href="#Dealing-with-constraints" title="Permalink"></a></h3><p>To implement the solution, we need to handle the constraints in some way. For this problem, we can divide the constraints in <em>vertical</em>, <em>horizontal</em> and <em>diagonal</em> clashes between the queens.</p><p>Interestingly enough, the vertical and horizontal clashes can be dealt with by using a vector of <strong>permutations</strong> where the <em>genes</em> (index of the vector) represent a column and the <em>alleles</em> (values the index can take) represent the row used in that column:</p><p><img src="../assets/8-queens03.png" alt="A possible representation of the 8-queen problem"/></p><p>For the phenotype above, the genotype representation would look like this:</p><pre><code class="language-julia hljs">x = [1, 3, 5, 2, 6, 4, 7, 8]</code></pre><p>The queen in the first column is in row 1. The queen in the second column is in row 3, and so on.</p><p>EvoLP contains a convenient <code>permutation_vector_pop</code>:</p><p><a href="../man/generators.html#EvoLP.permutation_vector_pop"><code>permutation_vector_pop</code></a></p><pre><code class="language-julia hljs">julia&gt; @doc permutation_vector_pop</code></pre><p>We can now use the generator to initialise our population:</p><pre><code class="language-julia hljs">pop_size = 100
+population = permutation_vector_pop(pop_size, 8, 1:8)
+first(population, 3)</code></pre><pre><code class="language-text hljs">3-element Vector{Vector{Int64}}:
+    [3, 7, 4, 8, 2, 1, 5, 6]
+    [5, 4, 7, 6, 2, 3, 1, 8]
+    [8, 6, 5, 1, 2, 3, 4, 7]</code></pre><p>To deal with the <em>diagonal</em> constraints, we can use the <strong>fitness function</strong>.</p><p>The penalty of a queen is the number of queens she can check. The penalty of a board configuration would then be the sum of all penalties of all queens, and this is what we want to <strong>minimise</strong>. So let&#39;s build our fitness function step by step.</p><p>Assume a queen <span>$q$</span> is in a position <span>$(i, j)$</span>. Then, we can define the diagonal neighbourhood as the following:</p><ul><li>Top-left: <span>$(i-1, j-1)$</span></li><li>Top-right: <span>$(i-1, j+1)$</span></li><li>Bottom-left: <span>$(i+1, j-1)$</span></li><li>Bottom-right: <span>$(i+1, j+1)$</span></li></ul><p>We can then use this information to iterate in all directions and check how many queens are there in the diagonals.</p><p>If we do this <strong>for every queen</strong> <span>$q$</span>, then we will count some of the clashes twice. It is a good idea to create a set of these clashes so that we can sum them afterwards.</p><pre><code class="language-julia hljs">function diag_constraints(x)
+    # rows are values in x
+    # columns are indices from 1:8
+    fitness = []
+    for q in 1:8
+        tl = collect(zip(x[q]:-1:1, q:-1:1))
+        tr = collect(zip(x[q]:-1:1, q:1:8))
+        bl = collect(zip(x[q]:1:8, q:-1:1))
+        br = collect(zip(x[q]:1:8, q:1:8))
+
+        constraints = Set(vcat(tl, tr, bl, br))
+        delete!(constraints, (x[q], q))
+        q_fit = sum([(i, j) in constraints ? 1 : 0 for (i, j) in zip(x, 1:8)])
+        push!(fitness, q_fit)
+    end
+
+    return sum(fitness)
+end</code></pre><p>To handle the corners and not specify &quot;emtpy&quot; diagonals, we consider the position <span>$(i,j)$</span> of a queen to count as a &quot;clash&quot; itself. This means that a queen in <span>$(1,1)$</span> will consider <span>$(1,1)$</span> as the top-left diagonal, and <span>$(i,i), i \in [1,8]$</span> as the bottom-right diagonal (again, including itself). We later remove these additional constraints via <code>delete!</code> and proceed normally.</p><p>Using the same configuration as before, we have the following conflicting positions:</p><p><img src="../assets/8-queens04.png" alt="Conflicts of the previous configuration are highlighted"/></p><p>We can test our fitness function <code>diag_constraints</code> on this board and see the number of conflicts in total:</p><pre><code class="language-julia hljs">test = [1, 3, 5, 2, 6, 4, 7, 8]
+diag_constraints(test)</code></pre><pre><code class="language-text hljs">10</code></pre><p>Going through each queen <span>$q_i$</span> (with <span>$i$</span> being the column number), we have the following number of conflicts: <span>$q_1 = 2$</span>, <span>$q_2 = 1$</span>, <span>$q_3 = 0$</span>, <span>$q_4 = 1$</span>, <span>$q_5 = 1$</span>, <span>$q_6 = 1$</span>, <span>$q_7 = 2$</span>,  <span>$q_8 = 2$</span></p><h3 id="Evolutionary-operators"><a class="docs-heading-anchor" href="#Evolutionary-operators">Evolutionary operators</a><a id="Evolutionary-operators-1"></a><a class="docs-heading-anchor-permalink" href="#Evolutionary-operators" title="Permalink"></a></h3><p>We now need to choose our evolutionary operators: what we will use for <strong>selection</strong>, <strong>crossover</strong> and <strong>mutation</strong>.</p><p>However, since we&#39;re dealing with permutations, we are restricted to use specific operators that do not end up destroying feasible solutions and therefore violate our constraints. EvoLP contains some operators that can deal with permutation-based individuals:</p><pre><code class="language-julia hljs">julia&gt; @doc TournamentSelectionSteady</code></pre><pre><code class="language-text hljs">Tournament parent selection with tournament size ``k``.</code></pre><pre><code class="language-julia hljs">julia&gt; @doc OrderOneCrossover</code></pre><pre><code class="language-text hljs">Order 1 crossover (OX1) for permutation-based individuals.</code></pre><pre><code class="language-julia hljs">julia&gt; @doc SwapMutation</code></pre><pre><code class="language-text hljs">Swap mutation for permutation-based individuals.</code></pre><p>We can now <em>instantiate</em> them and continue.</p><pre><code class="language-julia hljs">S = TournamentSelectionSteady(5);
+C = OrderOneCrossover();
+M = SwapMutation();</code></pre><h3 id="Logging-statistics"><a class="docs-heading-anchor" href="#Logging-statistics">Logging statistics</a><a id="Logging-statistics-1"></a><a class="docs-heading-anchor-permalink" href="#Logging-statistics" title="Permalink"></a></h3><p>We can use the <a href="../man/logbook.html#EvoLP.Logbook"><code>Logbook</code></a> to record statistics about our run:</p><pre><code class="language-julia hljs">statnames = [&quot;mean_eval&quot;, &quot;max_f&quot;, &quot;min_f&quot;, &quot;median_f&quot;]
+fns = [mean, maximum, minimum, median]
+thedict = LittleDict(statnames, fns)
+thelogger = Logbook(thedict)</code></pre><pre><code class="language-text hljs">Logbook(LittleDict{AbstractString, Function, Vector{AbstractString}, Vector{Function}}(&quot;mean_eval&quot; =&gt; Statistics.mean, &quot;max_f&quot; =&gt; maximum, &quot;min_f&quot; =&gt; minimum, &quot;median_f&quot; =&gt; Statistics.median), NamedTuple{(:mean_eval, :max_f, :min_f, :median_f)}[])</code></pre><h3 id="Constructing-our-own-algorithm"><a class="docs-heading-anchor" href="#Constructing-our-own-algorithm">Constructing our own algorithm</a><a id="Constructing-our-own-algorithm-1"></a><a class="docs-heading-anchor-permalink" href="#Constructing-our-own-algorithm" title="Permalink"></a></h3><p>And now we are ready to use all our building blocks to construct our own algorithm. In this case, we will use a <em>steady-state</em> GA: instead of replacing the whole population, we will generate a fixed amount of candidate solutions and keep the best <code>n</code> individuals in the population each iteration.</p><p>Let&#39;s do a summary then:</p><ul><li>The representation is a <strong>vector</strong> of <strong>permutations of integers</strong> with values in the closed range <span>$[1,8]$</span>.</li><li>To <strong>select</strong> the <strong>parents</strong>, we use the <a href="../man/selection.html#EvoLP.TournamentSelectionSteady"><code>TournamentSelectionSteady</code></a> operator with a tournament size of 5.</li><li>To <strong>recombine</strong> the parents, we use the <a href="../man/cross.html#EvoLP.OrderOneCrossover"><code>OrderOneCrossover</code></a> operator.</li><li>To <strong>mutate</strong> a candidate solution, we use the <a href="../man/mutation.html#EvoLP.SwapMutation"><code>SwapMutation</code></a> operator.</li><li>To <strong>select</strong> the <strong>survivors</strong>, we <em>replace the worst</em> individuals.</li><li>With a <strong>population size</strong> <code>pop_size</code> of 100.</li><li>With a <strong>random initialisation</strong> using the generator <a href="../man/generators.html#EvoLP.permutation_vector_pop"><code>permutation_vector_pop</code></a>.</li><li>We will use a <strong>crossover probability</strong> of 100%.</li><li>And a <strong>mutation probability</strong> of 80%.</li></ul><p>We can then build our algorithm in a function, and use EvoLP&#39;s <a href="../man/results.html#EvoLP.Result"><code>Result</code></a> type for the return:</p><pre><code class="language-julia hljs">function mySteadyGA(logbook, f, pop, k_max, S, C, M, mrate)
+    n = length(pop)
+    # Generation loop
+    for _ in 1:k_max
+        fitnesses = f.(pop)
+        parents = select(S, fitnesses)  # this will return 2 parents
+        parents = vcat(parents, select(S, fitnesses))  # Extend the list with 2 more parents
+        offspring = [cross(C, pop[parents[1]], pop[parents[2]])]  # get first kid
+        offspring = vcat(offspring, [cross(C, pop[parents[3]], pop[parents[4]])])  # get 2nd
+        pop = vcat(pop, offspring) # add to population
+        
+        # Mutation loop
+        for i in eachindex(pop)
+            if rand() &lt;= mrate
+                pop[i] = mutate(M, pop[i])
+            end
+        end
+        fitnesses = f.(pop)
+
+        # Log statistics
+        compute!(logbook, fitnesses)
+
+        # Find worst and remove
+        worst1 = argmax(fitnesses)
+        deleteat!(pop, worst1)
+        deleteat!(fitnesses, worst1)
+        
+        # And do the same again
+        worst2 = argmax(fitnesses)
+        deleteat!(pop, worst2)
+        deleteat!(fitnesses, worst2)
+    end
+
+    # Result reporting
+    best, best_i = findmin(f, pop)
+    n_evals = 2 * k_max * n + n
+    result = Result(best, pop[best_i], pop, k_max, n_evals)
+    return result
+end</code></pre><p>To try our new algorithm, we just need to call its function with the appropriate arguments:</p><pre><code class="language-julia hljs">result  = mySteadyGA(thelogger, diag_constraints, population, 500, S, C, M, 0.8);</code></pre><p>EvoLP provides convenient <a href="../man/results.html">functions</a> that we can use to get information about a result:</p><pre><code class="language-julia hljs">@show optimum(result)
+@show optimizer(result)
+@show f_calls(result)
+thelogger.records[end]</code></pre><pre><code class="language-text hljs">optimum(result) = 0
+optimizer(result) = Any[5, 1, 8, 6, 3, 7, 2, 4]
+f_calls(result) = 100100
+
+
+
+(mean_eval = 9.392156862745098, max_f = 20, min_f = 0, median_f = 8.0)</code></pre><p>And this is just a helper function to visualise our result as a chess board:</p><pre><code class="language-julia hljs">function drawboard(x)
+    b = fill(&quot;◻&quot;,8,8)
+    for i in 1:2:8
+        b[i,2:2:8] .= &quot;◼&quot;
+    end
+    for i in 2:2:8
+        b[i, 1:2:8] .= &quot;◼&quot;
+    end
+    for (i,j) in zip(x,1:8)
+        b[i, j] = &quot;♛&quot;
+    end
+    for i in 1:8
+        println(join(b[i,:]))
+    end
+end</code></pre><pre><code class="language-julia hljs">drawboard(optimizer(result))</code></pre><pre><code class="language-text hljs">◻♛◻◼◻◼◻◼
+◼◻◼◻◼◻♛◻
+◻◼◻◼♛◼◻◼
+◼◻◼◻◼◻◼♛
+♛◼◻◼◻◼◻◼
+◼◻◼♛◼◻◼◻
+◻◼◻◼◻♛◻◼
+◼◻♛◻◼◻◼◻</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="oneplusone_onemax.html">« The OneMax problem</a><a class="docs-footer-nextpage" href="ga_rosenbrock.html">GA for continuous optimisation »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.24 on <span class="colophon-date" title="Thursday 6 April 2023 17:59">Thursday 6 April 2023</span>. Using Julia version 1.8.5.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
