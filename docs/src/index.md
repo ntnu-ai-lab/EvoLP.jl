@@ -2,6 +2,10 @@
 
 Welcome to the documentation for EvoLP!
 
+[![GitHub source](https://img.shields.io/badge/GitHub-source-green.svg?logo=github)](https://github.com/ntnu-ai-lab/EvoLP.jl)
+[![Code Style: Blue](https://img.shields.io/badge/code%20style-blue-blue.svg)](https://github.com/invenia/BlueStyle)
+[![Julia version](https://img.shields.io/badge/Julia-1.8-blueviolet.svg?logo=julia)](https://julialang.org)
+
 ## What is EvoLP?
 
 [EvoLP](https://github.com/ntnu-ai-lab/EvoLP) is a _playground_ for [evolutionary computation](https://en.wikipedia.org/wiki/Evolutionary_computation) in [Julia](https://julialang.org). It provides a set of predefined _building blocks_ that can be coupled together to quickly generate evolutionary computation solvers and compute statistics for a variety of optimisation tasks, including discrete, continuous and combinatorial optimisation.
@@ -19,10 +23,7 @@ Additionally, you can extend EvoLP to create [new operators](man/extending.md).
 
 ## Getting started
 
-!!! note
-    TODO: Submit it to the package repository and make it installable.
-
-- Read the [quick start](man/quickstart.md) page.
+- Read the [quick start](man/quickstart.md) page for information about installation and to get a quick overview.
 - Browse some of the [examples](tuto/oneplusone_onemax.md) to see how to use the built-in algorithms.
 - For a more comprehensive tutorial, read the [8-queen problem](tuto/8_queen.md) where we make an algorithm from scratch.
 
