@@ -125,7 +125,7 @@ Both `lb` and `ub` must be arrays of the same dimensions.
 
 ```julia
 julia> unif_rand_particle_pop(3, [-1, -1], [1, 1])
-3-element Vector{Any}:
+3-element Vector{Particle}:
  Particle([0.012771979849810489, 1.5375945897550218], [0, 0], [0.012771979849810489, 1.5375945897550218])
  Particle([1.4615231729898166, 0.7340438556735969], [0, 0], [1.4615231729898166, 0.7340438556735969])
  Particle([0.26586910036555356, 0.22012991705951324], [0, 0], [0.26586910036555356, 0.22012991705951324])
@@ -133,7 +133,7 @@ julia> unif_rand_particle_pop(3, [-1, -1], [1, 1])
 """
 function unif_rand_particle_pop(n, lb, ub; rng=Random.GLOBAL_RNG)
 	d = length(lb)
-	pop = []
+	pop = Particle[]
 
 	for i in 1:n
 		x_pos = rand(rng, d) .* (ub - lb)
@@ -156,7 +156,7 @@ matrix of covariances.
 
 ```julia
 julia> normal_rand_particle_pop(3, [-1, -1], [1 0; 0 1])
-3-element Vector{Any}:
+3-element Vector{Particle}:
  Particle([-2.3026589618390214, 0.25907687184121864], [0.0, 0.0], [-2.3026589618390214, 0.25907687184121864])
  Particle([-0.5118786279984703, -0.5948648935657292], [0.0, 0.0], [-0.5118786279984703, -0.5948648935657292])
  Particle([-1.3230210847731094, -1.6234307114658497], [0.0, 0.0], [-1.3230210847731094, -1.6234307114658497])
@@ -164,7 +164,7 @@ julia> normal_rand_particle_pop(3, [-1, -1], [1 0; 0 1])
 """
 function normal_rand_particle_pop(n, μ, Σ; rng=Random.GLOBAL_RNG)
 	D = MvNormal(μ, Σ)
-	pop = []
+	pop = Particle[]
 
 	for i in 1:n
 		x_pos = rand(rng, D)

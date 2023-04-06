@@ -9,7 +9,7 @@ const testfiles =(
 )
 
 @testset "EvoLP.jl" begin
-    @testset "$file" for file in testfiles
+    @testset "`file" for file in testfiles
         include(file)
     end
 end;

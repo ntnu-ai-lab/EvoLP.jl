@@ -5,6 +5,14 @@ This tutorial will showcase how to use some of the building blocks provided by L
 In this example,  we will solve the [8-queens puzzle](https://en.wikipedia.org/wiki/Eight_queens_puzzle).
 This is a constraint satisfaction problem in which the goal is to place 8 queens in a chess board such that neither of them _check_ each other.
 
+```@meta
+DocTestSetup = quote
+  using EvoLP
+  using OrderedCollections
+  using Statistics
+end
+```
+
 ![One queen on the board](../assets/8-queens01.png)
 
 In the figure above, we have placed a queen represented by a blue dot. All conflicting cells have been highlighted. The problem becomes harder when we add more queens to the board:
@@ -68,16 +76,16 @@ To deal with the _diagonal_ constraints, we can use the **fitness function**.
 The penalty of a queen is the number of queens she can check.
 The penalty of a board configuration would then be the sum of all penalties of all queens, and this is what we want to **minimise**. So let's build our fitness function step by step.
 
-Assume a queen $q$ is in a position $(i, j)$. Then, we can define the diagonal neighbourhood as the following:
+Assume a queen ``q`` is in a position ``(i, j)``. Then, we can define the diagonal neighbourhood as the following:
 
-- Top-left: $(i-1, j-1)$
-- Top-right: $(i-1, j+1)$
-- Bottom-left: $(i+1, j-1)$
-- Bottom-right: $(i+1, j+1)$
+- Top-left: ``(i-1, j-1)``
+- Top-right: ``(i-1, j+1)``
+- Bottom-left: ``(i+1, j-1)``
+- Bottom-right: ``(i+1, j+1)``
 
 We can then use this information to iterate in all directions and check how many queens are there in the diagonals.
 
-If we do this **for every queen** $q$, then we will count some of the clashes twice. It is a good idea to create a set of these clashes so that we can sum them afterwards.
+If we do this **for every queen** ``q``, then we will count some of the clashes twice. It is a good idea to create a set of these clashes so that we can sum them afterwards.
 
 ```julia
 function diag_constraints(x)
@@ -100,8 +108,8 @@ function diag_constraints(x)
 end
 ```
 
-To handle the corners and not specify "emtpy" diagonals, we consider the position $(i,j)$ of a queen to count as a "clash" itself.
-This means that a queen in $(1,1)$ will consider $(1,1)$ as the top-left diagonal, and $(i,i), i \in [1,8]$ as the bottom-right diagonal (again, including itself). We later remove these additional constraints via `delete!` and proceed normally.
+To handle the corners and not specify "emtpy" diagonals, we consider the position ``(i,j)`` of a queen to count as a "clash" itself.
+This means that a queen in ``(1,1)`` will consider ``(1,1)`` as the top-left diagonal, and ``(i,i), i \in [1,8]`` as the bottom-right diagonal (again, including itself). We later remove these additional constraints via `delete!` and proceed normally.
 
 Using the same configuration as before, we have the following conflicting positions:
 
@@ -118,8 +126,8 @@ diag_constraints(test)
 10
 ```
 
-Going through each queen $q_i$ (with $i$ being the column number), we have the following number of conflicts:
-$q_1 = 2$, $q_2 = 1$, $q_3 = 0$, $q_4 = 1$, $q_5 = 1$, $q_6 = 1$, $q_7 = 2$,  $q_8 = 2$
+Going through each queen ``q_i`` (with ``i`` being the column number), we have the following number of conflicts:
+``q_1 = 2``, ``q_2 = 1``, ``q_3 = 0``, ``q_4 = 1``, ``q_5 = 1``, ``q_6 = 1``, ``q_7 = 2``,  ``q_8 = 2``
 
 ### Evolutionary operators
 
@@ -133,7 +141,7 @@ julia> @doc TournamentSelectionSteady
 ```
 
 ```text
-Tournament parent selection with tournament size `k`.
+Tournament parent selection with tournament size ``k``.
 ```
 
 ```julia
@@ -178,11 +186,11 @@ Logbook(LittleDict{AbstractString, Function, Vector{AbstractString}, Vector{Func
 ### Constructing our own algorithm
 
 And now we are ready to use all our building blocks to construct our own algorithm.
-In this case, we will use a _steady-state_ GA: instead of replacing the whole population, we will generate a fixed amount of candidate solutions and keep the best $n$ individuals in the population each iteration.
+In this case, we will use a _steady-state_ GA: instead of replacing the whole population, we will generate a fixed amount of candidate solutions and keep the best `n` individuals in the population each iteration.
 
 Let's do a summary then:
 
-- The representation is a **vector** of **permutations of integers** with values in the closed range $[1,8]$.
+- The representation is a **vector** of **permutations of integers** with values in the closed range ``[1,8]``.
 - To **select** the **parents**, we use the [`TournamentSelectionSteady`](@ref) operator with a tournament size of 5.
 - To **recombine** the parents, we use the [`OrderOneCrossover`](@ref) operator.
 - To **mutate** a candidate solution, we use the [`SwapMutation`](@ref) operator.

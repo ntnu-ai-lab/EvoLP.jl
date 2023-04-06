@@ -6,7 +6,7 @@ DocMeta.setdocmeta!(EvoLP, :DocTestSetup, :(using EvoLP); recursive=true)
 
 makedocs(
     modules = [EvoLP],
-    doctest = false,
+    doctest = true,
     clean = true,
     sitename = "EvoLP",
     highlightsig = true,
@@ -39,6 +39,6 @@ makedocs(
             "Types" => "lib/types.md",
             "Functions" => "lib/functions.md",
         ],
-        "References" => "references.md",
+        "References & related links" => "references.md",
     ]
 )

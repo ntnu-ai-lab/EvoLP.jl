@@ -20,11 +20,11 @@ For this example, we will use the Michalewicz function, which is a test function
 michalewicz(x; m=10)
 ```
 
-> The **Michalewicz** function is a $d$-dimensional function with several steep valleys, where `m` controls the steepness. `m` is usually set at 10. For 2 dimensions, $x^* = [2.20, 1.57]$, with $f(x^*) = -1.8011$.
+> The **Michalewicz** function is a `d`-dimensional function with several steep valleys, where `m` controls the steepness. `m` is usually set at 10. For 2 dimensions, ``x^* = [2.20, 1.57]``, with ``f(x^*) = -1.8011``.
 >
-> $f(x) = -\sum_{i=1}^{d}\sin(x_i) \sin^{2m}\left(\frac{ix_i^2}{\pi}\right)$
+> ``f(x) = -\sum_{i=1}^{d}\sin(x_i) \sin^{2m}\left(\frac{ix_i^2}{\pi}\right)``
 
-In this case we will use $d=2$ and $m=10$, which are the default values implemented.
+In this case we will use `d=2` and `m=10`, which are the default values implemented.
 
 In PSO, we use *particles*. Each particle has a *position* and a *velocity*, and remembers the best position the whole swarm has visited. We can create a population of particles in multiple ways, but EvoLP provides 2 [**particle generators**](../man/generators.md) with random positions: either uniform or following a normal distribution.
 
@@ -41,7 +41,7 @@ normal_rand_particle_pop(n, μ, Σ; rng=Random.GLOBAL_RNG)
 > Generate a population of `n` [`Particle`](@ref) using a normal distribution with means `μ` and covariance`Σ`.
 > `μ` expects a vector of length *l* (i.e. number of dimensions) while `Σ` expects an *l x l* matrix of covariances.
 
-Since we are using the 2-dimensional version of the function, we need to provide a vector of 2 means and a $2 \times 2$ matrix of covariances:
+Since we are using the 2-dimensional version of the function, we need to provide a vector of 2 means and a `2 \times 2` matrix of covariances:
 
 ```julia
 population = normal_rand_particle_pop(50, [0, 0], [1 0; 0 1])
@@ -49,7 +49,7 @@ first(population, 3)
 ```
 
 ```text
-3-element Vector{Any}:
+3-element Vector{Particle}:
     Particle([-0.22703948747578281, 1.7689889087227626], [0.0, 0.0], [-0.22703948747578281, 1.7689889087227626])
     Particle([0.9523372333139276, 1.8452380648469366], [0.0, 0.0], [0.9523372333139276, 1.8452380648469366])
     Particle([-1.2560899837782407, 0.15303679468484374], [0.0, 0.0], [-1.2560899837782407, 0.15303679468484374])
@@ -76,8 +76,8 @@ Now we can use the built-in [`PSO`](@ref) algorithm:
 ```
 
 ```text
-PSO(f::Function, population, k_max; w=1, c1=1, c2=1)
-PSO(logger::Logbook, f::Function, population, k_max; w=1, c1=1, c2=1)
+PSO(f::Function, population::Vector{Particle}, k_max::Integer; w=1, c1=1, c2=1)
+PSO(logger::Logbook, f::Function, population::Vector{Particle}, k_max::Integer; w=1, c1=1, c2=1)
 ```
 
 > **Arguments**

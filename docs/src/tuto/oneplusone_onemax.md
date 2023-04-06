@@ -16,9 +16,9 @@ For this example, we will use the [`onemax`](@ref) test function, which is alrea
 @doc onemax
 ```
 
-> The **OneMax** function returns the sum of the individual. For an individual of length $n$, maximum is achieved with $n$ ones.
+> The **OneMax** function returns the sum of the individual. For an individual of length ``n``, maximum is achieved with ``n`` ones.
 >
-> $\text{OneMax}(\mathbf{x}) = \sum_{i=1}^n x_i$
+> ``\text{OneMax}(\mathbf{x}) = \sum_{i=1}^n x_i``
 
 In an EA we use vectors as _individuals_. The 1+1 EA features 1 _parent_ and 1 _offspring_ each iteration.
 
@@ -68,7 +68,7 @@ Since the 1+1 EA works on a single individual, we only have the _mutation step_.
 
 > Bitwise mutation with probability `λ` of flipping each bit.
 
-This mutation operator needs a probability $\lambda$ for flipping each bit, so we pass it like so:
+This mutation operator needs a probability ``\lambda`` for flipping each bit, so we pass it like so:
 
 ```julia
 Mut = BitwiseMutation(1/ind_size)
