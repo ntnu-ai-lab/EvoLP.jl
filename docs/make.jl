@@ -13,11 +13,15 @@ makedocs(
     format = Documenter.HTML(
         prettyurls = false,
         mathengine = MathJax3(),
+        ansicolor = true,
+        sidebar_sitename = false,
+        canonical = "https://ntnu-ai-lab.github.io/EvoLP.jl/stable/",
+        assets = ["assets/favicon.ico"],
     ),
     pages = [
         "Introduction" => "index.md",
         "User Guide" => [
-            "Workflow" => "man/quickstart.md",
+            "Quick start" => "man/quickstart.md",
             "Algorithms" => "man/algorithms.md",
             "Selection operators" => "man/selection.md",
             "Crossover operators" => "man/cross.md",

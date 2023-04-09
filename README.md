@@ -1,9 +1,16 @@
-# EvoLP - an evolutionary computation playground
+<p align="center">
+    <img width="400px" src="https://raw.githubusercontent.com/ntnu-ai-lab/EvoLP.jl/master/docs/src/assets/logo.png#gh-light-mode-only"/>
+    <img width="400px" src="https://raw.githubusercontent.com/ntnu-ai-lab/EvoLP.jl/master/docs/src/assets/logo-dark.png#gh-dark-mode-only"/>
+</p>
+
+<div align="center">
 
 [![Stable](https://img.shields.io/badge/docs-latest-blue.svg)](https://ntnu-ai-lab.github.io/EvoLP.jl/)
 [![Julia version](https://img.shields.io/badge/Julia-1.8-blueviolet.svg?logo=julia)](https://julialang.org)
 [![GitHub](https://img.shields.io/github/license/ntnu-ai-lab/EvoLP)](https://github.com/ntnu-ai-lab/EvoLP/blob/main/LICENSE)
 [![Code Style: Blue](https://img.shields.io/badge/code%20style-blue-blue.svg)](https://github.com/invenia/BlueStyle)
+
+</div>
 
 ---
 
