@@ -1,6 +1,6 @@
 <p align="center">
-    <img width="400px" src="https://raw.githubusercontent.com/ntnu-ai-lab/EvoLP.jl/master/docs/src/assets/logo.png#gh-light-mode-only"/>
-    <img width="400px" src="https://raw.githubusercontent.com/ntnu-ai-lab/EvoLP.jl/master/docs/src/assets/logo-dark.png#gh-dark-mode-only"/>
+  <img width="400px" src="https://raw.githubusercontent.com/ntnu-ai-lab/EvoLP.jl/main/docs/src/assets/logo.png#gh-light-mode-only"/>
+  <img width="400px" src="https://raw.githubusercontent.com/ntnu-ai-lab/EvoLP.jl/main/docs/src/assets/logo-dark.png#gh-dark-mode-only"/>
 </p>
 
 <div align="center">
@@ -54,5 +54,12 @@ pkg> add EvoLP
 Please report any issues via the GitHub [issues tracker](https://github.com/ntnu-ai-lab/EvoLP/issues).
 
 ## Acknowledgements
+
+<p align="center">
+  <img width=300px" src="https://raw.githubusercontent.com/ntnu-ai-lab/EvoLP.jl/main/docs/src/assets/logo_nail.png#gh-light-mode-only"/>
+  <img width=300px" src="https://raw.githubusercontent.com/ntnu-ai-lab/EvoLP.jl/main/docs/src/assets/logo_nail-dark.png#gh-dark-mode-only"/>
+  <img width=300px" src="https://raw.githubusercontent.com/ntnu-ai-lab/EvoLP.jl/main/docs/src/assets/logo_ntnu.png#gh-light-mode-only"/>
+  <img width=300px" src="https://raw.githubusercontent.com/ntnu-ai-lab/EvoLP.jl/main/docs/src/assets/logo_ntnu-dark.png#gh-dark-mode-only"/>
+</p>
 
 EvoLP was initially created as a toolbox for internal use by PhD students of [NTNU's Open AI Lab](https://www.ntnu.edu/ailab/ai-lab), and whose funding is provided by [Project no. 311284](https://prosjektbanken.forskningsradet.no/en/project/FORISS/311284) by [The Research Council of Norway](https://www.forskningsradet.no/). Therefore, EvoLP is licensed under the [MIT License](https://github.com/ntnu-ai-lab/EvoLP/blob/main/LICENSE) which makes it **free and open source**.
