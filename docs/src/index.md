@@ -3,8 +3,9 @@
 Welcome to the documentation for EvoLP!
 
 [![GitHub source](https://img.shields.io/badge/GitHub-source-green.svg?logo=github)](https://github.com/ntnu-ai-lab/EvoLP.jl)
+[![Julia version](https://img.shields.io/badge/Julia-1.8+-blueviolet.svg?logo=julia)](https://julialang.org)
 [![Code Style: Blue](https://img.shields.io/badge/code%20style-blue-blue.svg)](https://github.com/invenia/BlueStyle)
-[![Julia version](https://img.shields.io/badge/Julia-1.8-blueviolet.svg?logo=julia)](https://julialang.org)
+[![ColPrac: Contributor's Guide on Collaborative Practices for Community Packages](https://img.shields.io/badge/ColPrac-Contributor's%20Guide-blueviolet)](https://github.com/SciML/ColPrac)
 
 ## What is EvoLP?
 
@@ -31,7 +32,7 @@ Alternatively, you can browse the [type](lib/types.md) and [functions](lib/funct
 
 ## Acknowledgements
 
-EvoLP was initially created as a toolbox for internal use by PhD students of [NTNU's Open AI Lab](https://www.ntnu.edu/ailab/ai-lab), and whose funding is provided by [Project no. 311284](https://prosjektbanken.forskningsradet.no/en/project/FORISS/311284) by [The Research Council of Norway](https://www.forskningsradet.no/).
+EvoLP started as a toolbox for internal use by PhD students of [NTNU's Open AI Lab](https://www.ntnu.edu/ailab/ai-lab), and whose funding is provided by [Project no. 311284](https://prosjektbanken.forskningsradet.no/en/project/FORISS/311284) by [The Research Council of Norway](https://www.forskningsradet.no/).
 
 ## License
 
