@@ -104,13 +104,15 @@ end
 # Normally only for continuous domains
 
 """
-A single particle in the swarm, with a position `x`, a velocity `v` and the best position
-it has encountered `x_best`.
+A single particle in the swarm, with a position `x`, a velocity `v`, the best position it
+has encountered `x_best` and its evaluations `y` and `y_best`
 """
 mutable struct Particle
     x
     v
+    y
     x_best
+    y_best
 end
 
 """
@@ -137,7 +139,8 @@ function unif_rand_particle_pop(n, lb, ub; rng=Random.GLOBAL_RNG)
 
 	for i in 1:n
 		x_pos = rand(rng, d) .* (ub - lb)
-		push!(pop, Particle(x_pos, fill(0, d), x_pos))
+        y = Inf
+		push!(pop, Particle(x_pos, fill(0, d), y, x_pos, y))
 	end
 
 	return pop
@@ -168,7 +171,8 @@ function normal_rand_particle_pop(n, μ, Σ; rng=Random.GLOBAL_RNG)
 
 	for i in 1:n
 		x_pos = rand(rng, D)
-		push!(pop, Particle(x_pos, zeros(size(μ)), x_pos))
+        y = Inf
+		push!(pop, Particle(x_pos, zeros(size(μ)), y, x_pos, y))
 	end
 
 	return pop
