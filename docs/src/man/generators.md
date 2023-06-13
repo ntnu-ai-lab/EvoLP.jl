@@ -24,6 +24,11 @@ unif_rand_vector_pop
 
 For particle-swarm optimisation.
 
+!!! compat "EvoLP 1.1"
+    `Particle` objects in EvoLP pre-v.1.1 had no fitness placeholders.
+    If you use a custom `Particle` generator, you might want to update it.
+    For built-in generators and algorithms, the update would not be noticeable.
+
 ```@docs
 Particle
 ```
