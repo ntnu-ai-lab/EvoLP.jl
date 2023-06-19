@@ -6,7 +6,7 @@
 <div align="center">
 
 [![Stable](https://img.shields.io/badge/docs-latest-blue.svg)](https://ntnu-ai-lab.github.io/EvoLP.jl/)
-[![Julia version](https://img.shields.io/badge/Julia-1.8+-blueviolet.svg?logo=julia)](https://julialang.org)
+[![Julia version](https://img.shields.io/badge/Julia-1.7+-blueviolet.svg?logo=julia)](https://julialang.org)
 [![GitHub](https://img.shields.io/github/license/ntnu-ai-lab/EvoLP)](https://github.com/ntnu-ai-lab/EvoLP/blob/main/LICENSE)
 
 [![Code Style: Blue](https://img.shields.io/badge/code%20style-blue-blue.svg)](https://github.com/invenia/BlueStyle)

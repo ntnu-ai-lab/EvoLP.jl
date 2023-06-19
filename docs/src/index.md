@@ -3,7 +3,7 @@
 Welcome to the documentation for EvoLP!
 
 [![GitHub source](https://img.shields.io/badge/GitHub-source-green.svg?logo=github)](https://github.com/ntnu-ai-lab/EvoLP.jl)
-[![Julia version](https://img.shields.io/badge/Julia-1.8+-blueviolet.svg?logo=julia)](https://julialang.org)
+[![Julia version](https://img.shields.io/badge/Julia-1.7+-blueviolet.svg?logo=julia)](https://julialang.org)
 [![Code Style: Blue](https://img.shields.io/badge/code%20style-blue-blue.svg)](https://github.com/invenia/BlueStyle)
 [![ColPrac: Contributor's Guide on Collaborative Practices for Community Packages](https://img.shields.io/badge/ColPrac-Contributor's%20Guide-blueviolet)](https://github.com/SciML/ColPrac)
 

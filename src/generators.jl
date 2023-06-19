@@ -104,13 +104,15 @@ end
 # Normally only for continuous domains
 
 """
-A single particle in the swarm, with a position `x`, a velocity `v` and the best position
-it has encountered `x_best`.
+A single particle in the swarm, with a position `x`, a velocity `v`, the best position it
+has encountered `x_best` and its evaluations `y` and `y_best`
 """
 mutable struct Particle
     x
     v
+    y
     x_best
+    y_best
 end
 
 """
@@ -126,9 +128,9 @@ Both `lb` and `ub` must be arrays of the same dimensions.
 ```julia
 julia> unif_rand_particle_pop(3, [-1, -1], [1, 1])
 3-element Vector{Particle}:
- Particle([0.012771979849810489, 1.5375945897550218], [0, 0], [0.012771979849810489, 1.5375945897550218])
- Particle([1.4615231729898166, 0.7340438556735969], [0, 0], [1.4615231729898166, 0.7340438556735969])
- Particle([0.26586910036555356, 0.22012991705951324], [0, 0], [0.26586910036555356, 0.22012991705951324])
+ Particle([1.0823301388655755, 0.1544036055233653], [0, 0], Inf, [1.0823301388655755, 0.1544036055233653], Inf)
+ Particle([1.0718059584439532, 1.5793257162200343], [0, 0], Inf, [1.0718059584439532, 1.5793257162200343], Inf)
+ Particle([1.732268523018161, 0.32172551959160556], [0, 0], Inf, [1.732268523018161, 0.32172551959160556], Inf)
 ```
 """
 function unif_rand_particle_pop(n, lb, ub; rng=Random.GLOBAL_RNG)
@@ -137,7 +139,8 @@ function unif_rand_particle_pop(n, lb, ub; rng=Random.GLOBAL_RNG)
 
 	for i in 1:n
 		x_pos = rand(rng, d) .* (ub - lb)
-		push!(pop, Particle(x_pos, fill(0, d), x_pos))
+        y = Inf
+		push!(pop, Particle(x_pos, fill(0, d), y, x_pos, y))
 	end
 
 	return pop
@@ -155,11 +158,11 @@ matrix of covariances.
 # Examples
 
 ```julia
-julia> normal_rand_particle_pop(3, [-1, -1], [1 0; 0 1])
+julia> normal_rand_particle_pop(3, [0, 0], [1 0; 0 1])
 3-element Vector{Particle}:
- Particle([-2.3026589618390214, 0.25907687184121864], [0.0, 0.0], [-2.3026589618390214, 0.25907687184121864])
- Particle([-0.5118786279984703, -0.5948648935657292], [0.0, 0.0], [-0.5118786279984703, -0.5948648935657292])
- Particle([-1.3230210847731094, -1.6234307114658497], [0.0, 0.0], [-1.3230210847731094, -1.6234307114658497])
+ Particle([-0.6025996585348097, -1.0055548956861133], [0.0, 0.0], Inf, [-0.6025996585348097, -1.0055548956861133], Inf)
+ Particle([-0.7562454555135321, 1.9490439959687778], [0.0, 0.0], Inf, [-0.7562454555135321, 1.9490439959687778], Inf)
+ Particle([0.5687241357408321, -0.7406267072113427], [0.0, 0.0], Inf, [0.5687241357408321, -0.7406267072113427], Inf)
 ```
 """
 function normal_rand_particle_pop(n, μ, Σ; rng=Random.GLOBAL_RNG)
@@ -168,7 +171,8 @@ function normal_rand_particle_pop(n, μ, Σ; rng=Random.GLOBAL_RNG)
 
 	for i in 1:n
 		x_pos = rand(rng, D)
-		push!(pop, Particle(x_pos, zeros(size(μ)), x_pos))
+        y = Inf
+		push!(pop, Particle(x_pos, zeros(size(μ)), y, x_pos, y))
 	end
 
 	return pop

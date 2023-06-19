@@ -1,12 +1,12 @@
 """
     GA(f, pop, k_max, S, C, M)
-    GA(logbook::Logbook, f, pop, k_max, S, C, M)
+    GA(logbook::Logbook, f, population, k_max, S, C, M)
 
 Generational Genetic Algorithm.
 
 ## Arguments
 - `f::Function`: objective function to **minimise**.
-- `pop::AbstractVector`: population—a list of vector individuals.
+- `population::AbstractVector`: a list of vector individuals.
 - `k_max::Integer`: number of iterations.
 - `S::SelectionMethod`: one of the available [`SelectionMethod`](@ref).
 - `C::CrossoverMethod`: one of the available [`CrossoverMethod`](@ref).
@@ -16,23 +16,25 @@ Returns a [`Result`](@ref).
 """
 function GA(
     f::Function,
-    pop::AbstractVector,
+    population::AbstractVector,
     k_max::Integer,
     S::SelectionMethod,
     C::CrossoverMethod,
     M::MutationMethod
 )
-    n = length(pop)
+    n = length(population)
+    fitnesses = []
 	for _ in 1:k_max
-		parents = select(S, f.(pop)) # O(k_max * n)
-		offspring = [cross(C, pop[p[1]], pop[p[2]]) for p in parents]
-		pop .= mutate.(Ref(M), offspring)  # whole population is replaced
+        fitnesses = f.(population)  # O(k_max * n)
+		parents = select(S, fitnesses)
+		offspring = [cross(C, population[p[1]], population[p[2]]) for p in parents]
+		population .= mutate.(Ref(M), offspring)  # whole population is replaced
 	end
 
-    # x, fx
-	best, best_i = findmin(f, pop) # O(n)
-    n_evals = k_max * n + n
-    result = Result(best, pop[best_i], pop, k_max, n_evals)
+    best_i = argmin(fitnesses)
+    best = population[best_i]
+    n_evals = k_max * n
+    result = Result(fitnesses[best_i], best, population, k_max, n_evals)
 	return result
 end
 
@@ -40,26 +42,26 @@ end
 function GA(
     logbook::Logbook,
     f::Function,
-    pop::AbstractVector,
+    population::AbstractVector,
     k_max::Integer,
     S::SelectionMethod,
     C::CrossoverMethod,
     M::MutationMethod
 )
-    n = length(pop)
+    n = length(population)
+    fitnesses = []
 	for _ in 1:k_max
-		parents = select(S, f.(pop)) # O(k_max * n)
-		offspring = [cross(C, pop[p[1]], pop[p[2]]) for p in parents]
-		pop .= mutate.(Ref(M), offspring) # whole population is replaced
-
-        fitnesses = f.(pop) # O(k_max * n)
+        fitnesses = f.(population)  # O(k_max * n)
+		parents = select(S, fitnesses)
+		offspring = [cross(C, population[p[1]], population[p[2]]) for p in parents]
+		population .= mutate.(Ref(M), offspring)  # whole population is replaced
 
         compute!(logbook, fitnesses)
 	end
 
-    # x, fx
-	best, best_i = findmin(f, pop) # O(n)
-	n_evals = 2 * k_max * n + n
-    result = Result(best, pop[best_i], pop, k_max, n_evals)
+    best_i = argmin(fitnesses)
+    best = population[best_i]
+    n_evals = k_max * n
+    result = Result(fitnesses[best_i], best, population, k_max, n_evals)
 	return result
 end

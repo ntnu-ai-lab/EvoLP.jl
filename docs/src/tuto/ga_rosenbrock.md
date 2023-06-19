@@ -49,9 +49,9 @@ first(population, 3)
 
 ```text
 3-element Vector{Vector{Float64}}:
-    [-1.6427111696272696, 0.5882958618620507]
-    [-1.0327502018102739, -0.12553291195289634]
-    [0.16879891668759264, -0.41216354050954684]
+ [-0.25289759101653736, 1.0150132241600427]
+ [-0.9053394512418402, 0.6058801355483802]
+ [0.5784934203305488, -0.20665678122470943]
 ```
 
 In a GA, we have *selection*, *crossover* and *mutation*.
@@ -82,11 +82,11 @@ For mutation, we can use Gaussian noise:
 > Gaussian mutation with standard deviation `σ`, which should be a real number.
 
 ```julia
-M = GaussianMutation(0.5)
+M = GaussianMutation(0.05)
 ```
 
 ```text
-GaussianMutation(0.5)
+GaussianMutation(0.05)
 ```
 
 Now we can set up the [`Logbook`](@ref) to record statistics about our run:
@@ -109,8 +109,8 @@ And now we're ready to use the `GA` built-in algorithm:
 ```
 
 ```text
-GA(f::Function, pop, k_max, S, C, M)
-GA(logbook::Logbook, f::Function, pop, k_max, S, C, M)
+GA(f::Function, population, k_max, S, C, M)
+GA(logbook::Logbook, f::Function, population, k_max, S, C, M)
 ```
 
 > Generational Genetic Algorithm.
@@ -118,7 +118,7 @@ GA(logbook::Logbook, f::Function, pop, k_max, S, C, M)
 > **Arguments**
 >
   > * `f`: Objective function to minimise
-  > * `pop`: Population—a list of individuals.
+  > * `population`: a list of individuals.
   > * `k_max`: maximum iterations
   > * `S::SelectionMethod`: a selection method. See selection.
   > * `C::CrossoverMethod`: a crossover method. See crossover.
@@ -143,11 +143,11 @@ thelogger.records[end]
 ```
 
 ```text
-optimum(result) = 0.0015029528354023858
-optimizer(result) = [1.0367119356341026, 1.0803427525882299]
-f_calls(result) = 50050
+optimum(result) = 0.00015325530365919114
+optimizer(result) = [0.9295343671510049, 0.9158201966396184]
+f_calls(result) = 25000
 
-(mean_eval = 3.7839504926952294, max_f = 22.281919411164413, min_f = 0.0015029528354023858, median_f = 2.429775485243721)
+(mean_eval = 0.07544433008393486, max_f = 0.43255087263181813, min_f = 0.00015325530365919114, median_f = 0.0424343220731829)
 ```
 
 The records in the `Logbook` are `NamedTuples`. This makes it easier to export and analyse using [DataFrames](https://dataframes.juliadata.org/stable/), for example:
@@ -159,16 +159,16 @@ DataFrame(thelogger.records)
 
 ```text
 500×4 DataFrame
- Row │ mean_eval  max_f     min_f        median_f 
-     │ Float64    Float64   Float64      Float64  
-─────┼────────────────────────────────────────────
-   1 │   9.89648  134.066   0.149169      3.6715
-   2 │   5.73033   40.1663  0.134373      2.94368
-   3 │   4.65904   18.9003  0.181144      3.22389
-   4 │   4.34055   52.1745  0.0813748     2.14014
-   5 │   5.1239    42.4315  0.119411      2.83591
-   6 │   3.70733   37.285   0.0413168     2.17732
-   7 │   4.84669   66.9539  0.00445092    2.52908
-   8 │   3.87748   26.8901  0.345194      1.75084
-  ⋮  │     ⋮         ⋮           ⋮          ⋮
+ Row │ mean_eval   max_f       min_f        median_f  
+     │ Float64     Float64     Float64      Float64   
+─────┼────────────────────────────────────────────────
+   1 │ 22.0251     406.9       0.447041     6.78992
+   2 │  3.61617     36.062     0.124031     1.96466
+   3 │  1.13189      3.18343   0.127583     1.07601
+   4 │  0.781777     1.6644    0.309661     0.711803
+   5 │  0.593735     0.935043  0.294026     0.588684
+   6 │  0.527621     0.766033  0.315916     0.518089
+   7 │  0.522381     0.745129  0.37027      0.527158
+   8 │  0.493569     0.807639  0.275269     0.498038
+  ⋮ │     ⋮           ⋮            ⋮           ⋮
 ```
