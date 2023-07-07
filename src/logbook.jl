@@ -48,9 +48,11 @@ end
 
 """
     compute!(logger::Logbook, data::AbstractVector)
+    compute!(notebooks::Vector{Logbook}, data::Vector{AbstractVector})
 
-Computes statistics for `logger` using `data`, which is usually a vector of fitnesses.
-All calculations are done in place, so `logger` will be updated.
+Computes statistics for `logger` (or a vector of `logger`s) using `data`,
+which is usually a vector of fitnesses.
+All calculations are done in place, so the `logger` records will be updated.
 """
 function compute!(logger::Logbook, data::AbstractVector)
     fnames = [s for s in keys(logger.S)]
@@ -60,4 +62,14 @@ function compute!(logger::Logbook, data::AbstractVector)
 	push!(logger.records, record)
 
     return nothing
+end
+
+function compute!(notebooks::Vector{Logbook}, data::AbstractVector)
+    for (logger, y) in zip(notebooks,data)
+        fnames = [s for s in keys(logger.S)]
+        callables = [f(y) for f in values(logger.S)]
+
+	    record = namedtuple(fnames, callables)
+	    push!(logger.records, record)
+    end
 end
