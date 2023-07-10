@@ -52,3 +52,6 @@ This makes it easier to export as a [DataFrame](https://github.com/JuliaData/Dat
 ```@docs
 compute!
 ```
+
+The `compute!` function can be called either by providing a logbook to update, or a vector of `Logbook`s.
+This is useful if what you want to calculate depends on different data sources (e.g. some statistics are computed from fitness while some others use the population, etc.)

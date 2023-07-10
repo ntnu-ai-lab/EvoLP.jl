@@ -39,7 +39,7 @@ function GA(
 	return result
 end
 
-
+# Logbook version
 function GA(
     logbook::Logbook,
     f::Function,
@@ -67,7 +67,7 @@ function GA(
 	return result
 end
 
-
+# 2-logbook version
 function GA(
     notebooks::Vector{Logbook},
     f::Function,

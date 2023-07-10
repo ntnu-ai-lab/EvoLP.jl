@@ -31,6 +31,7 @@ function oneplusone(f::Function, ind::AbstractVector, k_max::Integer, M::Mutatio
 	return result
 end
 
+# Logbook version
 function oneplusone(
     logger::Logbook, f::Function, ind::AbstractVector, k_max::Integer, M::MutationMethod
 )
