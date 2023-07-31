@@ -62,6 +62,7 @@ function PSO(
     return result
 end
 
+# Logbook version
 function PSO(
     logger::Logbook, f::Function, population::Vector{Particle}, k_max::Integer;
     w=1, c1=1, c2=1
