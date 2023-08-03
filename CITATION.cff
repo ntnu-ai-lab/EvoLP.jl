@@ -1,44 +1,43 @@
 cff-version: 1.2.0
-title: EvoLP.jl
-message: 'If you use this software in your work, please cite both the article from preferred-citation and the software itself.'
-type: software
+message: "If you use this software in your work, please cite both the article from preferred-citation and the software itself."
 authors:
-  - family-names: 'Sánchez-Díaz'
-    given-names: 'Xavier F. C.'
-    orcid: 'https://orcid.org/0000-0003-2271-439X'
-    affiliation: Norwegian University of Science and Technology
-repository-code: 'https://github.com/ntnu-ai-lab/EvoLP.jl'
-license: MIT
+  - family-names: "Sánchez-Díaz"
+    given-names: "Xavier F. C."
+    orcid: "https://orcid.org/0000-0003-2271-439X"
+    affiliation: "Norwegian University of Science and Technology"
+title: "EvoLP.jl"
 version: 1.2.0
-date-released: '2023-07-31'
+license: MIT
+date-released: 2023-07-31
+url: "https://github.com/ntnu-ai-lab/EvoLP.jl"
 preferred-citation:
   type: conference-paper
   authors:
-    - family-names: 'Sánchez-Díaz'
-      given-names: 'Xavier F. C.'
-      orcid: 'https://orcid.org/0000-0003-2271-439X'
-      affiliation: 'Norwegian University of Science and Technology'
-    - family-names: 'Mengshoel'
-      given-names: 'Ole Jakob'
-      orcid: 'https://orcid.org/0000-0003-2666-5310'
-      affiliation: 'Norwegian University of Science and Technology'
-  title: 'EvoLP.jl: A Playground for Evolutionary Computation in Julia'
-  collection-title: 'Proceedings of the 5th Symposium of the Norwegian AI Society'
+    - family-names: "Sánchez-Díaz"
+      given-names: "Xavier F. C."
+      orcid: "https://orcid.org/0000-0003-2271-439X"
+      affiliation: "Norwegian University of Science and Technology"
+    - family-names: "Mengshoel"
+      given-names: "Ole Jakob"
+      orcid: "https://orcid.org/0000-0003-2666-5310"
+      affiliation: "Norwegian University of Science and Technology"
+  title: "EvoLP.jl: A Playground for Evolutionary Computation in Julia"
+  collection-title: "Proceedings of the 5th Symposium of the Norwegian AI Society"
   editors:
-    - family-names: 'Galimullin'
-      given-names: 'Rustam'
-    - family-names: 'Touileb'
-      given-names: 'Samia'
+    - family-names: "Galimullin"
+      given-names: "Rustam"
+    - family-names: "Touileb"
+      given-names: "Samia"
   month: 6
   year: 2023
   volume: 3431
-  issn: '1613-0073'
+  issn: 1613-0073
   publisher:
-    name: 'CEUR Workshop Proceedings'
+    name: "CEUR Workshop Proceedings"
   conference:
-    name: 'NAIS 2023: Symposium of the Norwegian AI Society 2023'
-    date-start: '2023-06-14'
-    date-end: '2023-06-15'
-    city: 'Bergen'
-    country: 'NO'
-  url: 'https://ceur-ws.org/Vol-3431/'
+    name: "NAIS 2023: Symposium of the Norwegian AI Society 2023"
+    date-start: 2023-06-14
+    date-end: 2023-06-15
+    city: "Bergen"
+    country: "NO"
+  url: "https://ceur-ws.org/Vol-3431/"
