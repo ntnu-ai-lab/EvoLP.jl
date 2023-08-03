@@ -30,6 +30,25 @@ Additionally, you can extend EvoLP to create [new operators](man/extending.md).
 
 Alternatively, you can browse the [type](lib/types.md) and [functions](lib/functions.md) indices to view all available functionality.
 
+## Citing EvoLP.jl
+
+If you find EvoLP.jl useful in your work or research, we kindly request that you cite the following [paper](https://ceur-ws.org/Vol-3431/paper7.pdf):
+
+```bibtex
+@inproceedings{Sanchez-DiazEvoLP2023a,
+  address = {Bergen, NO},
+  author = {Sánchez-Díaz, Xavier F. C. and Mengshoel, Ole Jakob},
+  booktitle = {Proceedings of the 5th Symposium of the Norwegian AI Society},
+  editor = {Galimullin, Rustam and Touileb, Samia},
+  month = jun,
+  publisher = {CEUR Workshop Proceedings},
+  series = {NAIS 2023: Symposium of the Norwegian AI Society 2023},
+  title = {{EvoLP.jl: A Playground for Evolutionary Computation in Julia}},
+  url = {https://ceur-ws.org/Vol-3431/},
+  year = {2023}
+}
+```
+
 ## Acknowledgements
 
 EvoLP started as a toolbox for internal use by PhD students of [NTNU's Open AI Lab](https://www.ntnu.edu/ailab/ai-lab), and whose funding is provided by [Project no. 311284](https://prosjektbanken.forskningsradet.no/en/project/FORISS/311284) by [The Research Council of Norway](https://www.forskningsradet.no/).
