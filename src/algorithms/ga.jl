@@ -36,7 +36,7 @@ function GA(
     # NOTE: Is pop f32?
     fitnesses = Vector{Float32}(undef, n)
 
-    @inbounds for _ in 1:k_max
+    @inbounds runtime = @elpased for _ in 1:k_max
         fitnesses = f.(population)  # O(k_max * n)
         parents = select(S, fitnesses)
         offspring = [cross(C, population[p[1]], population[p[2]]) for p in parents]

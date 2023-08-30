@@ -3,7 +3,7 @@ using Documenter
 using Test
 
 
-const testfiles =(
+const testfiles = (
     "generators.jl",
     "crossover.jl",
     "mutation.jl",
@@ -13,6 +13,7 @@ const testfiles =(
     @testset "$file" for file in testfiles
         include(file)
     end
+
     @testset "Examples in docs" begin
         doctest(EvoLP)
     end
