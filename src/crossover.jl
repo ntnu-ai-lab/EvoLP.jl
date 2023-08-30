@@ -23,8 +23,8 @@ Single point crossover between parents `a` and `b`, at a
 random point in the chromosome.
 """
 function cross(::SinglePointCrossover, a, b; rng=Random.GLOBAL_RNG)
-	i = rand(rng, 1:length(a))
-	return vcat(a[1:i], b[i+1:end])
+    i = rand(rng, 1:length(a))
+    return vcat(a[1:i], b[i+1:end])
 end
 
 """
@@ -39,14 +39,13 @@ Two point crossover between parents `a` and `b`, at two
 random points in the chromosome.
 """
 function cross(::TwoPointCrossover, a, b; rng=Random.GLOBAL_RNG)
-	n = length(a)
-	i, j = rand(rng, 1:n, 2)
+    i, j = rand(rng, 1:length(a), 2)
 
-	if i > j
-		(i, j) = (j, i)
-	end
+    if i > j
+        i, j = j, i
+    end
 
-	return vcat(a[1:i], b[i+1:j], a[j+1:n])
+    return vcat(a[1:i], b[i+1:j], a[j+1:end])
 end
 
 """
@@ -61,15 +60,17 @@ Uniform crossover between parents `a` and `b`. Each gene
 of the chromosome is randomly selected from one of the parents.
 """
 function cross(::UniformCrossover, a, b; rng=Random.GLOBAL_RNG)
-	child = copy(a)
+    child = copy(a)
 
-	for i in 1:length(a)
-		if rand(rng) < 0.5
-			child[i] = b[i]
-		end
-	end
+    @inbounds for i in 1:length(a)
+        if rand(rng) < 0.5
+            child[i] = b[i]
+        end
+    end
 
-	return child
+    # TODO: Test against  sped up version
+
+    return child
 end
 
 """
@@ -86,7 +87,7 @@ Linear Interpolation crossover between parents `a` and `b`.
 The resulting individual is the addition of a scaled version of
 each of the parents, using `C.λ` as a control parameter.
 """
-cross(C::InterpolationCrossover, a, b) = (1 - C.λ) * a + C.λ * b
+@inline cross(C::InterpolationCrossover, a, b) = (1 - C.λ) * a + C.λ * b
 
 # For permutation vector individuals
 
@@ -110,10 +111,7 @@ function cross(::OrderOneCrossover, a, b; rng=Random.GLOBAL_RNG)
     rem_vals = vcat(a[begin:indices[1]-1], a[indices[2]+1:end])
 
     # Using the same order as in `b`, copy those values in rem_vals
-    r = []
-    for v in vcat(b[indices[2]+1:end], b[begin:indices[2]])
-        v in rem_vals ? push!(r, v) : continue
-    end
+    r = [v for v in vcat(b[indices[2]+1:end], b[begin:indices[2]]) if v in rem_vals]
 
     # Break down into slices
     s2 = r[begin:length(a)-indices[2]]

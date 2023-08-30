@@ -21,9 +21,7 @@ julia> binary_vector_pop(2, 5)
  [0, 1, 0, 0, 0]
 ```
 """
-function binary_vector_pop(n, l; rng=Random.GLOBAL_RNG)
-	return [bitrand(rng, l) for _ in 1:n]
-end
+@inline binary_vector_pop(n, l; rng=Random.GLOBAL_RNG) = [bitrand(rng, l) for _ in 1:n]
 
 """
     permutation_vector_pop(n, d, pool; replacement=false, rng=Random.GLOBAL_RNG)
@@ -48,8 +46,7 @@ julia> permutation_vector_pop(2, 5, ["a", "b", "c", "d", "e"]; replacement=false
 ```
 """
 function permutation_vector_pop(n, d, pool; replacement=false, rng=Random.GLOBAL_RNG)
-    thepop = [sample(rng, pool, d, replace=replacement, ordered=false) for i in 1:n]
-    return thepop
+    return [sample(rng, pool, d, replace=replacement, ordered=false) for _ in 1:n]
 end
 
 ## Continuous domains
@@ -72,8 +69,8 @@ julia> unif_rand_vector_pop(3, [-1, -1], [1, 1])
 ```
 """
 function unif_rand_vector_pop(n, lb, ub; rng=Random.GLOBAL_RNG)
-	d = length(lb)
-	return [lb + rand(rng, d) .* (ub - lb) for _ in 1:n]
+    d = length(lb)
+    return [lb + rand(rng, d) .* (ub - lb) for _ in 1:n]
 end
 
 """
@@ -96,8 +93,8 @@ julia> normal_rand_vector_pop(3, [0, 0], [1 0; 0 1])
 ```
 """
 function normal_rand_vector_pop(n, μ, Σ; rng=Random.GLOBAL_RNG)
-	D = MvNormal(μ, Σ)
-	return [rand(rng, D) for _ in 1:n]
+    D = MvNormal(μ, Σ)
+    return [rand(rng, D) for _ in 1:n]
 end
 
 # Particles
@@ -134,16 +131,16 @@ julia> unif_rand_particle_pop(3, [-1, -1], [1, 1])
 ```
 """
 function unif_rand_particle_pop(n, lb, ub; rng=Random.GLOBAL_RNG)
-	d = length(lb)
-	pop = Particle[]
+    d = length(lb)
+    pop = Vector{Particle}(undef, n)
+    y = Inf
 
-	for i in 1:n
-		x_pos = rand(rng, d) .* (ub - lb)
-        y = Inf
-		push!(pop, Particle(x_pos, fill(0, d), y, x_pos, y))
-	end
+    @inbounds for i in 1:n
+        x_pos = rand(rng, d) .* (ub - lb)
+        pop[i] = Particle(x_pos, fill(0, d), y, x_pos, y)
+    end
 
-	return pop
+    return pop
 end
 
 """
@@ -166,14 +163,15 @@ julia> normal_rand_particle_pop(3, [0, 0], [1 0; 0 1])
 ```
 """
 function normal_rand_particle_pop(n, μ, Σ; rng=Random.GLOBAL_RNG)
-	D = MvNormal(μ, Σ)
-	pop = Particle[]
+    # TODO: Add y as optional parameter but default to Inf?
+    D = MvNormal(μ, Σ)
+    y = Inf
+    pop = Vector{Particle}(undef, n)
 
-	for i in 1:n
-		x_pos = rand(rng, D)
-        y = Inf
-		push!(pop, Particle(x_pos, zeros(size(μ)), y, x_pos, y))
-	end
+    @inbounds for i in 1:n
+        x_pos = rand(rng, D)
+        pop[i] = Particle(x_pos, zeros(size(μ)), y, x_pos, y)
+    end
 
-	return pop
+    return pop
 end

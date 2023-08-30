@@ -101,7 +101,7 @@ function PSO(
 
     best_i = argmin([P.y_best for P in population])
     best = population[best_i]
-    n_evals = length(population) + k_max * length(population)
+    n_evals = (1 + k_max) * length(population)
 
     return Result(best.y_best, best.x_best, population, k_max, n_evals)
 end

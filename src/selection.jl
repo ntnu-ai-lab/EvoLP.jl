@@ -25,6 +25,7 @@ Tournament parent selection with tournament size `k`.
 struct TournamentSelectionSteady <: SelectionMethod
     k
 end
+
 """
 Tournament parent selection with tournament size `k`.
 """
@@ -63,8 +64,8 @@ struct RankBasedSelectionGenerational <: SelectionMethod end
 Select two random parents out from the top `t.k` in the population.
 """
 function select(t::TruncationSelectionSteady, y; rng=Random.GLOBAL_RNG)
-	p = sortperm(y)
-	return p[rand(rng, 1:t.k, 2)]
+    p = sortperm(y)
+    return p[rand(rng, 1:t.k, 2)]
 end
 
 """
@@ -73,12 +74,12 @@ end
 Select two parents which are the winners from two random tournaments of size `t.k`.
 """
 function select(t::TournamentSelectionSteady, y; rng=Random.GLOBAL_RNG)
-	getparent() = begin
-		p = randperm(rng, length(y))
-		p[argmin(y[p[1:t.k]])]
-	end
+    getparent() = begin
+        p = randperm(rng, length(y))
+        p[argmin(y[p[1:t.k]])]
+    end
 
-	return [getparent(), getparent()]
+    return [getparent(), getparent()]
 end
 
 """
@@ -87,9 +88,9 @@ end
 Select two random parents with probability proportional to their fitness.
 """
 function select(::RouletteWheelSelectionSteady, y; rng=Random.GLOBAL_RNG)
-	y = maximum(y) .- y
-	cat = Categorical(normalize(y, 1))
-	return rand(rng, cat, 2)
+    y = maximum(y) .- y
+    cat = Categorical(normalize(y, 1))
+    return rand(rng, cat, 2)
 end
 
 """
@@ -98,9 +99,9 @@ end
 Select two random parents with probability proportional to their ranks.
 """
 function select(::RankBasedSelectionSteady, y; rng=Random.GLOBAL_RNG)
-	ranks = ordinalrank(y, rev = true)
-	cat = Categorical(normalize(ranks, 1))
-	return rand(rng, cat, 2)
+    ranks = ordinalrank(y, rev=true)
+    cat = Categorical(normalize(ranks, 1))
+    return rand(rng, cat, 2)
 end
 
 # For generational GAs
@@ -117,8 +118,8 @@ end
 Select two random parents (from the top `t.k`) in the population for each fitness in `y`.
 """
 function select(t::TruncationSelectionGenerational, y; rng=Random.GLOBAL_RNG)
-	p = sortperm(y)
-	return [p[rand(rng, 1:t.k, 2)] for _ in y]
+    p = sortperm(y)
+    return [p[rand(rng, 1:t.k, 2)] for _ in y]
 end
 
 """
@@ -128,12 +129,12 @@ Select two parents which are the winners from two random tournaments of size `t.
 fitness in `y`.
 """
 function select(t::TournamentSelectionGenerational, y; rng=Random.GLOBAL_RNG)
-	getparent() = begin
-		p = randperm(rng, length(y))
-		p[argmin(y[p[1:t.k]])]
-	end
+    getparent() = begin
+        p = randperm(rng, length(y))
+        p[argmin(y[p[1:t.k]])]
+    end
 
-	return [[getparent(), getparent()] for _ in y]
+    return [[getparent(), getparent()] for _ in y]
 end
 
 """
@@ -143,9 +144,9 @@ Select two random parents with probability proportional to their fitness, for ea
 in `y`.
 """
 function select(::RouletteWheelSelectionGenerational, y; rng=Random.GLOBAL_RNG)
-	y = maximum(y) .- y
-	cat = Categorical(normalize(y, 1))
-	return [rand(rng, cat, 2) for _ in y]
+    y = maximum(y) .- y
+    cat = Categorical(normalize(y, 1))
+    return [rand(rng, cat, 2) for _ in y]
 end
 
 """
@@ -155,7 +156,7 @@ Select two random parents with probability proportional to their ranks, for each
 in `y`.
 """
 function select(::RankBasedSelectionGenerational, y; rng=Random.GLOBAL_RNG)
-	ranks = ordinalrank(y, rev = true)
-	cat = Categorical(normalize(ranks, 1))
-	return [rand(rng, cat, 2) for _ in y]
+    ranks = ordinalrank(y, rev=true)
+    cat = Categorical(normalize(ranks, 1))
+    return [rand(rng, cat, 2) for _ in y]
 end
