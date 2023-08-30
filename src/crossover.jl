@@ -23,8 +23,8 @@ Single point crossover between parents `a` and `b`, at a
 random point in the chromosome.
 """
 function cross(::SinglePointCrossover, a, b; rng=Random.GLOBAL_RNG)
-    i = rand(rng, 1:length(a))
-    return vcat(a[1:i], b[i+1:end])
+    i = rand(rng, eachindex(a))
+    return vcat(a[begin:i], b[i+1:end])
 end
 
 """
@@ -39,13 +39,13 @@ Two point crossover between parents `a` and `b`, at two
 random points in the chromosome.
 """
 function cross(::TwoPointCrossover, a, b; rng=Random.GLOBAL_RNG)
-    i, j = rand(rng, 1:length(a), 2)
+    i, j = rand(rng, eachindex(a), 2)
 
     if i > j
         i, j = j, i
     end
 
-    return vcat(a[1:i], b[i+1:j], a[j+1:end])
+    return vcat(a[begin:i], b[i+1:j], a[j+1:end])
 end
 
 """
@@ -62,13 +62,9 @@ of the chromosome is randomly selected from one of the parents.
 function cross(::UniformCrossover, a, b; rng=Random.GLOBAL_RNG)
     child = copy(a)
 
-    @inbounds for i in 1:length(a)
-        if rand(rng) < 0.5
-            child[i] = b[i]
-        end
+    @inbounds for i in eachindex(a)
+        child[i] = rand(rng) < 0.5 ? b[i] : continue
     end
-
-    # TODO: Test against  sped up version
 
     return child
 end
@@ -104,6 +100,7 @@ A substring from `a` is copied directly to the offspring, and the
 remaining values are copied in the order they appear in `b`.
 """
 function cross(::OrderOneCrossover, a, b; rng=Random.GLOBAL_RNG)
+    # NOTE: Slow
     indices = sample(rng, 2:length(a)-1, 2, replace=false, ordered=true)
     # Selected part from `a`
     chosen = a[indices[1]:indices[2]]

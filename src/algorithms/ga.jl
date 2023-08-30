@@ -15,13 +15,6 @@ Generational Genetic Algorithm.
 
 Returns a [`Result`](@ref).
 """
-macro repeat(start, stop, body)
-    for _ in start:stop
-        quote
-            nothing
-        end
-    end
-end
 
 function GA(
     f::Function,
@@ -36,7 +29,7 @@ function GA(
     # NOTE: Is pop f32?
     fitnesses = Vector{Float32}(undef, n)
 
-    @inbounds runtime = @elpased for _ in 1:k_max
+    @elapsed runtime = @inbounds for _ in 1:k_max
         fitnesses = f.(population)  # O(k_max * n)
         parents = select(S, fitnesses)
         offspring = [cross(C, population[p[1]], population[p[2]]) for p in parents]
@@ -47,7 +40,7 @@ function GA(
     best = population[best_i]
     n_evals = k_max * n
 
-    return Result(fitnesses[best_i], best, population, k_max, n_evals)
+    return Result(fitnesses[best_i], best, population, k_max, n_evals, runtime)
 end
 
 # Logbook version
@@ -64,7 +57,7 @@ function GA(
 
     fitnesses = Vector{Float32}(undef, n)
 
-    @inbounds for _ in 1:k_max
+    @elapsed runtime = @inbounds for _ in 1:k_max
         fitnesses = f.(population)  # O(k_max * n)
         parents = select(S, fitnesses)
         offspring = [cross(C, population[p[1]], population[p[2]]) for p in parents]
@@ -77,7 +70,7 @@ function GA(
     best = population[best_i]
     n_evals = k_max * n
 
-    return Result(fitnesses[best_i], best, population, k_max, n_evals)
+    return Result(fitnesses[best_i], best, population, k_max, n_evals, runtime)
 end
 
 # 2-logbook version
@@ -94,7 +87,7 @@ function GA(
 
     fitnesses = Vector{Float32}(undef, n)
 
-    @inbounds for _ in 1:k_max
+    @elapsed runtime = @inbounds for _ in 1:k_max
         fitnesses = f.(population)  # O(k_max * n)
         parents = select(S, fitnesses)
         offspring = [cross(C, population[p[1]], population[p[2]]) for p in parents]
@@ -107,6 +100,6 @@ function GA(
     best = population[best_i]
     n_evals = k_max * n
 
-    result = Result(fitnesses[best_i], best, population, k_max, n_evals)
+    result = Result(fitnesses[best_i], best, population, k_max, n_evals, runtime)
     return result
 end

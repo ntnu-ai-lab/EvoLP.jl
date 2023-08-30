@@ -21,7 +21,7 @@ julia> binary_vector_pop(2, 5)
  [0, 1, 0, 0, 0]
 ```
 """
-@inline binary_vector_pop(n, l; rng=Random.GLOBAL_RNG) = [bitrand(rng, l) for _ in 1:n]
+binary_vector_pop(n, l; rng=Random.GLOBAL_RNG) = [bitrand(rng, l) for _ in 1:n]
 
 """
     permutation_vector_pop(n, d, pool; replacement=false, rng=Random.GLOBAL_RNG)
@@ -46,7 +46,7 @@ julia> permutation_vector_pop(2, 5, ["a", "b", "c", "d", "e"]; replacement=false
 ```
 """
 function permutation_vector_pop(n, d, pool; replacement=false, rng=Random.GLOBAL_RNG)
-    return [sample(rng, pool, d, replace=replacement, ordered=false) for _ in 1:n]
+    [sample(rng, pool, d, replace=replacement, ordered=false) for _ in 1:n]
 end
 
 ## Continuous domains
@@ -70,7 +70,7 @@ julia> unif_rand_vector_pop(3, [-1, -1], [1, 1])
 """
 function unif_rand_vector_pop(n, lb, ub; rng=Random.GLOBAL_RNG)
     d = length(lb)
-    return [lb + rand(rng, d) .* (ub - lb) for _ in 1:n]
+    return [lb + rand(rng, d) .* (ub - lb), n]
 end
 
 """
@@ -135,11 +135,13 @@ function unif_rand_particle_pop(n, lb, ub; rng=Random.GLOBAL_RNG)
     pop = Vector{Particle}(undef, n)
     y = Inf
 
+    # TODO: Use another macro for inbounds repeat
     @inbounds for i in 1:n
         x_pos = rand(rng, d) .* (ub - lb)
         pop[i] = Particle(x_pos, fill(0, d), y, x_pos, y)
     end
 
+    @show length(pop)
     return pop
 end
 

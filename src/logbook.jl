@@ -61,7 +61,7 @@ function compute!(logger::Logbook, data::AbstractVector)
     record = namedtuple(fnames, callables)
     push!(logger.records, record)
 
-    #return nothing
+    return nothing
 end
 
 function compute!(notebooks::Vector{Logbook}, data::AbstractVector)

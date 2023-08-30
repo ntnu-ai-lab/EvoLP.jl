@@ -26,7 +26,7 @@ function oneplusone(f::Function, ind::AbstractVector, k_max::Integer, M::Mutatio
 
     n_evals = 2 * k_max
 
-    return Result(fx, ind, [ind], k_max, n_evals)
+    return Result(fx, ind, [ind], k_max, n_evals, 0.0)
 end
 
 # Logbook version
@@ -47,5 +47,5 @@ function oneplusone(
 
     n_evals = 2 * k_max
 
-    return Result(fx, ind, [ind], k_max, n_evals)
+    return Result(fx, ind, [ind], k_max, n_evals, 0.0)
 end
