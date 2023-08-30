@@ -23,9 +23,7 @@ end
 
 Randomly flips each bit with a probability `λ`.
 """
-function mutate(M::BitwiseMutation, ind; rng=Random.GLOBAL_RNG)
-	return [rand(rng) < M.λ ? !v : v for v in ind]
-end
+@inline mutate(M::BitwiseMutation, ind; rng=Random.GLOBAL_RNG) = [rand(rng) < M.λ ? !v : v for v in ind]
 
 # For continuous individuals
 """
@@ -41,9 +39,7 @@ end
 Randomly add Gaussian noise to the `ind` candidate solution, with a standard
 deviation of `σ`.
 """
-function mutate(M::GaussianMutation, ind; rng=Random.GLOBAL_RNG)
-	return ind + randn(rng, length(ind)) * M.σ
-end
+@inline mutate(M::GaussianMutation, ind; rng=Random.GLOBAL_RNG) = ind + randn(rng, length(ind)) * M.σ
 
 # For permutation individuals
 """
@@ -60,10 +56,9 @@ function mutate(::SwapMutation, ind; rng=Random.GLOBAL_RNG)
     indices = sample(rng, 1:length(ind), 2, replace=false)
     aux = ind[indices[1]]
     c = deepcopy(ind)
-    c[indices[1]] = c[indices[2]]
-    c[indices[2]] = aux
+    c[indices[1]], c[indices[2]] = c[indices[2]], aux
     return c
- end
+end
 
 """
 Insert mutation for permutation-based individuals.
@@ -76,10 +71,10 @@ struct InsertMutation <: MutationMethod end
 Randomly choose two positions `a` and `b` from `ind`,
 insert at `a`+1 the element at position `b``, and shift the rest of the elements.
 """
- function mutate(::InsertMutation, ind; rng=Random.GLOBAL_RNG)
+function mutate(::InsertMutation, ind; rng=Random.GLOBAL_RNG)
     indices = sample(rng, 1:length(ind), 2, replace=false, ordered=true)
     removed = splice!(ind, indices[2])
-    insert!(ind, indices[1]+1, removed)
+    insert!(ind, indices[1] + 1, removed)
     return ind
 end
 
@@ -117,7 +112,7 @@ function mutate(::InversionMutation, ind; rng=Random.GLOBAL_RNG)
     indices = sample(rng, 1:length(ind), 2, replace=false, ordered=true)
     c = deepcopy(ind)
     shift = c[indices[1]:indices[2]]
-    reverse!(shift)
-    c[indices[1]:indices[2]] = shift
+    c[indices[1]:indices[2]] = shift[end:-1:1]
+
     return c
 end

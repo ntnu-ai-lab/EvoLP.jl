@@ -11,7 +11,7 @@ struct Result
     population  # population at last state
     n_iters # pass the number of iterations
     n_evals  # number of individual evaluations
-    # runtime? # TODO
+    runtime
 end
 
 """
@@ -19,32 +19,39 @@ end
 
 Returns evaluation of solution found ``f(x^*)``.
 """
-optimum(res) = res.fxstar
+optimum(res::Result) = res.fxstar
 
 """
     optimizer(result)
 
 Returns solution found ``x^*``.
 """
-optimizer(res) = res.xstar
+optimizer(res::Result) = res.xstar
 
 """
-    iterations(res)
+    iterations(res::Result)
 
 Returns the number of iterations of a result.
 """
-iterations(res) = res.n_iters
+iterations(res::Result) = res.n_iters
 
 """
-    f_calls(res)
+    f_calls(res::Result)
 
 Returns number of function evaluation calls of a result.
 """
-f_calls(res) = res.n_evals
+f_calls(res::Result) = res.n_evals
 
 """
-    population(res)
+    population(res::Result)
 
 Returns the resulting population of the algorithm.
 """
-population(res) = res.population
+population(res::Result) = res.population
+
+"""
+    runtime(res::Result)
+
+Returns the resulting runtime of the algorithm.
+"""
+runtime(res::Result) = res.runtime
