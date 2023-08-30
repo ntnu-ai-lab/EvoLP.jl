@@ -35,11 +35,11 @@ function PSO(
         end
     end
 
-    for _ in 1:k_max
+    @inbounds for _ in 1:k_max
         for P in population
             r1, r2 = rand(d), rand(d)
             P.x += P.v
-            P.v = w*P.v + c1*r1 .* (P.x_best - P.x) + c2*r2 .* (x_best - P.x)
+            P.v = w * P.v + c1 * r1 .* (P.x_best - P.x) + c2 * r2 .* (x_best - P.x)
             P.y = f(P.x)  # O(k_max * pop)
 
             if P.y < y_best
@@ -56,10 +56,9 @@ function PSO(
 
     best_i = argmin([P.y_best for P in population])
     best = population[best_i]
-    n_evals = length(population) + k_max  * length(population)
+    n_evals = length(population) + k_max * length(population)
 
-    result = Result(best.y_best, best.x_best, population, k_max, n_evals)
-    return result
+    return Result(best.y_best, best.x_best, population, k_max, n_evals)
 end
 
 # Logbook version
@@ -80,11 +79,11 @@ function PSO(
         end
     end
 
-    for _ in 1:k_max
+    @inbounds for _ in 1:k_max
         for P in population
             r1, r2 = rand(d), rand(d)
             P.x += P.v
-            P.v = w*P.v + c1*r1 .* (P.x_best - P.x) + c2*r2 .* (x_best - P.x)
+            P.v = w * P.v + c1 * r1 .* (P.x_best - P.x) + c2 * r2 .* (x_best - P.x)
             P.y = f(P.x)  # O(k_max * pop)
 
             if P.y < y_best
@@ -102,8 +101,7 @@ function PSO(
 
     best_i = argmin([P.y_best for P in population])
     best = population[best_i]
-    n_evals = length(population) + k_max  * length(population)
+    n_evals = length(population) + k_max * length(population)
 
-    result = Result(best.y_best, best.x_best, population, k_max, n_evals)
-    return result
+    return Result(best.y_best, best.x_best, population, k_max, n_evals)
 end

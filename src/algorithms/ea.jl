@@ -15,40 +15,37 @@ Returns a [`Result`](@ref).
 """
 function oneplusone(f::Function, ind::AbstractVector, k_max::Integer, M::MutationMethod)
     fx = Inf  # works only on minimisation problems
-    for _ in 1:k_max
+    @inbounds for _ in 1:k_max
         c = mutate(M, ind)
-        fx = f(ind)
-        fc = f(c)
-        if fc <= fx  # O(2 * k_max)  # minimisation problem
+        fx, fc = f(c), f(ind)
+        if fc <= fx
             ind = c
             fx = fc
         end
-	end
+    end
 
     n_evals = 2 * k_max
-    result = Result(fx, ind, [ind], k_max, n_evals)
 
-	return result
+    return Result(fx, ind, [ind], k_max, n_evals)
 end
 
 # Logbook version
 function oneplusone(
     logger::Logbook, f::Function, ind::AbstractVector, k_max::Integer, M::MutationMethod
 )
-	fx = Inf  # works only on minimisation problems
-    for _ in 1:k_max
+    fx = Inf  # works only on minimisation problems
+    @inbounds for _ in 1:k_max
         c = mutate(M, ind)
-        fx = f(ind)
-        fc = f(c)
+        fx, fc = f(ind), f(c)
         if fc <= fx  # O(2 * k_max)  # minimisation problem
             ind = c
             fx = fc
         end
 
         compute!(logger, [fx])
-	end
-    n_evals = 2 * k_max
-    result = Result(fx, ind, [ind], k_max, n_evals)
+    end
 
-	return result
+    n_evals = 2 * k_max
+
+    return Result(fx, ind, [ind], k_max, n_evals)
 end

@@ -15,6 +15,14 @@ Generational Genetic Algorithm.
 
 Returns a [`Result`](@ref).
 """
+macro repeat(start, stop, body)
+    for _ in start:stop
+        quote
+            nothing
+        end
+    end
+end
+
 function GA(
     f::Function,
     population::AbstractVector,
@@ -24,19 +32,22 @@ function GA(
     M::MutationMethod
 )
     n = length(population)
-    fitnesses = []
-	for _ in 1:k_max
+
+    # NOTE: Is pop f32?
+    fitnesses = Vector{Float32}(undef, n)
+
+    @inbounds for _ in 1:k_max
         fitnesses = f.(population)  # O(k_max * n)
-		parents = select(S, fitnesses)
-		offspring = [cross(C, population[p[1]], population[p[2]]) for p in parents]
-		population .= mutate.(Ref(M), offspring)  # whole population is replaced
-	end
+        parents = select(S, fitnesses)
+        offspring = [cross(C, population[p[1]], population[p[2]]) for p in parents]
+        population .= mutate.(Ref(M), offspring)  # whole population is replaced
+    end
 
     best_i = argmin(fitnesses)
     best = population[best_i]
     n_evals = k_max * n
-    result = Result(fitnesses[best_i], best, population, k_max, n_evals)
-	return result
+
+    return Result(fitnesses[best_i], best, population, k_max, n_evals)
 end
 
 # Logbook version
@@ -50,21 +61,23 @@ function GA(
     M::MutationMethod
 )
     n = length(population)
-    fitnesses = []
-	for _ in 1:k_max
+
+    fitnesses = Vector{Float32}(undef, n)
+
+    @inbounds for _ in 1:k_max
         fitnesses = f.(population)  # O(k_max * n)
-		parents = select(S, fitnesses)
-		offspring = [cross(C, population[p[1]], population[p[2]]) for p in parents]
-		population .= mutate.(Ref(M), offspring)  # whole population is replaced
+        parents = select(S, fitnesses)
+        offspring = [cross(C, population[p[1]], population[p[2]]) for p in parents]
+        population .= mutate.(Ref(M), offspring)  # whole population is replaced
 
         compute!(logbook, fitnesses)
-	end
+    end
 
     best_i = argmin(fitnesses)
     best = population[best_i]
     n_evals = k_max * n
-    result = Result(fitnesses[best_i], best, population, k_max, n_evals)
-	return result
+
+    return Result(fitnesses[best_i], best, population, k_max, n_evals)
 end
 
 # 2-logbook version
@@ -78,19 +91,22 @@ function GA(
     M::MutationMethod
 )
     n = length(population)
-    fitnesses = []
-	for _ in 1:k_max
+
+    fitnesses = Vector{Float32}(undef, n)
+
+    @inbounds for _ in 1:k_max
         fitnesses = f.(population)  # O(k_max * n)
-		parents = select(S, fitnesses)
-		offspring = [cross(C, population[p[1]], population[p[2]]) for p in parents]
-		population .= mutate.(Ref(M), offspring)  # whole population is replaced
+        parents = select(S, fitnesses)
+        offspring = [cross(C, population[p[1]], population[p[2]]) for p in parents]
+        population .= mutate.(Ref(M), offspring)  # whole population is replaced
 
         compute!(notebooks, [fitnesses, population])
-	end
+    end
 
     best_i = argmin(fitnesses)
     best = population[best_i]
     n_evals = k_max * n
+
     result = Result(fitnesses[best_i], best, population, k_max, n_evals)
-	return result
+    return result
 end
