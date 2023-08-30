@@ -27,9 +27,10 @@ function GA(
     n = length(population)
 
     # NOTE: Is pop f32?
+    # TODO: create a timer macro
     fitnesses = Vector{Float32}(undef, n)
 
-    @elapsed runtime = @inbounds for _ in 1:k_max
+    runtime = @elapsed @inbounds for _ in 1:k_max
         fitnesses = f.(population)  # O(k_max * n)
         parents = select(S, fitnesses)
         offspring = [cross(C, population[p[1]], population[p[2]]) for p in parents]
@@ -57,7 +58,7 @@ function GA(
 
     fitnesses = Vector{Float32}(undef, n)
 
-    @elapsed runtime = @inbounds for _ in 1:k_max
+    runtime = @elapsed @inbounds for _ in 1:k_max
         fitnesses = f.(population)  # O(k_max * n)
         parents = select(S, fitnesses)
         offspring = [cross(C, population[p[1]], population[p[2]]) for p in parents]
@@ -87,7 +88,7 @@ function GA(
 
     fitnesses = Vector{Float32}(undef, n)
 
-    @elapsed runtime = @inbounds for _ in 1:k_max
+    runtime = @elapsed @inbounds for _ in 1:k_max
         fitnesses = f.(population)  # O(k_max * n)
         parents = select(S, fitnesses)
         offspring = [cross(C, population[p[1]], population[p[2]]) for p in parents]
@@ -100,6 +101,5 @@ function GA(
     best = population[best_i]
     n_evals = k_max * n
 
-    result = Result(fitnesses[best_i], best, population, k_max, n_evals, runtime)
-    return result
+    return Result(fitnesses[best_i], best, population, k_max, n_evals, runtime)
 end
