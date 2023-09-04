@@ -26,9 +26,7 @@ function GA(
 )
     n = length(population)
 
-    # NOTE: Is pop f32?
-    # TODO: create a timer macro
-    fitnesses = Vector{Float32}(undef, n)
+    fitnesses = AbstractVector{Float64}(undef, n)
 
     runtime = @elapsed @inbounds for _ in 1:k_max
         fitnesses = f.(population)  # O(k_max * n)
@@ -56,7 +54,7 @@ function GA(
 )
     n = length(population)
 
-    fitnesses = Vector{Float32}(undef, n)
+    fitnesses = Vector{Float64}(undef, n)
 
     runtime = @elapsed @inbounds for _ in 1:k_max
         fitnesses = f.(population)  # O(k_max * n)
@@ -86,7 +84,7 @@ function GA(
 )
     n = length(population)
 
-    fitnesses = Vector{Float32}(undef, n)
+    fitnesses = AbstractVector{AbstractFloat}(undef, n)
 
     runtime = @elapsed @inbounds for _ in 1:k_max
         fitnesses = f.(population)  # O(k_max * n)

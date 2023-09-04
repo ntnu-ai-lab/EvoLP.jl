@@ -62,8 +62,8 @@ of the chromosome is randomly selected from one of the parents.
 function cross(::UniformCrossover, a, b; rng=Random.GLOBAL_RNG)
     child = copy(a)
 
-    @inbounds for i in eachindex(a)
-        child[i] = rand(rng) < 0.5 ? b[i] : continue
+    for i = eachindex(a)
+        @inbounds child[i] = rand(rng) < 0.5 ? b[i] : continue
     end
 
     return child
@@ -83,7 +83,7 @@ Linear Interpolation crossover between parents `a` and `b`.
 The resulting individual is the addition of a scaled version of
 each of the parents, using `C.λ` as a control parameter.
 """
-@inline cross(C::InterpolationCrossover, a, b) = (1 - C.λ) * a + C.λ * b
+@inline cross(C::InterpolationCrossover, a, b) = @fastmath (1 - C.λ) * a + C.λ * b
 
 # For permutation vector individuals
 

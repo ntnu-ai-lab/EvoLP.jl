@@ -17,7 +17,7 @@ function oneplusone(f::Function, ind::AbstractVector, k_max::Integer, M::Mutatio
     fx = Inf  # works only on minimisation problems
     runtime = @elapsed @inbounds for _ in 1:k_max
         c = mutate(M, ind)
-        fx, fc = f(c), f(ind)
+        fx, fc = f(ind), f(c)
         if fc <= fx
             ind = c
             fx = fc

@@ -39,7 +39,7 @@ end
 Randomly add Gaussian noise to the `ind` candidate solution, with a standard
 deviation of `σ`.
 """
-@inline mutate(M::GaussianMutation, ind; rng=Random.GLOBAL_RNG) = ind + randn(rng, length(ind)) * M.σ
+@inline mutate(M::GaussianMutation, ind; rng=Random.GLOBAL_RNG) = @fastmath ind + randn(rng, length(ind)) * M.σ
 
 # For permutation individuals
 """

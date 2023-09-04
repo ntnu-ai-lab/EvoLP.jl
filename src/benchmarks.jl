@@ -20,7 +20,7 @@ but the landscape is a bit more difficult to traverse.
 \\text{LO}(\\mathbf{x}) = \\sum_{i=1}^n \\prod_j^i x_j
 ```
 """
-function leadingones(x)::Int
+@inline function leadingones(x)::Int
     s = 0
     m = 1
     @inbounds for val in x
@@ -83,7 +83,7 @@ The **Booth** function is a 2-dimensional quadratic function with global minimum
 f(x) = (x_1 + 2x_2 - 7)^2 + (2 x_1 + x_2 - 5)^2
 ```
 """
-@inline booth(x) = (x[1] + 2 * x[2] - 7)^2 + (2 * x[1] + x[2] - 5)^2
+@inline booth(x) = @fastmath (x[1] + 2 * x[2] - 7)^2 + (2 * x[1] + x[2] - 5)^2
 
 
 """
@@ -99,7 +99,7 @@ f(x) = a(x_2 - bx_1^2 + cx_1 - r)^2 + s(1 - t)\\cos(x_1) + s
 ```
 """
 @inline function branin(x; a=1, b=5.1 / (4π^2), c=5 / π, r=6, s=10, t=1 / (8π))
-    return a * (x[2] - b * x[1]^2 + c * x[1] - r)^2 + s * (1 - t) * cos(x[1]) + s
+    return @fastmath a * (x[2] - b * x[1]^2 + c * x[1] - r)^2 + s * (1 - t) * cos(x[1]) + s
 end
 
 """
@@ -118,8 +118,8 @@ where ``\\theta=x_1`` and ``r`` is obtained by
 r = \\frac{1}{2} + \\frac{1}{2} \\left(\\frac{2x_2}{1+x_2^2}\\right)
 ```
 """
-@inline function circle(x)
-    θ = x[1]
+@inline @fastmath function circle(x)
+    θ = first(x)
     r = 0.5 + 0.5 * (2 * x[2] / (1 + x[2]^2))
     y1 = 1 - r * cos(θ)
     y2 = 1 - r * sin(θ)
@@ -140,7 +140,7 @@ f(x) = a\\lVert\\mathbb{x}\\rVert + b \\sin(c\\arctan(x_2, x_1))
 ```
 """
 @inline function flower(x; a=1, b=1, c=4)
-    return a * norm(x) + b * sin(c * atan(x[2], x[1]))
+    return @fastmath a * norm(x) + b * sin(c * atan(x[2], x[1]))
 end
 
 """
@@ -155,7 +155,7 @@ f(x) = -\\sum_{i=1}^{d}\\sin(x_i) \\sin^{2m}\\left(\\frac{ix_i^2}{\\pi}\\right)
 ```
 """
 @inline function michalewicz(x; m=10)
-    return -sum(sin(v) * sin(i * v^2 / π)^(2m) for (i, v) in enumerate(x))
+    return @fastmath -sum(sin(v) * sin(i * v^2 / π)^(2m) for (i, v) in enumerate(x))
 end
 
 """
@@ -168,7 +168,7 @@ With ``a=1`` and ``b=5``, minimum is at ``f([a, a^2]) = 0``
 f(x) = (a - x_1)^2 + b(x_2 - x_1^2)^2
 ```
 """
-@inline rosenbrock(x; a=1, b=5) = (a - x[1])^2 + b * (x[2] - x[1]^2)^2
+@inline rosenbrock(x; a=1, b=5) = @fastmath (a - x[1])^2 + b * (x[2] - x[1]^2)^2
 
 """
     wheeler(x, a=1.5)
@@ -180,4 +180,4 @@ With ``a`` (by default at 1.5) ``x^* = [1, 1.5]``, with ``f(x^*) = -1``.
 f(x) = - \\exp(- (x_1 x_2 - a)^2 - (x_2 - a)^2 )
 ```
 """
-@inline wheeler(x, a=1.5) = -exp(-(x[1] * x[2] - a)^2 - (x[2] - a)^2)
+@inline wheeler(x, a=1.5) = @fastmath -exp(-(x[1] * x[2] - a)^2 - (x[2] - a)^2)
