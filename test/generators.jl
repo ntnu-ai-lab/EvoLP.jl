@@ -27,7 +27,7 @@ myrng = StableRNG(123)
         @test length(pop) == 3000  # Size of the population matches
         @test length(pop[1]) == 2  # size of an individual matches
         @test typeof(pop[1]) <: Vector{Float64}  # Type of an individual matches
-        @test mean(pop) ≈ [0, 0] atol=0.1  # Distribution E[x] holds
+        @test mean(pop) ≈ [0, 0] atol = 0.1  # Distribution E[x] holds
     end
 
     @testset "Uniformly random vectors generator" begin
@@ -35,7 +35,7 @@ myrng = StableRNG(123)
         @test length(pop) == 3000  # Size of the population matches
         @test length(pop[1]) == 2 # Size of an individual matches
         @test typeof(pop[1]) <: Vector{Float64} # Type of an individual matches
-        @test sum(sum.(pop)) / 3000 ≈ 1 rtol=0.1  # Distribution E[x] holds
+        @test sum(sum.(pop)) / 3000 ≈ 1 rtol = 0.1  # Distribution E[x] holds
     end
 
     @testset "Normal random particles generator" begin
@@ -43,7 +43,7 @@ myrng = StableRNG(123)
         @test length(pop) == 3000  # Size of the population matches
         @test length(pop[1].x) == 2 # Dimensions of position matches
         @test typeof(pop[1]) == Particle  # Type of individual matches
-        @test mean([P.x for P in pop]) ≈ [0, 0] atol=0.1  # Distribution E[x] holds
+        @test mean([P.x for P in pop]) ≈ [0, 0] atol = 0.1  # Distribution E[x] holds
     end
 
     @testset "Uniformly random particles generator" begin
@@ -51,6 +51,6 @@ myrng = StableRNG(123)
         @test length(pop) == 3000  # Size of the population matches
         @test length(pop[1].x) == 2 # Dimensions of position matches
         @test typeof(pop[1]) == Particle  # Type of individual matches
-        @test sum([sum(P.x) for P in pop]) / 3000 ≈ 1 rtol=0.1  # Distribution E[x] holds
+        @test sum([sum(P.x) for P in pop]) / 3000 ≈ 1 rtol = 0.1  # Distribution E[x] holds
     end
 end;

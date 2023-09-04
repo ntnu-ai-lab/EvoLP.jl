@@ -16,14 +16,14 @@ If no argument is passed, the logbook is constructed with a set of commonly stat
 as minimum, mean, median, maximum and standard deviation; in that order.
 """
 mutable struct Logbook
-	S::LittleDict{AbstractString, Function}
-	records::AbstractVector
+    S::LittleDict{AbstractString,Function}
+    records::AbstractVector
 
-	function Logbook(S::LittleDict)
+    function Logbook(S::LittleDict)
         fnames = [k for k in keys(S)]
-		d = Vector{namedtuple(fnames)}()
-		return new(S,d)
-	end
+        d = Vector{namedtuple(fnames)}()
+        return new(S, d)
+    end
 
     function Logbook()
         fnames = [
@@ -58,18 +58,18 @@ function compute!(logger::Logbook, data::AbstractVector)
     fnames = [s for s in keys(logger.S)]
     callables = [f(data) for f in values(logger.S)]
 
-	record = namedtuple(fnames, callables)
-	push!(logger.records, record)
+    record = namedtuple(fnames, callables)
+    push!(logger.records, record)
 
     return nothing
 end
 
 function compute!(notebooks::Vector{Logbook}, data::AbstractVector)
-    for (logger, y) in zip(notebooks,data)
+    for (logger, y) in zip(notebooks, data)
         fnames = [s for s in keys(logger.S)]
         callables = [f(y) for f in values(logger.S)]
 
-	    record = namedtuple(fnames, callables)
-	    push!(logger.records, record)
+        record = namedtuple(fnames, callables)
+        push!(logger.records, record)
     end
 end

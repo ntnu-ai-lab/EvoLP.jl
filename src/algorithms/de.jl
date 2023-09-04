@@ -1,9 +1,9 @@
 """
-    GA(f, pop, k_max, S, C, M)
+    DE(f, pop, k_max, S, C, M)
     GA(logbook::Logbook, f, population, k_max, S, C, M)
     GA(notebooks::Vector{Logbook}, f, population, k_max, S, C, M)
 
-Generational Genetic Algorithm.
+Differential Evaluation Algorithm.
 
 ## Arguments
 - `f::Function`: objective function to **minimise**.
@@ -16,7 +16,7 @@ Generational Genetic Algorithm.
 Returns a [`Result`](@ref).
 """
 
-function GA(
+function DE(
     f::Function,
     population::AbstractVector,
     k_max::Integer,
@@ -26,7 +26,7 @@ function GA(
 )
     n = length(population)
 
-    fitnesses = AbstractVector{Float64}(undef, n)
+    fitnesses = Vector{Float32}(undef, n)
 
     runtime = @elapsed @inbounds for _ in 1:k_max
         fitnesses = f.(population)  # O(k_max * n)
@@ -43,7 +43,7 @@ function GA(
 end
 
 # Logbook version
-function GA(
+function DE(
     logbook::Logbook,
     f::Function,
     population::AbstractVector,
@@ -54,7 +54,7 @@ function GA(
 )
     n = length(population)
 
-    fitnesses = Vector{Float64}(undef, n)
+    fitnesses = Vector{Float32}(undef, n)
 
     runtime = @elapsed @inbounds for _ in 1:k_max
         fitnesses = f.(population)  # O(k_max * n)
@@ -73,7 +73,7 @@ function GA(
 end
 
 # 2-logbook version
-function GA(
+function DE(
     notebooks::Vector{Logbook},
     f::Function,
     population::AbstractVector,
@@ -84,7 +84,7 @@ function GA(
 )
     n = length(population)
 
-    fitnesses = AbstractVector{AbstractFloat}(undef, n)
+    fitnesses = Vector{Float32}(undef, n)
 
     runtime = @elapsed @inbounds for _ in 1:k_max
         fitnesses = f.(population)  # O(k_max * n)

@@ -1,5 +1,16 @@
 "Swarm-based algorithms"
 
+# Add to more?
+macro timer(block)
+    return quote
+        local start_time = time()
+        $(esc(block))
+        local end_time = time()
+        end_time - start_time
+    end
+end
+
+
 """
     PSO(f, population, k_max; w=1, c1=1, c2=1)
     PSO(logger::Logbook, f, population, k_max; w=1, c1=1, c2=1)
@@ -26,40 +37,41 @@ function PSO(
     x_best, y_best = copy(population[1].x_best), Inf
 
     # evaluation loop
-    for P in population
-        P.y = f(P.x)  # O(pop)
-
-        if P.y < y_best
-            x_best[:] = P.x
-            y_best = P.y
-        end
-    end
-
-    for _ in 1:k_max
+    runtime = @timer begin
         for P in population
-            r1, r2 = rand(d), rand(d)
-            P.x += P.v
-            P.v = w*P.v + c1*r1 .* (P.x_best - P.x) + c2*r2 .* (x_best - P.x)
-            P.y = f(P.x)  # O(k_max * pop)
+            P.y = f(P.x)  # O(pop)
 
             if P.y < y_best
                 x_best[:] = P.x
                 y_best = P.y
             end
+        end
 
-            if P.y < P.y_best
-                P.x_best[:] = P.x
-                P.y_best = P.y
+        @inbounds for _ in 1:k_max
+            for P in population
+                r1, r2 = rand(d), rand(d)
+                P.x += P.v
+                P.v = w * P.v + c1 * r1 .* (P.x_best - P.x) + c2 * r2 .* (x_best - P.x)
+                P.y = f(P.x)  # O(k_max * pop)
+
+                if P.y < y_best
+                    x_best[:] = P.x
+                    y_best = P.y
+                end
+
+                if P.y < P.y_best
+                    P.x_best[:] = P.x
+                    P.y_best = P.y
+                end
             end
         end
     end
 
     best_i = argmin([P.y_best for P in population])
     best = population[best_i]
-    n_evals = length(population) + k_max  * length(population)
+    n_evals = (1 + k_max) * length(population)
 
-    result = Result(best.y_best, best.x_best, population, k_max, n_evals)
-    return result
+    return Result(best.y_best, best.x_best, population, k_max, n_evals, runtime)
 end
 
 # Logbook version
@@ -71,39 +83,40 @@ function PSO(
     x_best, y_best = copy(population[1].x_best), Inf
 
     # evaluation loop
-    for P in population
-        P.y = f(P.x)  # O(pop)
-
-        if P.y < y_best
-            x_best[:] = P.x
-            y_best = P.y
-        end
-    end
-
-    for _ in 1:k_max
+    runtime = @timer begin
         for P in population
-            r1, r2 = rand(d), rand(d)
-            P.x += P.v
-            P.v = w*P.v + c1*r1 .* (P.x_best - P.x) + c2*r2 .* (x_best - P.x)
-            P.y = f(P.x)  # O(k_max * pop)
+            P.y = f(P.x)  # O(pop)
 
             if P.y < y_best
                 x_best[:] = P.x
                 y_best = P.y
             end
-
-            if P.y < P.y_best
-                P.x_best[:] = P.x
-                P.y_best = P.y
-            end
         end
-        compute!(logger, [P.y for P in population])
+
+        @inbounds for _ in 1:k_max
+            for P in population
+                r1, r2 = rand(d), rand(d)
+                P.x += P.v
+                P.v = w * P.v + c1 * r1 .* (P.x_best - P.x) + c2 * r2 .* (x_best - P.x)
+                P.y = f(P.x)  # O(k_max * pop)
+
+                if P.y < y_best
+                    x_best[:] = P.x
+                    y_best = P.y
+                end
+
+                if P.y < P.y_best
+                    P.x_best[:] = P.x
+                    P.y_best = P.y
+                end
+            end
+            compute!(logger, [P.y for P in population])
+        end
     end
 
     best_i = argmin([P.y_best for P in population])
     best = population[best_i]
-    n_evals = length(population) + k_max  * length(population)
+    n_evals = (1 + k_max) * length(population)
 
-    result = Result(best.y_best, best.x_best, population, k_max, n_evals)
-    return result
+    return Result(best.y_best, best.x_best, population, k_max, n_evals, runtime)
 end

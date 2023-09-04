@@ -21,9 +21,7 @@ julia> binary_vector_pop(2, 5)
  [0, 1, 0, 0, 0]
 ```
 """
-function binary_vector_pop(n, l; rng=Random.GLOBAL_RNG)
-	return [bitrand(rng, l) for _ in 1:n]
-end
+@inline binary_vector_pop(n, l; rng=Random.GLOBAL_RNG) = [bitrand(rng, l) for _ in 1:n]
 
 """
     permutation_vector_pop(n, d, pool; replacement=false, rng=Random.GLOBAL_RNG)
@@ -48,8 +46,7 @@ julia> permutation_vector_pop(2, 5, ["a", "b", "c", "d", "e"]; replacement=false
 ```
 """
 function permutation_vector_pop(n, d, pool; replacement=false, rng=Random.GLOBAL_RNG)
-    thepop = [sample(rng, pool, d, replace=replacement, ordered=false) for i in 1:n]
-    return thepop
+    return [sample(rng, pool, d, replace=replacement, ordered=false) for _ in 1:n]
 end
 
 ## Continuous domains
@@ -71,9 +68,9 @@ julia> unif_rand_vector_pop(3, [-1, -1], [1, 1])
  [-0.377090051761797, -0.28434454028992096]
 ```
 """
-function unif_rand_vector_pop(n, lb, ub; rng=Random.GLOBAL_RNG)
-	d = length(lb)
-	return [lb + rand(rng, d) .* (ub - lb) for _ in 1:n]
+@inline function unif_rand_vector_pop(n, lb, ub; rng=Random.GLOBAL_RNG)
+    d = length(lb)
+    return [lb + rand(rng, d) .* (ub - lb), n]
 end
 
 """
@@ -95,9 +92,9 @@ julia> normal_rand_vector_pop(3, [0, 0], [1 0; 0 1])
  [-0.5384758126777555, -0.8141702145510666]
 ```
 """
-function normal_rand_vector_pop(n, μ, Σ; rng=Random.GLOBAL_RNG)
-	D = MvNormal(μ, Σ)
-	return [rand(rng, D) for _ in 1:n]
+@inline function normal_rand_vector_pop(n, μ, Σ; rng=Random.GLOBAL_RNG)
+    D = MvNormal(μ, Σ)
+    return [rand(rng, D) for _ in 1:n]
 end
 
 # Particles
@@ -108,6 +105,7 @@ A single particle in the swarm, with a position `x`, a velocity `v`, the best po
 has encountered `x_best` and its evaluations `y` and `y_best`
 """
 mutable struct Particle
+    # TODO: Add datatypes?
     x
     v
     y
@@ -134,16 +132,18 @@ julia> unif_rand_particle_pop(3, [-1, -1], [1, 1])
 ```
 """
 function unif_rand_particle_pop(n, lb, ub; rng=Random.GLOBAL_RNG)
-	d = length(lb)
-	pop = Particle[]
+    d = length(lb)
+    pop = Vector{Particle}(undef, n)
+    y = Inf
 
-	for i in 1:n
-		x_pos = rand(rng, d) .* (ub - lb)
-        y = Inf
-		push!(pop, Particle(x_pos, fill(0, d), y, x_pos, y))
-	end
+    # TODO: Use another macro for inbounds repeat
+    for i in eachindex(lb)
+        x_pos = rand(rng, d) .* (ub - lb)
+        @inbounds pop[i] = Particle(x_pos, fill(0, d), y, x_pos, y)
+    end
 
-	return pop
+    #@show length(pop)
+    return pop
 end
 
 """
@@ -166,14 +166,15 @@ julia> normal_rand_particle_pop(3, [0, 0], [1 0; 0 1])
 ```
 """
 function normal_rand_particle_pop(n, μ, Σ; rng=Random.GLOBAL_RNG)
-	D = MvNormal(μ, Σ)
-	pop = Particle[]
+    # TODO: Add y as optional parameter but default to Inf?
+    D = MvNormal(μ, Σ)
+    y = Inf
+    pop = Vector{Particle}(undef, n)
 
-	for i in 1:n
-		x_pos = rand(rng, D)
-        y = Inf
-		push!(pop, Particle(x_pos, zeros(size(μ)), y, x_pos, y))
-	end
+    for i in 1:n
+        x_pos = rand(rng, D)
+        @inbounds pop[i] = Particle(x_pos, zeros(size(μ)), y, x_pos, y)
+    end
 
-	return pop
+    return pop
 end
