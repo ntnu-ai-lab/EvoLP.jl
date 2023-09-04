@@ -137,7 +137,7 @@ function unif_rand_particle_pop(n, lb, ub; rng=Random.GLOBAL_RNG)
     y = Inf
 
     # TODO: Use another macro for inbounds repeat
-    for i = eachindex(lb)
+    for i in eachindex(lb)
         x_pos = rand(rng, d) .* (ub - lb)
         @inbounds pop[i] = Particle(x_pos, fill(0, d), y, x_pos, y)
     end
