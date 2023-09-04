@@ -8,7 +8,7 @@ the population, the number of iterations and the number of function calls.
 struct Result
     fxstar  # optimum
     xstar  # optimizer
-    population::Int64  # population at last state
+    population::AbstractVector  # population at last state
     n_iters::Int64 # pass the number of iterations
     n_evals::Int64  # number of individual evaluations
     runtime::Float32
