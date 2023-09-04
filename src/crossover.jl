@@ -62,7 +62,7 @@ of the chromosome is randomly selected from one of the parents.
 function cross(::UniformCrossover, a, b; rng=Random.GLOBAL_RNG)
     child = copy(a)
 
-    for i = eachindex(a)
+    for i in eachindex(a)
         @inbounds child[i] = rand(rng) < 0.5 ? b[i] : continue
     end
 
