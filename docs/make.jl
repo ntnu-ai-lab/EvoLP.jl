@@ -27,7 +27,7 @@ makedocs(
             "Crossover operators" => "man/cross.md",
             "Mutation operators" => "man/mutation.md",
             "Population generators" => "man/generators.md",
-            "Benchmark functions" => "man/benchmarks.md",
+            "Optimisation test functions" => "man/testfunctions.md",
             "Reporting results" => "man/results.md",
             "Logging statistics" => "man/logbook.md",
             "Custom operators"  => "man/extending.md",

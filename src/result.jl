@@ -11,7 +11,7 @@ struct Result
     population::AbstractVector  # population at last state
     n_iters::Int64 # pass the number of iterations
     n_evals::Int64  # number of individual evaluations
-    runtime::Float32
+    runtime::Float64
 end
 
 """

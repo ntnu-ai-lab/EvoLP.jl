@@ -70,7 +70,7 @@ julia> unif_rand_vector_pop(3, [-1, -1], [1, 1])
 """
 @inline function unif_rand_vector_pop(n, lb, ub; rng=Random.GLOBAL_RNG)
     d = length(lb)
-    return [lb + rand(rng, d) .* (ub - lb), n]
+    return [lb + rand(rng, d) .* (ub - lb) for _ in 1:n]
 end
 
 """
@@ -133,17 +133,16 @@ julia> unif_rand_particle_pop(3, [-1, -1], [1, 1])
 """
 function unif_rand_particle_pop(n, lb, ub; rng=Random.GLOBAL_RNG)
     d = length(lb)
-    pop = Vector{Particle}(undef, n)
+    population = Vector{Particle}(undef, n)
     y = Inf
 
     # TODO: Use another macro for inbounds repeat
-    for i in eachindex(lb)
+    for i in 1:n
         x_pos = rand(rng, d) .* (ub - lb)
-        @inbounds pop[i] = Particle(x_pos, fill(0, d), y, x_pos, y)
+        @inbounds population[i] = Particle(x_pos, fill(0, d), y, x_pos, y)
     end
 
-    #@show length(pop)
-    return pop
+    return population
 end
 
 """

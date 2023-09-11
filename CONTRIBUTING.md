@@ -93,7 +93,7 @@ New generators should be tested in the `generators.jl` test suite.
 New recombinators should be tested in the `crossover.jl` test suite.
 And so on.
 
-To test algorithms, we solve one of the test functions (in `src/benchmarks.jl`) and which solutions are known.
+To test algorithms, we solve one of the test functions (in `src/testfunctions.jl`) and which solutions are known.
 Create a new implementation in a notebook, beautify and put in the `src/examples/` directory.
 
 ### Get in touch

@@ -6,7 +6,8 @@ const testfiles = (
     "generators.jl",
     "crossover.jl",
     "mutation.jl",
-    "benchmarks.jl"
+    "testfunctions.jl",
+    "deprecated.jl",
 )
 
 @testset "EvoLP.jl" begin

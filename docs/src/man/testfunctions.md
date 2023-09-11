@@ -1,4 +1,4 @@
-# Benchmark functions
+# Optimisation test functions
 
 EvoLP includes some test functions to benchmark your algorithms.
 Unless otherwise specified, every function is of the form ``f(x)``.
