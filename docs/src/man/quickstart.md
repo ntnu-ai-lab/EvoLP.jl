@@ -41,7 +41,7 @@ using EvoLP
 A common workflow in EvoLP is somewhat similar to this:
 
 1. Use a [generator](generators.md) for initialising your population.
-2. Code your objective or use a [test benchmark function](benchmarks.md).
+2. Code your objective or use a [test benchmark function](testfunctions.md).
 3. Depending on your objective function and individual representation, choose appropriate [selectors](selection.md), [recombinators](cross.md) and [mutators](mutation.md).
 4. Use a [built-in algorithm](algorithms.md) or code your own. Roughly:
     - Evaluate your population.

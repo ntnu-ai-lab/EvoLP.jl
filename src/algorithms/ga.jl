@@ -15,7 +15,6 @@ Generational Genetic Algorithm.
 
 Returns a [`Result`](@ref).
 """
-
 function GA(
     f::Function,
     population::AbstractVector,

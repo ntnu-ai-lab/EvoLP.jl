@@ -38,29 +38,36 @@ export SinglePointCrossover, TwoPointCrossover, UniformCrossover, InterpolationC
 export OrderOneCrossover
 export cross
 
-# Benchmark functions
+# Optimisation test functions
 export onemax, leadingones, jumpk  # Pseudoboolean
-export ackley, booth, branin, circle, flower, michalewicz, rosenbrock, wheeler  # Continuous
+export ackley, booth, branin, michalewicz, rosenbrock, wheeler  # Continuous
 
 # Results
 export Result
-export optimum, optimizer, iterations, f_calls, population
+export optimum, optimizer, iterations, f_calls, population, runtime
 
 # Logbook
 export Logbook
 export compute!
 
+# Deprecated functionality
+# Will be removed in the future
+export circle
+export flower
 
-include("benchmarks.jl")
+
 include("crossover.jl")
 include("generators.jl")
 include("logbook.jl")
 include("mutation.jl")
 include("result.jl")
 include("selection.jl")
+include("testfunctions.jl")
 
 include("algorithms/ga.jl")
 include("algorithms/ea.jl")
 include("algorithms/swarm.jl")
+
+include("deprecated.jl")
 
 end
