@@ -10,19 +10,20 @@ using EvoLP
 using OrderedCollections
 ```
 
-For this example we will use the **Rosenbrock** function, which is already included as a benchmark in EvoLP. We can look at the documentation like so:
+For this example we will use the **Rosenbrock** function, which is already included as a benchmark function in EvoLP. We can look at the documentation like so:
 
 ```julia
 @doc rosenbrock
 ```
 
 ```julia
-rosenbrock(x; a=1, b=5)
+rosenbrock(x; b=100)
 ```
 
-> **Rosenbrock** benchmark function. With ``a=1`` and ``b=5``, minimum is at ``f([a, a^2]) = 0``
+> The ``d``-dimensional **Rosenbrock** _banana_ benchmark function. With ``b=100``,
+> minimum is at ``f([1, \\dots, 1]) = 0``
 >
-> ``f(x) = (a - x_1)^2 + b(x_2 - x_1^2)^2``
+> ``f(x) = \\sum_{i=1}^{d-1} \\left[b(x_{i+1} - x_i^2)^2 + (x_i - 1)^2 \\right]``
 
 ## Implementing the solution
 

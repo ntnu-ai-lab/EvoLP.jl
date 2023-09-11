@@ -8,6 +8,7 @@ import StatsBase: ordinalrank, sample
 using Distributions
 using Random
 using Statistics
+using UnicodePlots
 
 # Random population generators
 export binary_vector_pop  # Binary vectors
@@ -49,6 +50,7 @@ export optimum, optimizer, iterations, f_calls, population, runtime
 # Logbook
 export Logbook
 export compute!
+export summarise
 
 # Deprecated functionality
 # Will be removed in the future

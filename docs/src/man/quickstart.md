@@ -23,9 +23,9 @@ julia> Pkg.add("EvoLP")
 
 Alternatively, you can enter `Pkg` mode by pressing the `]` key and then add EvoLP like so:
 
-```julia
-julia> ] # upon typing ], the prompt changes (in place) to: pkg>
-pkg> add EvoLP
+```@repl
+] # upon typing ], the prompt changes (in place) to: pkg>
+add EvoLP
 ```
 
 Once EvoLP is installed, you can use all the building blocks by importing/using it at the top of your code:

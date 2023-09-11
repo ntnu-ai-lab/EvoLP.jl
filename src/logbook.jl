@@ -73,3 +73,44 @@ function compute!(notebooks::Vector{Logbook}, data::AbstractVector)
         push!(logger.records, record)
     end
 end
+
+
+"""
+    summarise(logger::Logbook)
+    summarise(notebooks::Logbook)
+
+Print and plot descriptive statistics for a given `logger` (or a vector of `logger`s).
+"""
+function summarise(logger::Logbook)
+    n = length(logger.records)
+    for (i, eachstat) in enumerate(keys(logger.S))
+        data = [logger.records[j][i] for j in 1:n]
+        printstyled("\n $(eachstat) \n"; bold=true)
+        print("max: $(maximum(data)) \n" *
+            "avg: $(mean(data))\n" *
+            "median: $(median(data)) \n" *
+            "min: $(minimum(data))\n" *
+            "std: $(std(data))\n")
+        plt = lineplot(data;
+                xlabel="it", ylabel=eachstat)
+        print(plt)
+    end
+end
+
+function summarise(notebooks::Vector{Logbook})
+    for eachnb in notebooks
+        n = length(eachnb.records)
+        for (i, eachstat) in enumerate(keys(eachnb.S))
+            data = [eachnb.records[j][i] for j in 1:n]
+            printstyled("\n $(eachstat) \n"; bold=true)
+            print("max: $(maximum(data)) \n" *
+                "avg: $(mean(data))\n" *
+                "median: $(median(data)) \n" *
+                "min: $(minimum(data))\n" *
+                "std: $(std(data))\n")
+            plt = lineplot(data;
+                    xlabel="it", ylabel=eachstat)
+            print(plt)
+        end
+    end
+end

@@ -40,7 +40,7 @@ julia> Pkg.add("EvoLP")
 
 Alternatively, you can enter `Pkg` mode by pressing the `]` key and then add EvoLP like so:
 
-```julia
+```text
 julia> ] # upon typing ], the prompt changes (in place) to: pkg>
 pkg> add EvoLP
 ```

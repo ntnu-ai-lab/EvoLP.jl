@@ -83,7 +83,7 @@ function GA(
 )
     n = length(population)
 
-    fitnesses = AbstractVector{AbstractFloat}(undef, n)
+    fitnesses = Vector{Float64}(undef, n)
 
     runtime = @elapsed @inbounds for _ in 1:k_max
         fitnesses = f.(population)  # O(k_max * n)

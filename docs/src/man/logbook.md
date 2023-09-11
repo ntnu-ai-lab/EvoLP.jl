@@ -54,4 +54,42 @@ compute!
 ```
 
 The `compute!` function can be called either by providing a logbook to update, or a vector of `Logbook`s.
-This is useful if what you want to calculate depends on different data sources (e.g. some statistics are computed from fitness while some others use the population, etc.)
+This is useful if that which you want to calculate depends on different data sources (e.g. some statistics are computed from fitness while some others use the population, etc.)
+
+## Statistics at a glance
+
+If you prefer to have a quick overview of your Logbook, you can do so using the `summarise` function:
+
+```@docs
+summarise
+```
+
+`summarise` will go through each of the statistics and present a summary and a Unicode plot:
+
+```console
+ mean_f 
+max: -0.5333333333333333 
+avg: -5.6193333333333335
+median: -5.716666666666667 
+min: -7.366666666666666
+std: 1.0150625419575374
+             ┌────────────────────────────────────────┐ 
+           0 │▖                                       │ 
+             │▐                                       │ 
+             │▗                                       │ 
+             │▐                                       │ 
+             │ ▌                                      │ 
+             │ ▌                                      │ 
+             │ ▐▖                                     │ 
+   mean_f    │  ▌                              ▐      │ 
+             │  ▌         ▐  ▖                ▖▞▖     │ 
+             │  ▐▄▖   ▗  ▖▐▌▖▙▐    █▌    ▗▖   █▌▌ ▖▗▚ │ 
+             │  ▐▜█▗▖▙▛▟▐▜▘▙▜▐▐▖ █▌▌▚ ▖▗▗▌█ ▖▗█▌▌▐▙▐▐ │ 
+             │   ▐▌███ █▌  █▝ ▘▙▟▝█▘▐▐▜▌▛▌██▀█▌▌▐▐▘▀ ▙│ 
+             │   ▝▌▝▛█ ▝▘  ▜    ▘ ▐ ▝▌ ▘  ▘▜ ▀▘  ▀   █│ 
+             │       ▐     ▐      ▝                   │ 
+          -8 │                                        │ 
+             └────────────────────────────────────────┘ 
+              0                                    100  
+                                 it                     
+```
