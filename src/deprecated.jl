@@ -1,6 +1,10 @@
 # Deprecated functionality will be here until removed in a major release
 
-# Optimisation test functions
+using Base: @deprecate, @deprecate_binding, depwarn
+
+# BEGIN EvoLP 2.X.Y deprecations
+
+# testfunctions.jl
 
 """
     circle(x)
@@ -55,3 +59,28 @@ f(x) = a\\lVert\\mathbb{x}\\rVert + b \\sin(c\\arctan(x_2, x_1))
     Base.deepwarn("The `flower` function will be removed from EvoLP in a future release.")
     return @fastmath a * norm(x) + b * sin(c * atan(x[2], x[1]))
 end
+
+# selection.jl
+
+ @deprecate_binding SelectionMethod Selector
+
+ function TournamentSelectionGenerational(t)
+    depwarn(
+      "The _Generational_ selectors will be deprecated in a future realase. " *
+      "Please use `TournamentSelector(t)` instead of `TournamentSelectionGenerational(t)` " *
+      "and update your algorithm to use it for each individual in the population.",
+      :TournamentSelectionGenerational,
+    )
+    return TournamentSelector(t)
+ end
+
+ function TournamentSelectionSteady(t)
+    depwarn(
+      "The `TournamentSelectionSteady` type will be deprecated in a future realase. " *
+      "Please use `TournamentSelector(k)` instead.",
+      :TournamentSelectionSteady,
+    )
+    return TournamentSelector(t)
+ end
+
+# END EvoLP 2.X.Y deprecations

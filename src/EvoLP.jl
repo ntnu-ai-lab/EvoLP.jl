@@ -1,14 +1,28 @@
 module EvoLP
 
-import LinearAlgebra: norm, normalize
-import NamedTupleTools: namedtuple
-import OrderedCollections: LittleDict
-import StatsBase: ordinalrank, sample
+using LinearAlgebra: norm, normalize
+using NamedTupleTools: namedtuple
+using OrderedCollections: LittleDict
+using StatsBase: ordinalrank, sample
 
 using Distributions
 using Random
 using Statistics
 using UnicodePlots
+
+include("crossover.jl")
+include("generators.jl")
+include("logbook.jl")
+include("mutation.jl")
+include("result.jl")
+include("selection.jl")
+include("testfunctions.jl")
+
+include("algorithms/ga.jl")
+include("algorithms/ea.jl")
+include("algorithms/swarm.jl")
+
+include("deprecated.jl")
 
 # Random population generators
 export binary_vector_pop  # Binary vectors
@@ -23,9 +37,10 @@ export PSO
 
 # Selection
 export RankBasedSelectionGenerational, RouletteWheelSelectionGenerational
-export TournamentSelectionGenerational, TruncationSelectionGenerational
+export TruncationSelectionGenerational
+export TournamentSelector
 export RankBasedSelectionSteady, RouletteWheelSelectionSteady
-export TournamentSelectionSteady, TruncationSelectionSteady
+export TruncationSelectionSteady
 export select
 
 # Mutation
@@ -56,20 +71,6 @@ export summarise
 # Will be removed in the future
 export circle
 export flower
-
-
-include("crossover.jl")
-include("generators.jl")
-include("logbook.jl")
-include("mutation.jl")
-include("result.jl")
-include("selection.jl")
-include("testfunctions.jl")
-
-include("algorithms/ga.jl")
-include("algorithms/ea.jl")
-include("algorithms/swarm.jl")
-
-include("deprecated.jl")
-
+export TournamentSelectionGenerational
+export TournamentSelectionSteady
 end

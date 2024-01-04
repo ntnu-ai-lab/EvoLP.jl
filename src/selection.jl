@@ -2,54 +2,83 @@
 # ==========================
 
 """
-Abstract SelectionMethod.
+Abstract Selector for either Parent or Deme selection methods.
 """
-abstract type SelectionMethod end
+abstract type Selector end
+
+"""
+Abstract Parent Selector
+"""
+abstract type ParentSelector <: Selector end
+
+# Parent Selectors
+
+"""
+Tournament parent selection with tournament size `T`.
+"""
+struct TournamentSelector <: ParentSelector
+    T
+end
+
+"""
+    select(t::TournamentSelector, y)
+
+Select two parents which are the winners from two random tournaments of size `t.T`.
+"""
+function select(t::TournamentSelector, y; rng=Random.GLOBAL_RNG)
+    getparent() = begin
+        p = randperm(rng, length(y))
+        p[argmin(y[p[1:t.T]])]
+    end
+
+    return [getparent(), getparent()]
+end
+
+# """
+#     select(t::TournamentSelectionGenerational, y)
+
+# Select two parents which are the winners from two random tournaments of size `t.k` for each
+# fitness in `y`.
+# """
+# function select(t::TournamentSelectionGenerational, y; rng=Random.GLOBAL_RNG)
+# getparent() = begin
+#     p = randperm(rng, length(y))
+#     p[argmin(y[p[1:t.k]])]
+# end
+
+# return [[getparent(), getparent()] for _ in y]
+# end
 
 """
 Truncation selection for selecting top `k` possible parents in the population.
 """
-struct TruncationSelectionSteady <: SelectionMethod
+struct TruncationSelectionSteady <: Selector
     k
 end
 """
 Truncation selection for selecting top `k` possible parents in the population.
 """
-struct TruncationSelectionGenerational <: SelectionMethod
-    k
-end
-
-"""
-Tournament parent selection with tournament size `k`.
-"""
-struct TournamentSelectionSteady <: SelectionMethod
-    k
-end
-
-"""
-Tournament parent selection with tournament size `k`.
-"""
-struct TournamentSelectionGenerational <: SelectionMethod
+struct TruncationSelectionGenerational <: Selector
     k
 end
 
 """
 Roulette wheel parent selection.
 """
-struct RouletteWheelSelectionSteady <: SelectionMethod end
+struct RouletteWheelSelectionSteady <: Selector end
 """
 Roulette wheel parent selection.
 """
-struct RouletteWheelSelectionGenerational <: SelectionMethod end
+struct RouletteWheelSelectionGenerational <: Selector end
 
 """
 Rank-based parent selection.
 """
-struct RankBasedSelectionSteady <: SelectionMethod end
+struct RankBasedSelectionSteady <: Selector end
 """
 Rank-based parent selection.
 """
-struct RankBasedSelectionGenerational <: SelectionMethod end
+struct RankBasedSelectionGenerational <: Selector end
 
 # For steady-state GAs
 # ====================
@@ -66,20 +95,6 @@ Select two random parents out from the top `t.k` in the population.
 function select(t::TruncationSelectionSteady, y; rng=Random.GLOBAL_RNG)
     p = sortperm(y)
     return p[rand(rng, 1:t.k, 2)]
-end
-
-"""
-    select(t::TournamentSelectionSteady, y)
-
-Select two parents which are the winners from two random tournaments of size `t.k`.
-"""
-function select(t::TournamentSelectionSteady, y; rng=Random.GLOBAL_RNG)
-    getparent() = begin
-        p = randperm(rng, length(y))
-        p[argmin(y[p[1:t.k]])]
-    end
-
-    return [getparent(), getparent()]
 end
 
 """
@@ -120,21 +135,6 @@ Select two random parents (from the top `t.k`) in the population for each fitnes
 function select(t::TruncationSelectionGenerational, y; rng=Random.GLOBAL_RNG)
     p = sortperm(y)
     return [p[rand(rng, 1:t.k, 2)] for _ in y]
-end
-
-"""
-    select(t::TournamentSelectionGenerational, y)
-
-Select two parents which are the winners from two random tournaments of size `t.k` for each
-fitness in `y`.
-"""
-function select(t::TournamentSelectionGenerational, y; rng=Random.GLOBAL_RNG)
-    getparent() = begin
-        p = randperm(rng, length(y))
-        p[argmin(y[p[1:t.k]])]
-    end
-
-    return [[getparent(), getparent()] for _ in y]
 end
 
 """
