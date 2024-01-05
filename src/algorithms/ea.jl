@@ -13,7 +13,7 @@
 
 Returns a [`Result`](@ref).
 """
-function oneplusone(f::Function, ind::AbstractVector, k_max::Integer, M::MutationMethod)
+function oneplusone(f::Function, ind::AbstractVector, k_max::Integer, M::Mutator)
     fx = Inf  # works only on minimisation problems
     runtime = @elapsed @inbounds for _ in 1:k_max
         c = mutate(M, ind)
@@ -31,7 +31,7 @@ end
 
 # Logbook version
 function oneplusone(
-    logger::Logbook, f::Function, ind::AbstractVector, k_max::Integer, M::MutationMethod
+    logger::Logbook, f::Function, ind::AbstractVector, k_max::Integer, M::Mutator
 )
     fx = Inf  # works only on minimisation problems
     runtime = @elapsed @inbounds for _ in 1:k_max

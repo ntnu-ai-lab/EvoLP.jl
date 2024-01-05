@@ -21,7 +21,7 @@ function GA(
     k_max::Integer,
     S::ParentSelector,
     C::CrossoverMethod,
-    M::MutationMethod
+    M::Mutator
 )
     n = length(population)
 
@@ -49,7 +49,7 @@ function GA(
     k_max::Integer,
     S::ParentSelector,
     C::CrossoverMethod,
-    M::MutationMethod
+    M::Mutator
 )
     n = length(population)
 
@@ -79,7 +79,7 @@ function GA(
     k_max::Integer,
     S::ParentSelector,
     C::CrossoverMethod,
-    M::MutationMethod
+    M::Mutator
 )
     n = length(population)
 

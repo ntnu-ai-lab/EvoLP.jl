@@ -43,9 +43,10 @@ export TruncationSelector
 export select
 
 # Mutation
-export BitwiseMutation  # Binary
-export GaussianMutation  # Continuous
-export InsertMutation, InversionMutation, ScrambleMutation, SwapMutation  # Permutation
+export BitwiseMutator # Binary
+export GaussianMutator # Continous
+export InsertMutator, InversionMutator, ScrambleMutator, SwapMutator
+
 export mutate
 
 # Crossover
@@ -66,13 +67,18 @@ export Logbook
 export compute!
 export summarise
 
-# Deprecated functionality
-# Will be removed in the future
+# |=== Deprecated functionality ===|
+#
 export circle
 export flower
+
 export RankBasedSelectionGenerational, RankBasedSelectionSteady
 export RouletteWheelSelectionGenerational, RouletteWheelSelectionSteady
 export TournamentSelectionGenerational, TournamentSelectionSteady
 export TruncationSelectionGenerational, TruncationSelectionSteady
+
+export BitwiseMutation
+export GaussianMutation
+export InsertMutation, InversionMutation, ScrambleMutation, SwapMutation
 
 end

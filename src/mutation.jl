@@ -1,58 +1,78 @@
-"""
-Abstract MutationMethod.
-"""
-abstract type MutationMethod end
+# Mutation methods
+# ================
+# Mutators operate on a single individual and return a copy. No individual
+# is being modified. Some mutator composite types have parameters that
+# dictate how mutation is carried out.
+# Control the probability of performing a mutation directly in your algorithms.
 
 """
-Mutation methods here operate on a single individual.
-A `MutationMethod` type has a probability associated with it
-that dictates how mutation is carried out. All operators return
-a copy. No individual is being modified.
+Abstract Mutation Method.
 """
+abstract type Mutator end
+
+"""
+Abstract Mutator for real-valued individuals.
+"""
+abstract type ContinuousMutator <: Mutator end
+
+"""
+Abstract Mutator for binary individuals.
+"""
+abstract type BinaryMutator <: Mutator end
+
+"""
+Abstract Mutator for permutation individuals.
+"""
+abstract type PermutationMutator <: Mutator end
+
 
 # For binary individuals
 """
 Bitwise mutation with probability `λ` of flipping each bit.
 """
-struct BitwiseMutation <: MutationMethod
+struct BitwiseMutator <: BinaryMutator
     λ
 end
 
 """
-    mutate(M::BitwiseMutation, ind)
+    mutate(M::BitwiseMutator, ind)
 
 Randomly flips each bit with a probability `λ`.
 """
-@inline mutate(M::BitwiseMutation, ind; rng=Random.GLOBAL_RNG) = [rand(rng) < M.λ ? !v : v for v in ind]
+@inline function mutate(M::BitwiseMutator, ind; rng=Random.GLOBAL_RNG)
+    return [rand(rng) < M.λ ? !v : v for v in ind]
+end
 
 # For continuous individuals
 """
 Gaussian mutation with standard deviation `σ`, which should be a real number.
 """
-struct GaussianMutation <: MutationMethod
+struct GaussianMutator <: ContinuousMutator
     σ
 end
 
 """
-    mutate(M::GaussianMutation, ind)
+    mutate(M::GaussianMutator, ind)
 
 Randomly add Gaussian noise to the `ind` candidate solution, with a standard
 deviation of `σ`.
 """
-@inline mutate(M::GaussianMutation, ind; rng=Random.GLOBAL_RNG) = @fastmath ind + randn(rng, length(ind)) * M.σ
+@inline function mutate(M::GaussianMutator, ind; rng=Random.GLOBAL_RNG)
+    return @fastmath ind + randn(rng, length(ind)) * M.σ
+end
 
 # For permutation individuals
 """
 Swap mutation for permutation-based individuals.
 """
-struct SwapMutation <: MutationMethod end
+struct SwapMutator <: PermutationMutator end
 
 """
-    mutate(::SwapMutation, ind)
+    mutate(::SwapMutator, ind)
 
 Randomly swap the position of two alleles in the `ind` candidate solution.
 """
-function mutate(::SwapMutation, ind; rng=Random.GLOBAL_RNG)
+function mutate(::SwapMutator, ind; rng=Random.GLOBAL_RNG)
     indices = sample(rng, 1:length(ind), 2, replace=false)
     aux = ind[indices[1]]
     c = deepcopy(ind)
@@ -63,15 +83,15 @@ end
 """
 Insert mutation for permutation-based individuals.
 """
-struct InsertMutation <: MutationMethod end
+struct InsertionMutator <: PermutationMutator end
 
 """
-    mutate(::InsertMutation, ind)
+    mutate(::InsertionMutator, ind)
 
 Randomly choose two positions `a` and `b` from `ind`,
 insert at `a`+1 the element at position `b``, and shift the rest of the elements.
 """
-function mutate(::InsertMutation, ind; rng=Random.GLOBAL_RNG)
+function mutate(::InsertionMutator, ind; rng=Random.GLOBAL_RNG)
     indices = sample(rng, 1:length(ind), 2, replace=false, ordered=true)
     removed = splice!(ind, indices[2])
     insert!(ind, indices[1] + 1, removed)
@@ -81,15 +101,15 @@ end
 """
 Scramble mutation for permutation-based individuals.
 """
-struct ScrambleMutation <: MutationMethod end
+struct ScrambleMutator <: PermutationMutator end
 
 
 """
-    mutate(::ScrambleMutation, ind)
+    mutate(::ScrambleMutator, ind)
 
 Randomly scramble the subsequence between two random points in `ind`.
 """
-function mutate(::ScrambleMutation, ind; rng=Random.GLOBAL_RNG)
+function mutate(::ScrambleMutator, ind; rng=Random.GLOBAL_RNG)
     indices = sample(rng, 1:length(ind), 2, replace=false, ordered=true)
     c = deepcopy(ind)
     shift = c[indices[1]:indices[2]]
@@ -101,14 +121,14 @@ end
 """
 Inversion mutation for permutation-based individuals.
 """
-struct InversionMutation <: MutationMethod end
+struct InversionMutator <: PermutationMutator end
 
 """
-    mutate(::InversionMutation, ind)
+    mutate(::InversionMutator, ind)
 
 Invert the subsequence between two random points in `ind`.
 """
-function mutate(::InversionMutation, ind; rng=Random.GLOBAL_RNG)
+function mutate(::InversionMutator, ind; rng=Random.GLOBAL_RNG)
     indices = sample(rng, 1:length(ind), 2, replace=false, ordered=true)
     c = deepcopy(ind)
     shift = c[indices[1]:indices[2]]

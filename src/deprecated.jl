@@ -149,4 +149,75 @@ function RankBasedSelectionGenerational()
     return RankBasedSelector()
 end
 
+# mutation.jl
+
+# Mutation Method is no more
+@deprecate_binding MutationMethod Mutator
+
+# |--- Bitwise Mutation ---|
+
+function BitwiseMutation(λ)
+    depwarn(
+        "The `BitwiseMutation` type will be deprecated in a future release. " *
+        "Please use `BitwiseMutator(λ)` instead.",
+        :BitwiseMutation,
+    )
+    return BitwiseMutator(λ)
+end
+
+# |--- Gaussian Mutation ---|
+
+function GaussianMutation(σ)
+    depwarn(
+        "The `GaussianMutation` type will be deprecated in a future release. " *
+        "Please use `GaussianMutator(σ)` instead.",
+        :GaussianMutation,
+    )
+    return GaussianMutator(σ)
+end
+
+# |--- Insert Mutation ---|
+
+function InsertMutation()
+    depwarn(
+        "The `InsertMutation` type will be deprecated in a future release. " *
+        "Please use `InsertionMutator()` instead.",
+        :InsertMutation,
+    )
+    return InsertionMutator()
+end
+
+# |--- Inversion Mutation ---|
+
+function InversionMutation()
+    depwarn(
+        "The `InversionMutation` type will be deprecated in a future release. " *
+        "Please use `InversionMutator()` instead.",
+        :InversionMutation,
+    )
+    return InversionMutator()
+end
+
+# |--- Scramble Mutation ---|
+
+function ScrambleMutation()
+    depwarn(
+        "The `ScrambleMutation` type will be deprecated in a future release. " *
+        "Please use `ScrambleMutator()` instead.",
+        :ScrambleMutation,
+    )
+    return ScrambleMutator()
+end
+
+# |--- Swap Mutation ---|
+
+function SwapMutation()
+    depwarn(
+        "The `SwapMutation` type will be deprecated in a future release. " *
+        "Please use `SwapMutator()` instead.",
+        :SwapMutation,
+    )
+    return SwapMutator()
+end
+
 # END EvoLP 2.X.Y deprecations
