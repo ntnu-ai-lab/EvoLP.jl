@@ -36,11 +36,10 @@ export oneplusone
 export PSO
 
 # Selection
-export RankBasedSelectionGenerational, RouletteWheelSelectionGenerational
-export TruncationSelectionGenerational
+export RankBasedSelector
+export RouletteWheelSelector
 export TournamentSelector
-export RankBasedSelectionSteady, RouletteWheelSelectionSteady
-export TruncationSelectionSteady
+export TruncationSelector
 export select
 
 # Mutation
@@ -71,6 +70,9 @@ export summarise
 # Will be removed in the future
 export circle
 export flower
-export TournamentSelectionGenerational
-export TournamentSelectionSteady
+export RankBasedSelectionGenerational, RankBasedSelectionSteady
+export RouletteWheelSelectionGenerational, RouletteWheelSelectionSteady
+export TournamentSelectionGenerational, TournamentSelectionSteady
+export TruncationSelectionGenerational, TruncationSelectionSteady
+
 end

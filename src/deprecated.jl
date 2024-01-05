@@ -62,25 +62,91 @@ end
 
 # selection.jl
 
- @deprecate_binding SelectionMethod Selector
+# Selection Method is no more
+@deprecate_binding SelectionMethod Selector
 
- function TournamentSelectionGenerational(t)
+#|--- Tournament Selection ---|
+
+function TournamentSelectionGenerational(t)
     depwarn(
-      "The _Generational_ selectors will be deprecated in a future realase. " *
-      "Please use `TournamentSelector(t)` instead of `TournamentSelectionGenerational(t)` " *
-      "and update your algorithm to use it for each individual in the population.",
-      :TournamentSelectionGenerational,
+        "The _Generational_ selectors will be deprecated in a future release. " *
+        "Please use `TournamentSelector(t)` instead of `TournamentSelectionGenerational(t)` " *
+        "and update your algorithm to use it for each individual in the population.",
+        :TournamentSelectionGenerational,
     )
     return TournamentSelector(t)
- end
+end
 
- function TournamentSelectionSteady(t)
+function TournamentSelectionSteady(t)
     depwarn(
-      "The `TournamentSelectionSteady` type will be deprecated in a future realase. " *
-      "Please use `TournamentSelector(k)` instead.",
-      :TournamentSelectionSteady,
+        "The `TournamentSelectionSteady` type will be deprecated in a future release. " *
+        "Please use `TournamentSelector(k)` instead.",
+        :TournamentSelectionSteady,
     )
     return TournamentSelector(t)
- end
+end
+
+#|--- Truncation Selection ---|
+
+function TruncationSelectionSteady(k)
+    depwarn(
+        "The `TruncationSelectionSteady` type will be deprecated in a future release. " *
+        "Please use `TruncationSelector(k)` instead.",
+        :TournamentSelectionSteady,
+    )
+    return TruncationSelector(k)
+end
+
+function TruncationSelectionGenerational(k)
+    depwarn(
+        "The _Generational_ selectors will be deprecated in a future release. " *
+        "Please use `TruncationSelector(k)` instead of `TruncationSelectionGenerational(k)` " *
+        "and update your algorithm to use it for each individual in the population.",
+        :TruncationSelectionGenerational,
+    )
+    return TruncationSelector(k)
+end
+
+#|--- Roulette Wheel Selection ---|
+
+function RouletteWheelSelectionSteady()
+    depwarn(
+        "The `RouletteWheelSelectionSteady` type will be deprecated in a future release. " *
+        "Please use `RouletteWheelSelector()` instead.",
+        :RouletteWheelSelectionSteady,
+    )
+    return RouletteWheelSelector()
+end
+
+function RouletteWheelSelectionGenerational()
+    depwarn(
+        "The _Generational_ selectors will be deprecated in a future release. " *
+        "Please use `RouletteWheelSelector()` instead of `RouletteWheelSelectionGenerational()` " *
+        "and update your algorithm to use it for each individual in the population.",
+        :RouletteWheelSelectionGenerational,
+    )
+    return RouletteWheelSelector()
+end
+
+#|--- Rank Based Selection ---|
+
+function RankBasedSelectionSteady()
+    depwarn(
+        "The `RankBasedSelectionSteady` type will be deprecated in a future release. " *
+        "Please use `RankBasedSelector()` instead.",
+        :RankBasedSelectionSteady,
+    )
+    return RankBasedSelector()
+end
+
+function RankBasedSelectionGenerational()
+    depwarn(
+        "The _Generational_ selectors will be deprecated in a future release. " *
+        "Please use `RankBasedSelector()` instead of `RankBasedSelectionGenerational()` " *
+        "and update your algorithm to use it for each individual in the population.",
+        :RankBasedSelectionGenerational,
+    )
+    return RankBasedSelector()
+end
 
 # END EvoLP 2.X.Y deprecations
