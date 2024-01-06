@@ -13,6 +13,11 @@ Some of the selectors have parameters you can adjust.
 
 ## Choosing a selection operator
 
+!!! warning "Deprecated from EvoLP 1.3"
+    All selection operators have been **renamed** to _selectors_ since EvoLP 1.3.
+    The old names will be **deprecated** in a future major release.
+    Be sure to check the new [type ontology](../man/extending.md).
+
 EvoLP provides many built-in selectors.
 
 ```@docs

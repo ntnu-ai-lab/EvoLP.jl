@@ -60,34 +60,34 @@ In a GA, we have *selection*, *crossover* and *mutation*.
 We can easily set up these operators using the built-ins provided by EvoLP. Let's use rank based selection and interpolation crossover with 0.5 as the scaling factor:
 
 ```julia
-@doc InterpolationCrossover
+@doc InterpolationRecombinator
 ```
 
 > Interpolation crossover with scaling parameter ``λ``.
 
 ```julia
-S = RankBasedSelectionGenerational()
-C = InterpolationCrossover(0.5)
+S = RankBasedSelector()
+C = InterpolationRecombinator(0.5)
 ```
 
 ```text
-InterpolationCrossover(0.5)
+InterpolationRecombinator(0.5)
 ```
 
 For mutation, we can use Gaussian noise:
 
 ```julia
-@doc GaussianMutation
+@doc GaussianMutator
 ```
 
 > Gaussian mutation with standard deviation `σ`, which should be a real number.
 
 ```julia
-M = GaussianMutation(0.05)
+M = GaussianMutator(0.05)
 ```
 
 ```text
-GaussianMutation(0.05)
+GaussianMutator(0.05)
 ```
 
 Now we can set up the [`Logbook`](@ref) to record statistics about our run:
@@ -121,9 +121,9 @@ GA(logbook::Logbook, f::Function, population, k_max, S, C, M)
   > * `f`: Objective function to minimise
   > * `population`: a list of individuals.
   > * `k_max`: maximum iterations
-  > * `S::SelectionMethod`: a selection method. See selection.
-  > * `C::CrossoverMethod`: a crossover method. See crossover.
-  > * `M::MutationMethod`: a mutation method. See mutation.
+  > * `S::Selector`: a selection method. See selection.
+  > * `C::Recombinator`: a crossover method. See crossover.
+  > * `M::Mutator`: a mutation method. See mutation.
 >
 > Returns a [`Result`](@ref).
 

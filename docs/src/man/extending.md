@@ -1,6 +1,18 @@
-# Creating your own blocks
+# Extending EvoLP
 
-If you want to experiment with new _building blocks_, you can create your own by using the _abstract_ block types as a supertype of your own mutators, selectors and crossover methods.
+EvoLP was designed with extensibility in mind, by using Julia's dynamic dispatch ability to keep things simple.
+
+We have 3 main functions (`select`, `cross` and `mutate`) which will perform differently depending on the parameters passed.
+By passing a specific _type_, we ensure that the selection/recombination/mutation acts how we expect to.
+The available type hierarchy in EvoLP.jl looks like the following:
+
+![Block hierarchy](../assets/block-hierarchy.png)
+
+In the image above, the abstract types are highlighted in bold font. The composite types (those you can instantiate) are marked with dotted lines, and those with parameters are bounded in a grey box.
+
+## Creating your own blocks
+
+If you want to experiment with new _building blocks_, you can create your own by using the _abstract_ block types as a supertype of your own selectors, mutators and recombinators.
 These abstract blocks are the following:
 
 ```@autodocs
@@ -9,25 +21,27 @@ Public = false
 Order = [:type]
 ```
 
-These abstract types are **not exported** in EvoLP, which means that you will not see them if you used `using EvoLP` in your code. You need to access them directly, by writing `EvoLP.<theabstractblock>`.
+The abstract types are **not exported** in EvoLP, which means that you will not see them if you used `using EvoLP` in your code.
+You need to access them directly, by writing `EvoLP.<theabstractblock>`.
 
-Once you have your own type, you need to explicitly code how the _block_ should operate. This is done by creating a new function: [`select`](@ref), [`cross`](@ref) or [`mutate`](@ref), depending on what your abstract supertype is.
+Once you have your own type, you need to explicitly code how the _block_ should operate. This is done by creating a new method of the [`select`](@ref), [`cross`](@ref) or [`mutate`](@ref) functions, depending on what your abstract supertype is.
 
 After that, you can use the new blocks in your algorithms like any of the other built-in blocks.
 
 ## A hypothetical example
 
-You can use the corresponding `AbstractType` to create a new mutation method called `MyCrazyMutation` like so:
+You can use the corresponding `AbstractType` to create a new mutation method called `MyCrazyMutation`.
+This new mutator would work on a real-valued vector, so it should be a sub-type of the `ContinuousMutator` abstract type:
 
 ```julia
-struct MyCrazyMutation <: EvoLP.MutationMethod
+struct MyCrazyMutation <: EvoLP.ContinuousMutator
     param1
     param2
     param3
 end
 ```
 
-Then, we will create a new function `mutate` which will look something like the following:
+Then, we can code a new method for the `mutate` function, which will look something like the following:
 
 ```julia
 function mutate(M::MyCrazyMutation, ind; rng=Random.GLOBAL_RNG)
@@ -56,4 +70,4 @@ end
 
 ## A word about randomisation
 
-If using random numbers (for example in crossover or mutation operators) it is always a good idea to pass to your function a random number generator instance. In this way, your code can be both used for unit testing as well as for constructing shareable examples that are reproducible for the sake of science.
+If using random numbers (for example in crossover or mutation operators) it is always a good idea to pass to your function a random number generator instance. In this way, your code can be used both for unit testing as well as for constructing shareable examples that are reproducible for the sake of science.

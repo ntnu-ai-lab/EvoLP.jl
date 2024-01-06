@@ -38,7 +38,7 @@ For this problem, we can divide the constraints in _vertical_, _horizontal_ and 
 
 Interestingly enough, the vertical and horizontal clashes can be dealt with by using a vector of **permutations** where the _genes_ (index of the vector) represent a column and the _alleles_ (values the index can take) represent the row used in that column:
 
-![A possible representation of the 8-queen problem](../assets/8-queens03.png)
+![A possible representation of the 8-queens problem](../assets/8-queens03.png)
 
 For the phenotype above, the genotype representation would look like this:
 
@@ -137,7 +137,7 @@ However, since we're dealing with permutations, we are restricted to use specifi
 EvoLP contains some operators that can deal with permutation-based individuals:
 
 ```julia
-julia> @doc TournamentSelectionSteady
+julia> @doc TournamentSelector
 ```
 
 ```text
@@ -145,7 +145,7 @@ Tournament parent selection with tournament size ``k``.
 ```
 
 ```julia
-julia> @doc OrderOneCrossover
+julia> @doc OX1Recombinator
 ```
 
 ```text
@@ -153,7 +153,7 @@ Order 1 crossover (OX1) for permutation-based individuals.
 ```
 
 ```julia
-julia> @doc SwapMutation
+julia> @doc SwapMutator
 ```
 
 ```text
@@ -163,9 +163,9 @@ Swap mutation for permutation-based individuals.
 We can now _instantiate_ them and continue.
 
 ```julia
-S = TournamentSelectionSteady(5);
-C = OrderOneCrossover();
-M = SwapMutation();
+S = TournamentSelector(5);
+C = OX1Recombinator();
+M = SwapMutator();
 ```
 
 ### Logging statistics
@@ -191,9 +191,9 @@ In this case, we will use a _steady-state_ GA: instead of replacing the whole po
 Let's do a summary then:
 
 - The representation is a **vector** of **permutations of integers** with values in the closed range ``[1,8]``.
-- To **select** the **parents**, we use the [`TournamentSelectionSteady`](@ref) operator with a tournament size of 5.
-- To **recombine** the parents, we use the [`OrderOneCrossover`](@ref) operator.
-- To **mutate** a candidate solution, we use the [`SwapMutation`](@ref) operator.
+- To **select** the **parents**, we use the [`TournamentSelector`](@ref) operator with a tournament size of 5.
+- To **recombine** the parents, we use the [`OX1Recombinator`](@ref) operator.
+- To **mutate** a candidate solution, we use the [`SwapMutator`](@ref) operator.
 - To **select** the **survivors**, we _replace the worst_ individuals.
 - With a **population size** `pop_size` of 100.
 - With a **random initialisation** using the generator [`permutation_vector_pop`](@ref).
