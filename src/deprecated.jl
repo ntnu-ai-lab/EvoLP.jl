@@ -220,4 +220,65 @@ function SwapMutation()
     return SwapMutator()
 end
 
+# crossover.jl
+
+# Crossover Method is no more
+@deprecate_binding CrossoverMethod Recombinator
+
+# |--- Single Point Crossover ---|
+
+function SinglePointCrossover()
+    depwarn(
+        "The `SinglePointCrossover` type will be deprecated in a future release. " *
+        "Please use `SinglePointRecombinator()` instead.",
+        :SinglePointCrossover,
+    )
+    return SinglePointRecombinator()
+end
+
+# |--- Two Point Crossover ---|
+
+function TwoPointCrossover()
+    depwarn(
+        "The `TwoPointCrossover` type will be deprecated in a future release. " *
+        "Please use `TwoPointRecombinator()` instead.",
+        :TwoPointCrossover,
+    )
+    return TwoPointRecombinator()
+end
+
+# |--- Uniform Crossover ---|
+
+function UniformCrossover()
+    depwarn(
+        "The `UniformCrossover` type will be deprecated in a future release. " *
+        "Please use `UniformRecombinator()` instead.",
+        :UniformCrossover,
+    )
+    return UniformRecombinator()
+end
+
+# |--- Interpolation Crossover ---|
+
+function InterpolationCrossover(λ)
+    depwarn(
+        "The `InterpolationCrossover` type will be deprecated in a future release. " *
+        "Please use `InterpolationRecombinator(λ)` instead.",
+        :InterpolationCrossover,
+    )
+    return InterpolationRecombinator(λ)
+end
+
+# |--- Order One Crossover ---|
+
+function OrderOneCrossover()
+    depwarn(
+        "The `OrderOneCrossover` type will be deprecated in a future release. " *
+        "Please use `OX1Recombinator()` instead.",
+        :OrderOneCrossover,
+    )
+    return OX1Recombinator()
+end
+
+
 # END EvoLP 2.X.Y deprecations

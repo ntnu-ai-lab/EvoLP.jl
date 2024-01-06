@@ -20,7 +20,7 @@ function GA(
     population::AbstractVector,
     k_max::Integer,
     S::ParentSelector,
-    C::CrossoverMethod,
+    C::Recombinator,
     M::Mutator
 )
     n = length(population)
@@ -48,7 +48,7 @@ function GA(
     population::AbstractVector,
     k_max::Integer,
     S::ParentSelector,
-    C::CrossoverMethod,
+    C::Recombinator,
     M::Mutator
 )
     n = length(population)
@@ -78,7 +78,7 @@ function GA(
     population::AbstractVector,
     k_max::Integer,
     S::ParentSelector,
-    C::CrossoverMethod,
+    C::Recombinator,
     M::Mutator
 )
     n = length(population)

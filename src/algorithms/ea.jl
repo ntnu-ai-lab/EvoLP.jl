@@ -9,7 +9,7 @@
 - `f::Function`: objective function to **minimise**.
 - `ind::AbstractVector`: individual to start the evolution.
 - `k_max::Integer`: number of iterations.
-- `M::MutationMethod`: one of the available [`MutationMethod`](@ref).
+- `M::Mutator`: one of the available [`Mutator`](@ref).
 
 Returns a [`Result`](@ref).
 """

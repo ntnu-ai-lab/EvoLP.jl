@@ -46,12 +46,12 @@ export select
 export BitwiseMutator # Binary
 export GaussianMutator # Continous
 export InsertMutator, InversionMutator, ScrambleMutator, SwapMutator
-
 export mutate
 
 # Crossover
-export SinglePointCrossover, TwoPointCrossover, UniformCrossover, InterpolationCrossover
-export OrderOneCrossover
+export SinglePointRecombinator, TwoPointRecombinator, UniformRecombinator  # Numeric
+export InterpolationRecombinator  # Continuous
+export OX1Recombinator  # Permutation
 export cross
 
 # Optimisation test functions
@@ -68,17 +68,24 @@ export compute!
 export summarise
 
 # |=== Deprecated functionality ===|
-#
+
+# Test functions
 export circle
 export flower
 
+# Selection methods
 export RankBasedSelectionGenerational, RankBasedSelectionSteady
 export RouletteWheelSelectionGenerational, RouletteWheelSelectionSteady
 export TournamentSelectionGenerational, TournamentSelectionSteady
 export TruncationSelectionGenerational, TruncationSelectionSteady
 
+# Mutation methods
 export BitwiseMutation
 export GaussianMutation
 export InsertMutation, InversionMutation, ScrambleMutation, SwapMutation
 
+# Crossover methods
+export SinglePointCrossover, TwoPointCrossover, UniformCrossover
+export InterpolationCrossover
+export OrderOneCrossover
 end
