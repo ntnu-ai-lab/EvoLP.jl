@@ -280,5 +280,19 @@ function OrderOneCrossover()
     return OX1Recombinator()
 end
 
+# algorithms
 
-# END EvoLP 2.X.Y deprecations
+# swarm.jl
+
+@deprecate PSO(logger::Logbook, f::Function, population::Vector{Particle}, k_max::Integer; w=1, c1=1, c2=1) PSO!(logger::Logbook, f::Function, population::Vector{Particle}, k_max::Integer; w=1, c1=1, c2=1)
+
+# ea.jl
+
+@deprecate oneplusone(logger::Logbook, f::Function, ind::AbstractVector, k_max::Integer, M::Mutator) oneplusone!(logger::Logbook, f::Function, ind::AbstractVector, k_max::Integer, M::Mutator)
+
+# ga.jl
+
+@deprecate GA(logbook::Logbook, f::Function, population::AbstractVector, k_max::Integer, S::ParentSelector, C::Recombinator, M::Mutator) GA!(logbook::Logbook, f::Function, population::AbstractVector, k_max::Integer, S::ParentSelector, C::Recombinator, M::Mutator)
+@deprecate GA(notebooks::Vector{Logbook}, f::Function, population::AbstractVector, k_max::Integer, S::ParentSelector, C::Recombinator, M::Mutator) GA!(notebooks::Vector{Logbook}, f::Function, population::AbstractVector, k_max::Integer, S::ParentSelector, C::Recombinator, M::Mutator)
+
+    # END EvoLP 2.X.Y deprecations

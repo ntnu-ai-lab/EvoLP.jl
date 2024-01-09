@@ -42,7 +42,7 @@ function GA(
 end
 
 # Logbook version
-function GA(
+function GA!(
     logbook::Logbook,
     f::Function,
     population::AbstractVector,
@@ -72,7 +72,7 @@ function GA(
 end
 
 # 2-logbook version
-function GA(
+function GA!(
     notebooks::Vector{Logbook},
     f::Function,
     population::AbstractVector,

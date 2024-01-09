@@ -30,7 +30,7 @@ function oneplusone(f::Function, ind::AbstractVector, k_max::Integer, M::Mutator
 end
 
 # Logbook version
-function oneplusone(
+function oneplusone!(
     logger::Logbook, f::Function, ind::AbstractVector, k_max::Integer, M::Mutator
 )
     fx = Inf  # works only on minimisation problems

@@ -7,14 +7,14 @@ myrng = StableRNG(123)
 @info "Testing mutators"
 @testset verbose = true "Mutator test" begin
     @testset "Bitwise" begin
-        M = BitwiseMutation(1/8)
+        M = BitwiseMutator(1/8)
         x = binary_vector_pop(1, 8, rng=myrng)[1]  # 1. randpop
         c = mutate(M, x; rng=myrng) # 2. rand(myrng, 8) results in flipping 3rd bit
         @test c == Bool[1, 1, 1, 1, 0, 1, 0, 0]
     end
 
     @testset "Gaussian" begin
-        G = GaussianMutation(0.5)
+        G = GaussianMutator(0.5)
         x = [0, 0, 0, 0, 0, 0, 0, 0]
         c = mutate(G, x; rng=myrng) # 3. randn(myrng, 8) results in the following vector
         v = [
@@ -31,14 +31,14 @@ myrng = StableRNG(123)
     end
 
     @testset "Swap" begin
-        S = SwapMutation()
+        S = SwapMutator()
         x = [1, 2, 3, 4, 5, 6, 7, 8]
         c = mutate(S, x; rng=myrng)  # sample(myrng, 1:8, 2, replace=false) == 3, 7
         @test c == [1, 2, 7, 4, 5, 6, 3, 8]
     end
 
     @testset "Insert" begin
-        I = InsertMutation()
+        I = InsertionMutator()
         x = [1, 2, 3, 4, 5, 6, 7, 8]
         c = mutate(I, x; rng=myrng) # sample(myrng, 1:8, 2, replace=false, ordered=true)
         # results in [4, 6]
@@ -46,7 +46,7 @@ myrng = StableRNG(123)
     end
 
     @testset "Scramble" begin
-        S = ScrambleMutation()
+        S = ScrambleMutator()
         x = [1, 2, 3, 4, 5, 6, 7, 8]
         c = mutate(S, x; rng=myrng)  # sample(myrng, 1:8, 2, replace=false, ordered=true)
         # results in [3, 7]
@@ -55,7 +55,7 @@ myrng = StableRNG(123)
     end
 
     @testset "Inversion" begin
-        I = InversionMutation()
+        I = InversionMutator()
         x = [1, 2, 3, 4, 5, 6, 7, 8]
         c = mutate(I, x; rng=myrng)  # sample(myrng, 1:8, 2, replace=false, ordered=true)
         # results in [5, 6]

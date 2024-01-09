@@ -31,9 +31,9 @@ export permutation_vector_pop  # Permutation vectors
 export Particle, normal_rand_particle_pop, unif_rand_particle_pop  # Particles
 
 # Algorithms
-export GA
-export oneplusone
-export PSO
+export GA, GA!
+export oneplusone, oneplusone!
+export PSO, PSO!
 
 # Selection
 export RankBasedSelector
@@ -45,7 +45,7 @@ export select
 # Mutation
 export BitwiseMutator # Binary
 export GaussianMutator # Continous
-export InsertMutator, InversionMutator, ScrambleMutator, SwapMutator
+export InsertionMutator, InversionMutator, ScrambleMutator, SwapMutator
 export mutate
 
 # Crossover
@@ -56,7 +56,8 @@ export cross
 
 # Optimisation test functions
 export onemax, leadingones, jumpk  # Pseudoboolean
-export ackley, booth, branin, michalewicz, rosenbrock, wheeler  # Continuous
+export booth, branin, rosenbrock, wheeler  # Continuous unimodal
+export ackley, eggholder, michalewicz, rana # Continuous multimodal
 
 # Results
 export Result
