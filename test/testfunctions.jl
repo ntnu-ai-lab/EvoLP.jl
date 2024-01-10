@@ -1,11 +1,8 @@
 using EvoLP
 using Test
-using StableRNGs
-
-myrng = StableRNG(123)
 
 @info "Testing Benchmark functions"
-@testset verbose = true "Benchmark test" begin
+@testset verbose = true "Test functions" begin
     @testset "OneMax" begin
         x = ones(10)
         @test onemax(x) == 10
@@ -52,6 +49,16 @@ myrng = StableRNG(123)
         @test branin(z) ≈ 0.397887 atol = 0.001
     end
 
+    @testset "Egg Holder" begin
+        x = [512, 404.231805]
+        y = [481.462894, 436.929541, 451.769713]
+        z = [485.589834, 436.123707, 451.083199, 466.431218, 421.958519]
+        # known optima
+        @test eggholder(x) ≈ -959.64066270 atol = 0.001
+        @test eggholder(y) ≈ -1888.3213909 atol = 0.001
+        @test eggholder(z) ≈ -3719.7248363 atol = 0.001
+    end
+
     @testset "Michalewicz" begin
         x = [2.202906, 1.570796]
         y = [2.202906, 1.570796, 1.284992]
@@ -60,6 +67,16 @@ myrng = StableRNG(123)
         @test michalewicz(x) ≈ -1.8013 atol = 0.001
         @test michalewicz(y) ≈ -2.7603 atol = 0.001
         @test michalewicz(z) ≈ -4.6876 atol = 0.001
+    end
+
+    @testset "Rana" begin
+        x = [-488.632577, 512]
+        y = [-512, -512, -511.995602]
+        z = [-512, -512, -512, -512, -511.995602]
+        # known optima
+        @test rana(x) ≈ -511.7328819 atol = 0.001
+        @test rana(y) ≈ -1023.4166105 atol = 0.001
+        @test rana(z) ≈ -2046.8320657 atol = 0.001
     end
 
     @testset "Rosenbrock" begin

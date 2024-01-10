@@ -72,7 +72,7 @@ f(x) = -a \\exp\\left(-b\\sqrt{\\frac{1}{d} \\sum_{i=1}^d x_i^2}\\right)
 - \\exp\\left(\\frac{1}{d} \\sum_{i=1}{d} \\cos (cx_i) \\right) + a + \\exp(1)
 ```
 """
-@inline function ackley(x; a=20, b=0.2, c=2π)
+@inline function ackley(x::Vector{T} where {T<:Real}; a=20, b=0.2, c=2π)
     d = length(x)
     return -a * exp(-b * sqrt(sum(x .^ 2) / d)) -
            exp(sum(cos.(c * xi) for xi in x) / d) + a + exp(1)
@@ -86,7 +86,9 @@ The **Booth** function is a 2-dimensional quadratic function with global minimum
 f(x) = (x_1 + 2x_2 - 7)^2 + (2 x_1 + x_2 - 5)^2
 ```
 """
-@inline booth(x) = (x[1] + 2 * x[2] - 7)^2 + (2 * x[1] + x[2] - 5)^2
+@inline function booth(x::Vector{T} where {T<:Real})
+    return (x[1] + 2 * x[2] - 7)^2 + (2 * x[1] + x[2] - 5)^2
+end
 
 
 """
@@ -102,7 +104,8 @@ with ``f(x^*) \\approx 0.397887``.
 f(x) = a(x_2 - bx_1^2 + cx_1 - r)^2 + s(1 - t)\\cos(x_1) + s
 ```
 """
-@inline function branin(x; a=1, b=5.1 / (4π^2), c=5 / π, r=6, s=10, t=1 / (8π))
+@inline function branin(x::Vector{T} where {T<:Real};
+            a=1, b=5.1 / (4π^2), c=5 / π, r=6, s=10, t=1 / (8π))
     return a * (x[2] - b * x[1]^2 + c * x[1] - r)^2 + s * (1 - t) * cos(x[1]) + s
 end
 
@@ -132,7 +135,7 @@ where `m` controls the steepness. `m` is usually set at 10. For 2 dimensions,
 f(x) = -\\sum_{i=1}^{d}\\sin(x_i) \\sin^{2m}\\left(\\frac{ix_i^2}{\\pi}\\right)
 ```
 """
-@inline function michalewicz(x; m=10)
+@inline function michalewicz(x::Vector{T} where {T<:Real}; m=10)
     return -sum(sin(v) * sin(i * v^2 / π)^(2m) for (i, v) in enumerate(x))
 end
 
@@ -168,7 +171,7 @@ minimum is at ``f([1, \\dots, 1]) = 0``
 f(x) = \\sum_{i=1}^{d-1} \\left[b(x_{i+1} - x_i^2)^2 + (x_i - 1)^2 \\right]
 ```
 """
-@inline function rosenbrock(x; b=100)
+@inline function rosenbrock(x::Vector{T} where {T<:Real}; b=100)
     n = length(x)
     return sum([b * (x[i+1] - x[i]^2)^2 + (x[i] - 1)^2 for i in 1:n-1])
 end
@@ -184,4 +187,6 @@ With ``a`` (by default at 1.5) ``x^* = [1, 1.5]``, with ``f(x^*) = -1``.
 f(x) = - \\exp(- (x_1 x_2 - a)^2 - (x_2 - a)^2 )
 ```
 """
-@inline wheeler(x, a=1.5) = -exp(-(x[1] * x[2] - a)^2 - (x[2] - a)^2)
+@inline function wheeler(x::Vector{T} where {T<:Real}; a=1.5)
+    return -exp(-(x[1] * x[2] - a)^2 - (x[2] - a)^2)
+end
