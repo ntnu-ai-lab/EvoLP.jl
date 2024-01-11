@@ -9,11 +9,11 @@
 - `f::Function`: objective function to **minimise**.
 - `ind::AbstractVector`: individual to start the evolution.
 - `k_max::Integer`: number of iterations.
-- `M::MutationMethod`: one of the available [`MutationMethod`](@ref).
+- `M::Mutator`: one of the available [`Mutator`](@ref).
 
 Returns a [`Result`](@ref).
 """
-function oneplusone(f::Function, ind::AbstractVector, k_max::Integer, M::MutationMethod)
+function oneplusone(f::Function, ind::AbstractVector, k_max::Integer, M::Mutator)
     fx = Inf  # works only on minimisation problems
     runtime = @elapsed @inbounds for _ in 1:k_max
         c = mutate(M, ind)
@@ -30,8 +30,8 @@ function oneplusone(f::Function, ind::AbstractVector, k_max::Integer, M::Mutatio
 end
 
 # Logbook version
-function oneplusone(
-    logger::Logbook, f::Function, ind::AbstractVector, k_max::Integer, M::MutationMethod
+function oneplusone!(
+    logger::Logbook, f::Function, ind::AbstractVector, k_max::Integer, M::Mutator
 )
     fx = Inf  # works only on minimisation problems
     runtime = @elapsed @inbounds for _ in 1:k_max

@@ -2,34 +2,36 @@
 
 Parent selection operators (a.k.a. _selectors_) in EvoLP are based on fitness and are used to select individuals for **crossover**. The selectors always return **indices** so that individuals can be selected from the population later.
 
-These methods come in two variants: _steady-state_ and _generational_.
-_Steady-state_ operators return two parent indices, while _generational_ operators return a list of two parent indices for each fitness in the population.
+All of these methods perform a single operation, as in a  _steady-state_ algorithm.
+Each selector returns two parent indices.
 
-In other words, _steady-state_ variants perform one selection, while _generational_ variants perform ``n`` selections.
+For _generational_ algorithms, you need to repeat the selection ``n`` times; once per each individual in the population.
 
-Regardless of the variant, all operators are derived from the [`EvoLP.SelectionMethod`](@ref) abstract type and some of them have parameters you can adjust.
+All operators are derived from the [`EvoLP.ParentSelector`](@ref) abstract type, which is itself derived from the [`EvoLP.Selector`](@ref) abstract super type.
+Some of the selectors have parameters you can adjust.
 
 ## Choosing a selection operator
+
+!!! warning "Deprecated from EvoLP 1.4"
+    All selection operators have been **renamed** to _selectors_ since EvoLP 1.4.
+    The old names will be **deprecated** in a future major release.
+    Be sure to check the new [type ontology](../man/extending.md).
 
 EvoLP provides many built-in selectors.
 
 ```@docs
-TournamentSelectionSteady
-TournamentSelectionGenerational
-TruncationSelectionSteady
-TruncationSelectionGenerational
+TournamentSelector
+TruncationSelector
 ```
 
 ```@docs
-RouletteWheelSelectionSteady
-RouletteWheelSelectionGenerational
-RankBasedSelectionSteady
-RankBasedSelectionGenerational
+RouletteWheelSelector
+RankBasedSelector
 ```
 
 ## Performing the selection
 
-After "instantiating" a selection method, you can use the `select` function on an array of fitnesses `y` to obtain **parents' indices** (that you will need to slice from the population in your algorithm later.)
+After "instantiating" a selection method, you can use the `select` function on an array of fitnesses `y` to obtain 2 **parents' indices** (that you will need to slice from the population in your algorithm later.)
 
 ```@docs
 select

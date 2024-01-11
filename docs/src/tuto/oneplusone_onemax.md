@@ -60,10 +60,10 @@ firstborn = binary_vector_pop(1, ind_size)[1]
     1
 ```
 
-Since the 1+1 EA works on a single individual, we only have the _mutation step_. We can set up the appropriate mutation operator: [`BitwiseMutation`](@ref).
+Since the 1+1 EA works on a single individual, we only have the _mutation step_. We can set up the appropriate mutation operator: [`BitwiseMutator`](@ref).
 
 ```julia
-@doc BitwiseMutation
+@doc BitwiseMutator
 ```
 
 > Bitwise mutation with probability `λ` of flipping each bit.
@@ -71,11 +71,11 @@ Since the 1+1 EA works on a single individual, we only have the _mutation step_.
 This mutation operator needs a probability ``\lambda`` for flipping each bit, so we pass it like so:
 
 ```julia
-Mut = BitwiseMutation(1/ind_size)
+Mut = BitwiseMutator(1/ind_size)
 ```
 
 ```text
-BitwiseMutation(0.06666666666666667)
+BitwiseMutator(0.06666666666666667)
 ```
 
 Now on to the fitness function. Since EvoLP is built for _minimisation_, in order to do _maximisation_ we need to optimise for the _negative_ of **OneMax**:
@@ -119,7 +119,7 @@ oneplusone(logger::Logbook, f::Function, ind, k_max, M)
 > - `f`: Objective function to minimise
 > - `ind`: Individual to start the evolution
 > - `k_max`: Maximum number of iterations
-> - `M::MutationMethod`: A mutation method. See mutation.
+> - `M::Mutator`: A mutation method. See mutation.
 >
 > Returns a [`Result`](@ref).
 

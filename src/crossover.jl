@@ -1,28 +1,46 @@
-"""
-Abstract CrossoverMethod.
-"""
-abstract type CrossoverMethod end
+# Crossover methods
+# =================
+# Crossover methods (or recombinators) operate on two parents `a` and `b` to generate
+# a new candidate solution. Some of the recombinators have parameters to control how
+# reproduction is performed. All operators return a single, new individual and
+# no individual is modified in the process.
+#
+# To obtain another individual during crossover, use the `cross` method swapping arguments:
+# `cross(S, a, b)` for one offspring, and `cross(S, b, a)` for the other.
 
 """
-Crossover methods operate on two parents `a` and `b` to generate
-a new candidate solution. Some of the `CrossoverMethod`s have
-parameters to control how the reproduction is performed. All
-operators return a new individual. No individual is modified in the process.
+Abstract recombinator.
 """
+abstract type Recombinator end
 
-# For numerical vector individuals
+"""
+Abstract numeric recombinator.
+"""
+abstract type NumericRecombinator <: Recombinator end
+
+"""
+Abstract permutation recombinator.
+"""
+abstract type PermutationRecombinator <: Recombinator end
+
+"""
+Abstract continuous recombinator.
+"""
+abstract type ContinuousRecombinator <: NumericRecombinator end
+
+# For numeric vector individuals
 """
 Single point crossover.
 """
-struct SinglePointCrossover <: CrossoverMethod end
+struct SinglePointRecombinator <: NumericRecombinator end
 
 """
-    cross(::SinglePointCrossover, a, b)
+    cross(::SinglePointRecombinator, a, b)
 
 Single point crossover between parents `a` and `b`, at a
 random point in the chromosome.
 """
-function cross(::SinglePointCrossover, a, b; rng=Random.GLOBAL_RNG)
+function cross(::SinglePointRecombinator, a, b; rng=Random.GLOBAL_RNG)
     i = rand(rng, eachindex(a))
     return vcat(a[begin:i], b[i+1:end])
 end
@@ -30,15 +48,15 @@ end
 """
 Two point crossover.
 """
-struct TwoPointCrossover <: CrossoverMethod end
+struct TwoPointRecombinator <: NumericRecombinator end
 
 """
-    cross(::TwoPointCrossover, a, b)
+    cross(::TwoPointRecombinator, a, b)
 
 Two point crossover between parents `a` and `b`, at two
 random points in the chromosome.
 """
-function cross(::TwoPointCrossover, a, b; rng=Random.GLOBAL_RNG)
+function cross(::TwoPointRecombinator, a, b; rng=Random.GLOBAL_RNG)
     i, j = rand(rng, eachindex(a), 2)
 
     if i > j
@@ -51,15 +69,15 @@ end
 """
 Uniform crossover.
 """
-struct UniformCrossover <: CrossoverMethod end
+struct UniformRecombinator <: NumericRecombinator end
 
 """
-    crossover(::UniformCrossover, a, b)
+    crossover(::UniformRecombinator, a, b)
 
 Uniform crossover between parents `a` and `b`. Each gene
 of the chromosome is randomly selected from one of the parents.
 """
-function cross(::UniformCrossover, a, b; rng=Random.GLOBAL_RNG)
+function cross(::UniformRecombinator, a, b; rng=Random.GLOBAL_RNG)
     child = copy(a)
 
     for i in eachindex(a)
@@ -72,34 +90,34 @@ end
 """
 Interpolation crossover with scaling parameter `λ`.
 """
-struct InterpolationCrossover <: CrossoverMethod
+struct InterpolationRecombinator <: ContinuousRecombinator
     λ
 end
 
 """
-	cross(C::InterpolationCrossover, a, b)
+	cross(C::InterpolationRecombinator, a, b)
 
 Linear Interpolation crossover between parents `a` and `b`.
 The resulting individual is the addition of a scaled version of
 each of the parents, using `C.λ` as a control parameter.
 """
-@inline cross(C::InterpolationCrossover, a, b) = @fastmath (1 - C.λ) * a + C.λ * b
+@inline cross(C::InterpolationRecombinator, a, b) = @fastmath (1 - C.λ) * a + C.λ * b
 
 # For permutation vector individuals
 
 """
 Order 1 crossover (OX1) for permutation-based individuals.
 """
-struct OrderOneCrossover <: CrossoverMethod end
+struct OX1Recombinator <: PermutationRecombinator end
 
 """
-    cross(::OrderOneCrossover, a, b)
+    cross(::OX1Recombinator, a, b)
 
 Order 1 crossover between permutation parents `a` and `b`.
 A substring from `a` is copied directly to the offspring, and the
 remaining values are copied in the order they appear in `b`.
 """
-function cross(::OrderOneCrossover, a, b; rng=Random.GLOBAL_RNG)
+function cross(::OX1Recombinator, a, b; rng=Random.GLOBAL_RNG)
     # NOTE: Slow
     indices = sample(rng, 2:length(a)-1, 2, replace=false, ordered=true)
     # Selected part from `a`

@@ -26,7 +26,7 @@ Additionally, you can extend EvoLP to create [new operators](man/extending.md).
 
 - Read the [quick start](man/quickstart.md) page for information about installation and to get a quick overview.
 - Browse some of the [examples](tuto/oneplusone_onemax.md) to see how to use the built-in algorithms.
-- For a more comprehensive tutorial, read the [8-queen problem](tuto/8_queen.md) where we make an algorithm from scratch.
+- For a more comprehensive tutorial, read the [8-queens problem](tuto/8_queen.md) where we make an algorithm from scratch.
 
 Alternatively, you can browse the [type](lib/types.md) and [functions](lib/functions.md) indices to view all available functionality.
 

@@ -49,7 +49,7 @@ pkg> add EvoLP
 
 - Read the **[documentation](https://ntnu-ai-lab.github.io/EvoLP.jl/)**.
 - Browse some of the **[examples](https://github.com/ntnu-ai-lab/EvoLP/tree/main/examples/)** to see how to use the built-in algorithms.
-- For a more comprehensive tutorial, read [the 8-queen problem](/examples/ga_k_queens.ipynb) where we construct an algorithm from scratch.
+- For a more comprehensive tutorial, read [the 8-queens problem](/examples/ga_k_queens.ipynb) where we construct an algorithm from scratch.
 
 ## Bug Reports
 

@@ -36,7 +36,7 @@ using EvoLP
 # your code here
 ```
 
-## The general  workflow
+## The general workflow
 
 A common workflow in EvoLP is somewhat similar to this:
 
