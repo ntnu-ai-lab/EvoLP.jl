@@ -5,7 +5,6 @@ Parent selection operators (a.k.a. _selectors_) in EvoLP are based on fitness an
 All of these methods perform a single operation, as in a  _steady-state_ algorithm.
 Each selector returns two parent indices.
 
-<!-- TODO: add a callout here? -->
 For _generational_ algorithms, you need to repeat the selection ``n`` times; once per each individual in the population.
 
 All operators are derived from the [`EvoLP.ParentSelector`](@ref) abstract type, which is itself derived from the [`EvoLP.Selector`](@ref) abstract super type.
@@ -13,8 +12,8 @@ Some of the selectors have parameters you can adjust.
 
 ## Choosing a selection operator
 
-!!! warning "Deprecated from EvoLP 1.3"
-    All selection operators have been **renamed** to _selectors_ since EvoLP 1.3.
+!!! warning "Deprecated from EvoLP 1.4"
+    All selection operators have been **renamed** to _selectors_ since EvoLP 1.4.
     The old names will be **deprecated** in a future major release.
     Be sure to check the new [type ontology](../man/extending.md).
 

@@ -8,8 +8,8 @@ Currently, crossover is only implemented for _vector_ individuals.
 
 ## Selecting a crossover operator
 
-!!! warning "Deprecated from EvoLP 1.3"
-    All crossover operators have been **renamed** to _recombinators_ since EvoLP 1.3.
+!!! warning "Deprecated from EvoLP 1.4"
+    All crossover operators have been **renamed** to _recombinators_ since EvoLP 1.4.
     The old names will be **deprecated** in a future major release.
     Be sure to check the new [type ontology](../man/extending.md).
 

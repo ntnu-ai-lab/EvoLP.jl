@@ -15,6 +15,7 @@ optimizer
 population
 iterations
 f_calls
+runtime
 ```
 
 All built-in [algorithms](algorithms.md) in EvoLP use the `Result` as their return value.

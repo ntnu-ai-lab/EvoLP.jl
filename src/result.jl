@@ -2,8 +2,14 @@
 
 
 """
-A type for reporting results of an algorithm: the optimum ``f(x^*)``, the optimizer ``x^*``,
-the population, the number of iterations and the number of function calls.
+A type for reporting results of an algorithm. In order, these are:
+
+1. the optimum ``f(x^*)``
+2. the optimizer ``x^*``
+3. the population
+4. the number of iterations
+5. the number of function calls
+6. the runtime.
 """
 struct Result
     fxstar  # optimum
@@ -11,7 +17,7 @@ struct Result
     population::AbstractVector  # population at last state
     n_iters::Int64 # pass the number of iterations
     n_evals::Int64  # number of individual evaluations
-    runtime::Float64
+    runtime::Float64  # execution time
 end
 
 """
