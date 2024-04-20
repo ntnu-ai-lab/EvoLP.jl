@@ -8,6 +8,7 @@
 [![Stable](https://img.shields.io/badge/docs-latest-blue.svg)](https://ntnu-ai-lab.github.io/EvoLP.jl/)
 [![Julia version](https://img.shields.io/badge/Julia-1.7+-blueviolet.svg?logo=julia)](https://julialang.org)
 [![GitHub](https://img.shields.io/github/license/ntnu-ai-lab/EvoLP)](https://github.com/ntnu-ai-lab/EvoLP/blob/main/LICENSE)
+[![All Contributors](https://img.shields.io/github/ntnu-ai-lab/EvoLP/all-contributors?color=ee8449&style=flat-square)](#contributors-)
 
 [![Code Style: Blue](https://img.shields.io/badge/code%20style-blue-blue.svg)](https://github.com/invenia/BlueStyle)
 [![ColPrac: Contributor's Guide on Collaborative Practices for Community Packages](https://img.shields.io/badge/ColPrac-Contributor's%20Guide-blueviolet)](https://github.com/SciML/ColPrac)
@@ -73,6 +74,44 @@ If you find EvoLP.jl useful in your work or research, we kindly request that you
   year = {2023}
 }
 ```
+
+## Contributors
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%">
+                <a href="https://github.com/saxorana">
+                <img src="https://avatars.githubusercontent.com/u/5231167?v=4" width="100px;" alt=""/><br />
+                    <sub><b>Xavier F. C. Sánchez-Díaz</b></sub>
+                </a><br />
+                <a href="#question-saxorana" title="Answering Questions">💬</a> 
+                <a href="https://github.com/all-contributors/all-contributors/commits?author=saxorana" title="Documentation">📖</a> 
+                <a href="https://github.com/all-contributors/all-contributors/pulls?q=is%3Apr+reviewed-by%3Asaxorana" title="Reviewed Pull Requests">👀</a> 
+                <a href="#talk-saxorana" title="Talks">📢</a>
+      </td>
+
+      <td align="center" valign="top" width="14.28%">
+                <a href="https://github.com/Jafagervik">
+                <img src="" width="100px;" alt="Jørgen A. Fagervik"/><br />
+                    <sub><b>Jørgen Aleksander Fagervik</b></sub>
+                </a><br />
+                <a href="#question-Jafagervik" title="Answering Questions">💬</a> 
+                <a href="https://github.com/ntnu-ai-lab/EvoLP/commits?author=Jafagervik" title="Documentation">📖</a> 
+                <a href="https://github.com/ntnu-ai-lab/EvoLP/pulls?q=is%3Apr+reviewed-by%3AJafagervik" title="Reviewed Pull Requests">👀</a> 
+                <a href="#talk-Jafagervik" title="Talks">📢</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## Acknowledgements
 
