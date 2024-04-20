@@ -84,16 +84,15 @@ If you find EvoLP.jl useful in your work or research, we kindly request that you
   <tbody>
     <tr>
       <td align="center" valign="top" width="14.28%">
-                <a href="https://github.com/saxorana">
+        <a href="https://github.com/saxorana">
                 <img src="https://avatars.githubusercontent.com/u/5231167?v=4" width="100px;" alt=""/><br />
-                    <sub><b>Xavier F. C. Sánchez-Díaz</b></sub>
-                </a><br />
-                <a href="#question-saxorana" title="Answering Questions">💬</a> 
-                <a href="https://github.com/all-contributors/all-contributors/commits?author=saxorana" title="Documentation">📖</a> 
-                <a href="https://github.com/all-contributors/all-contributors/pulls?q=is%3Apr+reviewed-by%3Asaxorana" title="Reviewed Pull Requests">👀</a> 
-                <a href="#talk-saxorana" title="Talks">📢</a>
+                <sub><b>Xavier F. C. Sánchez-Díaz</b></sub>
+            </a><br />
+            <a href="#question-saxorana" title="Answering Questions">💬</a> 
+            <a href="https://github.com/all-contributors/all-contributors/commits?author=saxorana" title="Documentation">📖</a> 
+            <a href="https://github.com/all-contributors/all-contributors/pulls?q=is%3Apr+reviewed-by%3Asaxorana" title="Reviewed Pull Requests">👀</a> 
+            <a href="#talk-saxorana" title="Talks">📢</a>
       </td>
-
       <td align="center" valign="top" width="14.28%">
                 <a href="https://github.com/Jafagervik">
                 <img src="" width="100px;" alt="Jørgen A. Fagervik"/><br />
