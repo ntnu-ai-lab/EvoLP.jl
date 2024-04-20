@@ -26,8 +26,8 @@ function SA(
     α::Real=0.99
 )
     fx = Inf
-    best_ind = copy(population)  # Initialize the best individual
-    T = T₀ # Initialize the temperature
+    best_ind = copy(population)
+    T = T₀
 
     runtime = @elapsed begin
         for _ in 1:k_max
