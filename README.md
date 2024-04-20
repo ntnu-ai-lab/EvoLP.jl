@@ -94,8 +94,8 @@ If you find EvoLP.jl useful in your work or research, we kindly request that you
             <a href="#talk-saxorana" title="Talks">📢</a>
       </td>
       <td align="center" valign="top" width="14.28%">
-                <a href="https://github.com/Jafagervik">
-                <img src="" width="100px;" alt="Jørgen A. Fagervik"/><br />
+                <a href="https://twitter.com/jafagervik/photo">
+                    <img src="" width="100px;" alt="Jørgen A. Fagervik"/><br />
                     <sub><b>Jørgen Aleksander Fagervik</b></sub>
                 </a><br />
                 <a href="#question-Jafagervik" title="Answering Questions">💬</a> 
