@@ -15,7 +15,7 @@ Returns a [`Result`](@ref).
 """
 function oneplusone(f::Function, ind::AbstractVector, k_max::Integer, M::Mutator)
     fx = Inf  # works only on minimisation problems
-    runtime = @elapsed @inbounds for _ in 1:k_max
+    runtime = @elapsed for _ in 1:k_max
         c = mutate(M, ind)
         fx, fc = f(ind), f(c)
         if fc <= fx
@@ -24,7 +24,7 @@ function oneplusone(f::Function, ind::AbstractVector, k_max::Integer, M::Mutator
         end
     end
 
-    n_evals = 2 * k_max
+    n_evals = 2k_max
 
     return Result(fx, ind, [ind], k_max, n_evals, runtime)
 end
@@ -34,7 +34,7 @@ function oneplusone!(
     logger::Logbook, f::Function, ind::AbstractVector, k_max::Integer, M::Mutator
 )
     fx = Inf  # works only on minimisation problems
-    runtime = @elapsed @inbounds for _ in 1:k_max
+    runtime = @elapsed for _ in 1:k_max
         c = mutate(M, ind)
         fx, fc = f(ind), f(c)
         if fc <= fx  # O(2 * k_max)  # minimisation problem
@@ -45,7 +45,7 @@ function oneplusone!(
         compute!(logger, [fx])
     end
 
-    n_evals = 2 * k_max
+    n_evals = 2k_max
 
     return Result(fx, ind, [ind], k_max, n_evals, runtime)
 end
