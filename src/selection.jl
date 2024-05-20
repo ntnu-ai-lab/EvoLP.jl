@@ -19,7 +19,7 @@ abstract type ParentSelector <: Selector end
 Tournament parent selection with tournament size `T`.
 """
 struct TournamentSelector <: ParentSelector
-    T
+    T::Int
 end
 
 """

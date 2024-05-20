@@ -48,7 +48,7 @@ end
 Gaussian mutation with standard deviation `σ`, which should be a real number.
 """
 struct GaussianMutator <: ContinuousMutator
-    σ
+    σ::Real
 end
 
 """
