@@ -20,6 +20,7 @@ include("testfunctions.jl")
 
 include("algorithms/ga.jl")
 include("algorithms/ea.jl")
+include("algorithms/sa.jl")
 include("algorithms/swarm.jl")
 
 include("deprecated.jl")
@@ -32,6 +33,7 @@ export Particle, normal_rand_particle_pop, unif_rand_particle_pop  # Particles
 
 # Algorithms
 export GA, GA!
+export SA
 export oneplusone, oneplusone!
 export PSO, PSO!
 
