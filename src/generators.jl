@@ -146,7 +146,7 @@ function unif_rand_particle_pop(n, lb, ub; rng=Random.GLOBAL_RNG)
 end
 
 """
-    normal_rand_particle_pop(n, μ, Σ; rng=Random.GLOBAL_RNG)
+    normal_rand_particle_pop(n, μ, Σ; y=Inf, rng=Random.GLOBAL_RNG)
 
 Generate a population of `n` [`Particle`](@ref) using a normal distribution with means `μ``
 and covariance `Σ`.
