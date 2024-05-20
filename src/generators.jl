@@ -146,13 +146,15 @@ function unif_rand_particle_pop(n, lb, ub; rng=Random.GLOBAL_RNG)
 end
 
 """
-    normal_rand_particle_pop(n, μ, Σ; rng=Random.GLOBAL_RNG)
+    normal_rand_particle_pop(n, μ, Σ; y=Inf, rng=Random.GLOBAL_RNG)
 
 Generate a population of `n` [`Particle`](@ref) using a normal distribution with means `μ``
 and covariance `Σ`.
 
 `μ` expects a vector of length _l_ (i.e. number of dimensions) while `Σ` expects an _l x l_
 matrix of covariances.
+
+`y` is the evalutaion and current best value. `y` is set to `Inf` by default.
 
 # Examples
 
@@ -164,10 +166,8 @@ julia> normal_rand_particle_pop(3, [0, 0], [1 0; 0 1])
  Particle([0.5687241357408321, -0.7406267072113427], [0.0, 0.0], Inf, [0.5687241357408321, -0.7406267072113427], Inf)
 ```
 """
-function normal_rand_particle_pop(n, μ, Σ; rng=Random.GLOBAL_RNG)
-    # TODO: Add y as optional parameter but default to Inf?
+function normal_rand_particle_pop(n, μ, Σ; y=Inf, rng=Random.GLOBAL_RNG)
     D = MvNormal(μ, Σ)
-    y = Inf
     pop = Vector{Particle}(undef, n)
 
     for i in 1:n

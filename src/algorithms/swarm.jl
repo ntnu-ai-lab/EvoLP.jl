@@ -51,7 +51,7 @@ function PSO(
             for P in population
                 r1, r2 = rand(d), rand(d)
                 P.x += P.v
-                P.v = w * P.v + c1 * r1 .* (P.x_best - P.x) + c2 * r2 .* (x_best - P.x)
+                P.v = @fastmath w * P.v + c1 * r1 .* (P.x_best - P.x) + c2 * r2 .* (x_best - P.x)
                 P.y = f(P.x)  # O(k_max * pop)
 
                 if P.y < y_best
@@ -93,7 +93,7 @@ function PSO!(
             end
         end
 
-        @inbounds for _ in 1:k_max
+        for _ in 1:k_max
             for P in population
                 r1, r2 = rand(d), rand(d)
                 P.x += P.v

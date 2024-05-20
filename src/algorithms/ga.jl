@@ -27,7 +27,7 @@ function GA(
 
     fitnesses = Vector{Float64}(undef, n)
 
-    runtime = @elapsed @inbounds for _ in 1:k_max
+    runtime = @elapsed for _ in 1:k_max
         fitnesses = f.(population)  # O(k_max * n)
         parents = [select(S, fitnesses) for _ in eachindex(population)]
         offspring = [cross(C, population[p[1]], population[p[2]]) for p in parents]
@@ -55,7 +55,7 @@ function GA!(
 
     fitnesses = Vector{Float64}(undef, n)
 
-    runtime = @elapsed @inbounds for _ in 1:k_max
+    runtime = @elapsed for _ in 1:k_max
         fitnesses = f.(population)  # O(k_max * n)
         parents = [select(S, fitnesses) for _ in eachindex(population)]
         offspring = [cross(C, population[p[1]], population[p[2]]) for p in parents]
@@ -85,7 +85,7 @@ function GA!(
 
     fitnesses = Vector{Float64}(undef, n)
 
-    runtime = @elapsed @inbounds for _ in 1:k_max
+    runtime = @elapsed for _ in 1:k_max
         fitnesses = f.(population)  # O(k_max * n)
         parents = [select(S, fitnesses) for _ in eachindex(population)]
         offspring = [cross(C, population[p[1]], population[p[2]]) for p in parents]
