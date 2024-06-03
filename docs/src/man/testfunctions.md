@@ -20,8 +20,10 @@ ackley
 booth
 branin
 circle
+eggholder
 flower
 michalewicz
+rana
 rosenbrock
 wheeler
 ```
