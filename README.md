@@ -6,9 +6,9 @@
 <div align="center">
 
 [![Stable](https://img.shields.io/badge/docs-latest-blue.svg)](https://ntnu-ai-lab.github.io/EvoLP.jl/)
-[![Julia version](https://img.shields.io/badge/Julia-1.7+-blueviolet.svg?logo=julia)](https://julialang.org)
+[![Julia version](https://img.shields.io/badge/Julia-1.9+-blueviolet.svg?logo=julia)](https://julialang.org)
 [![GitHub](https://img.shields.io/github/license/ntnu-ai-lab/EvoLP)](https://github.com/ntnu-ai-lab/EvoLP/blob/main/LICENSE)
-[![All Contributors](https://img.shields.io/github/ntnu-ai-lab/EvoLP/all-contributors?color=ee8449&style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-red)](#contributors)
 
 [![Code Style: Blue](https://img.shields.io/badge/code%20style-blue-blue.svg)](https://github.com/invenia/BlueStyle)
 [![ColPrac: Contributor's Guide on Collaborative Practices for Community Packages](https://img.shields.io/badge/ColPrac-Contributor's%20Guide-blueviolet)](https://github.com/SciML/ColPrac)
