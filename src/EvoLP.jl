@@ -68,6 +68,25 @@ export Logbook
 export compute!
 export summarise
 
+# |=== EvoLPIslands extension ===|
+# Island types
+# export DemeSelector
+export RandomDemeSelector
+export WorstDemeSelector
+
+# Migration operators
+function drift end
+function strand end
+function reinsert! end
+
+export drift
+export strand
+export reinsert!
+
+# Island GA
+function islandGA! end
+export islandGA!
+
 # |=== Deprecated functionality ===|
 
 # Test functions

@@ -84,3 +84,27 @@ function select(::RankBasedSelector, y; rng=Random.GLOBAL_RNG)
     cat = Categorical(normalize(ranks, 1))
     return rand(rng, cat, 2)
 end
+
+# Deme Selectors
+# ==============
+# For use in island models, where a deme is a subset of the population.
+# Empty selector types. The interfaces are defined in the `EvoLPIslands.jl` extension.
+
+"""
+Abstract Deme Selector
+"""
+abstract type DemeSelector <: EvoLP.Selector end
+
+"""
+Deme selector for obtaining a random sample of size `k`
+"""
+struct RandomDemeSelector <: DemeSelector
+    k::Integer
+end
+
+"""
+Deme selector for obtaining the worst `k` individuals
+"""
+struct WorstDemeSelector <: DemeSelector
+    k::Integer
+end

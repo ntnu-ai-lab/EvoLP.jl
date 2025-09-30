@@ -154,7 +154,7 @@ and covariance `Σ`.
 `μ` expects a vector of length _l_ (i.e. number of dimensions) while `Σ` expects an _l x l_
 matrix of covariances.
 
-`y` is the evalutaion and current best value. `y` is set to `Inf` by default.
+`y` is the evaluation and current best value. `y` is set to `Inf` by default.
 
 # Examples
 

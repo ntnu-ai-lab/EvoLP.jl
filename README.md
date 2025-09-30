@@ -6,9 +6,9 @@
 <div align="center">
 
 [![Stable](https://img.shields.io/badge/docs-latest-blue.svg)](https://ntnu-ai-lab.github.io/EvoLP.jl/)
-[![Julia version](https://img.shields.io/badge/Julia-1.7+-blueviolet.svg?logo=julia)](https://julialang.org)
+[![Julia version](https://img.shields.io/badge/Julia-1.9+-blueviolet.svg?logo=julia)](https://julialang.org)
 [![GitHub](https://img.shields.io/github/license/ntnu-ai-lab/EvoLP)](https://github.com/ntnu-ai-lab/EvoLP/blob/main/LICENSE)
-[![All Contributors](https://img.shields.io/github/ntnu-ai-lab/EvoLP/all-contributors?color=ee8449&style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-red)](#contributors)
 
 [![Code Style: Blue](https://img.shields.io/badge/code%20style-blue-blue.svg)](https://github.com/invenia/BlueStyle)
 [![ColPrac: Contributor's Guide on Collaborative Practices for Community Packages](https://img.shields.io/badge/ColPrac-Contributor's%20Guide-blueviolet)](https://github.com/SciML/ColPrac)
@@ -26,6 +26,7 @@
 - Several crossover and mutation methods
 - Test functions for benchmarking
 - Convenient result reporting and a statistics logbook
+- Support for parallelization and island models (via an extension that uses [MPI.jl](https://github.com/JuliaParallel/MPI.jl))
 
 Combine these blocks to make your own algorithms or use some of the included minimisers: GA, 1+1EA and PSO.
 Additionally, you can extend EvoLP to create new operators.
@@ -58,7 +59,7 @@ Please report any issues via the GitHub [issues tracker](https://github.com/ntnu
 
 ## Citing EvoLP.jl
 
-If you find EvoLP.jl useful in your work or research, we kindly request that you cite the following [paper](https://ceur-ws.org/Vol-3431/paper7.pdf):
+If you find EvoLP.jl useful in your work or research, we kindly request that you cite the following [conference paper](https://ceur-ws.org/Vol-3431/paper7.pdf):
 
 ```bibtex
 @inproceedings{Sanchez-DiazEvoLP2023a,
@@ -75,12 +76,28 @@ If you find EvoLP.jl useful in your work or research, we kindly request that you
 }
 ```
 
+You can also cite EvoLPIslands, our MPI Extension, by citing the following [conference paper](https://www.ntnu.no/ojs/index.php/nikt/article/view/5667):
+
+```bibtex
+@article{sanchez-DiazEvolutionaryComputationIslands2023,
+  title = {{Evolutionary Computation with Islands: Extending EvoLP.Jl for Parallel Computing}},
+  shorttitle = {{Evolutionary Computation with Islands}},
+  author = {Sánchez-Díaz, Xavier F. C. and Mengshoel, Ole Jakob},
+  year = {2023},
+  month = nov,
+  journal = {Norsk {IKT}-konferanse for forskning og utdanning},
+  number = {1},
+  issn = {1892-0721},
+  copyright = {Copyright (c) 2023 Norsk IKT-konferanse for forskning og utdanning},
+}
+```
+
 ## Contributors
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
-<table>
+<table align="center">
   <tbody>
     <tr>
       <td align="center" valign="top" width="14.28%">
@@ -88,20 +105,15 @@ If you find EvoLP.jl useful in your work or research, we kindly request that you
                 <img src="https://avatars.githubusercontent.com/u/5231167?v=4" width="100px;" alt=""/><br />
                 <sub><b>Xavier F. C. Sánchez-Díaz</b></sub>
             </a><br />
-            <a href="#question-saxarona" title="Answering Questions">💬</a> 
-            <a href="https://github.com/all-contributors/all-contributors/commits?author=saxarona" title="Documentation">📖</a> 
-            <a href="https://github.com/all-contributors/all-contributors/pulls?q=is%3Apr+reviewed-by%3Asaxarona" title="Reviewed Pull Requests">👀</a> 
-            <a href="#talk-saxarona" title="Talks">📢</a>
+            <a href="https://saxarona.github.io/" title="Website">📝</a> 
+            <a href="https://github.com/ntnu-ai-lab/EvoLP.jl/commits?author=saxarona" title="Documentation">📖</a> 
       </td>
       <td align="center" valign="top" width="14.28%">
         <a href="https://github.com/Jafagervik">
                     <img src="https://pbs.twimg.com/profile_images/1761848615432073216/gMycbhZv_400x400.jpg" width="100px;" alt="Jørgen A. Fagervik"/><br />
                     <sub><b>Jørgen Aleksander Fagervik</b></sub>
                 </a><br />
-                <a href="#question-Jafagervik" title="Answering Questions">💬</a> 
-                <a href="https://github.com/ntnu-ai-lab/EvoLP/commits?author=Jafagervik" title="Documentation">📖</a> 
-                <a href="https://github.com/ntnu-ai-lab/EvoLP/pulls?q=is%3Apr+reviewed-by%3AJafagervik" title="Reviewed Pull Requests">👀</a> 
-                <a href="#talk-Jafagervik" title="Talks">📢</a>
+                <a href="https://github.com/ntnu-ai-lab/EvoLP.jl/commits?author=Jafagervik" title="Documentation">📖</a> 
       </td>
     </tr>
   </tbody>
@@ -109,7 +121,6 @@ If you find EvoLP.jl useful in your work or research, we kindly request that you
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
-
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## Acknowledgements
