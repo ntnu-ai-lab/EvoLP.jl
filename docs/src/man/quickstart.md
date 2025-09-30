@@ -3,7 +3,7 @@
 EvoLP was designed as a _playground_, where each _block_ is a reusable computation pattern that you can use to quickly set up your own algorithms and workflows.
 
 You can find some useful tutorials in the navigation bar. These examples are also available in [the repository](https://github.com/ntnu-ai-lab/EvoLP/tree/master/examples) as Jupyter Notebooks.
-The tutorial on [the 8 queens problem](../tuto/8_queen.md) details how to incorporate a custom algorithm into the workflow.
+The tutorial on [the 8 queens problem](../tuto/8_queens.md) details how to incorporate a custom algorithm into the workflow.
 If you want to use custom blocks, you can [do that too](../man/extending.md).
 
 ## Installation Guide

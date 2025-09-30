@@ -10,8 +10,8 @@ Generational Genetic Algorithm.
 - `population::AbstractVector`: a list of vector individuals.
 - `k_max::Integer`: number of iterations.
 - `S::ParentSelector`: one of the available [`ParentSelector`](@ref).
-- `C::CrossoverMethod`: one of the available [`CrossoverMethod`](@ref).
-- `M::MutationMethod`: one of the available [`MutationMethod`](@ref).
+- `C::Recombinator`: one of the available [`Recombinator`](@ref).
+- `M::Mutator`: one of the available [`Mutator`](@ref).
 
 Returns a [`Result`](@ref).
 """

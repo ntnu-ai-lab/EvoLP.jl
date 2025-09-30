@@ -13,7 +13,8 @@ import StatsBase: sample
     select(S_M::RandomDemeSelector, y)
 
 Return a list of size `S_M.k` of random indices from a vector of fitnesses `y`.
-Used inside [`drift`](@ref) to select individuals to be sent to another island.
+Used inside [`drift`](@ref) to select individuals to be sent to another island,
+or inside [`reinsert!`](@ref) to select individuals to be replaced.
 """
 function EvoLP.select(S_M::EvoLP.RandomDemeSelector, y)
     n = length(y)
@@ -24,7 +25,8 @@ end
     select(S_M::WorstDemeSelector, y)
 
 Return the indices of the `S_M.k`-worst fitnesses in `y`.
-Used inside [`drift`](@ref) to select individuals to be sent to another island.
+Used inside [`drift`](@ref) to select individuals to be sent to another island,
+or inside [`reinsert!`](@ref) to select individuals to be replaced.
 """
 function EvoLP.select(S_M::EvoLP.WorstDemeSelector, y)
     worst = partialsortperm(y, 1:S_M.k; rev=true)
@@ -92,20 +94,20 @@ end
 # Island GA
 
 """
-function islandGA(
-    logbook::Logbook,
-    f::Function,
-    population::AbstractVector,
-    max_it::Integer,
-    S_P::EvoLP.Selector,
-    X::EvoLP.Recombinator,
-    Mut::EvoLP.Mutator,
-    μ::Integer,
-    S_M::DemeSelector,
-    R_M::DemeSelector,
-    dest::Integer,
-    src::Integer,
-    comm::MPI.COMM_WORLD)
+    function islandGA!(
+        logbook::Logbook,
+        f::Function,
+        population::AbstractVector,
+        max_it::Integer,
+        S_P::EvoLP.Selector,
+        X::EvoLP.Recombinator,
+        Mut::EvoLP.Mutator,
+        μ::Integer,
+        S_M::DemeSelector,
+        R_M::DemeSelector,
+        dest::Integer,
+        src::Integer,
+        comm::MPI.COMM_WORLD)
 
 Generational genetic algorithm with islands.
 
@@ -114,17 +116,17 @@ Generational genetic algorithm with islands.
 - `f::Function`: objective function to **minimise**
 - `population::AbstractVector`: a list of vector individuals
 - `max_it::Integer`: number of iterations
-- `S_P::ParentSelector`: one of the available [`ParentSelector`](@ref)
-- `X::Recombinator`: one of the available [`Recombinator`](@ref)
-- `Mut::Mutator`: one of the available [`Mutator`](@ref)
+- `S_P::ParentSelector`: one of the available [`EvoLP.Selector`](@ref)
+- `X::Recombinator`: one of the available [`EvoLP.Recombinator`](@ref)
+- `Mut::Mutator`: one of the available [`EvoLP.Mutator`](@ref)
 - `μ::Integer`: migration rate (in number of iterations)
-- `S_M::DemeSelector`: selection policy. One of the available [`DemeSelector`](@ref)
-- `R_M::DemeSelector`: replacement policy. One of the available [`DemeSelector`](@ref)
+- `S_M::DemeSelector`: selection policy. One of the available [`EvoLP.DemeSelector`](@ref)
+- `R_M::DemeSelector`: replacement policy. One of the available [`EvoLP.DemeSelector`](@ref)
 - `dest::Integer`: ID of destination island
 - `src::Integer`: ID of source island
-- `comm::MPI.Comm`: an MPI communicator. Usually MPI.COMM_WORLD.
+- `comm::MPI.Comm`: an MPI communicator. Usually `MPI.COMM_WORLD`.
 """
-function EvoLP.islandGA(
+function EvoLP.islandGA!(
     logbook::Logbook,
     f::Function,
     population::AbstractVector,

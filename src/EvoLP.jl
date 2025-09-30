@@ -84,8 +84,8 @@ export strand
 export reinsert!
 
 # Island GA
-function islandGA end
-export islandGA
+function islandGA! end
+export islandGA!
 
 # |=== Deprecated functionality ===|
 

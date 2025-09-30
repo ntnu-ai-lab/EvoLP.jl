@@ -26,6 +26,7 @@
 - Several crossover and mutation methods
 - Test functions for benchmarking
 - Convenient result reporting and a statistics logbook
+- Support for parallelization and island models (via an extension that uses [MPI.jl](https://github.com/JuliaParallel/MPI.jl))
 
 Combine these blocks to make your own algorithms or use some of the included minimisers: GA, 1+1EA and PSO.
 Additionally, you can extend EvoLP to create new operators.
@@ -58,7 +59,7 @@ Please report any issues via the GitHub [issues tracker](https://github.com/ntnu
 
 ## Citing EvoLP.jl
 
-If you find EvoLP.jl useful in your work or research, we kindly request that you cite the following [paper](https://ceur-ws.org/Vol-3431/paper7.pdf):
+If you find EvoLP.jl useful in your work or research, we kindly request that you cite the following [conference paper](https://ceur-ws.org/Vol-3431/paper7.pdf):
 
 ```bibtex
 @inproceedings{Sanchez-DiazEvoLP2023a,
@@ -72,6 +73,22 @@ If you find EvoLP.jl useful in your work or research, we kindly request that you
   title = {{EvoLP.jl: A Playground for Evolutionary Computation in Julia}},
   url = {https://ceur-ws.org/Vol-3431/},
   year = {2023}
+}
+```
+
+You can also cite EvoLPIslands, our MPI Extension, by citing the following [conference paper](https://www.ntnu.no/ojs/index.php/nikt/article/view/5667):
+
+```bibtex
+@article{sanchez-DiazEvolutionaryComputationIslands2023,
+  title = {{Evolutionary Computation with Islands: Extending EvoLP.Jl for Parallel Computing}},
+  shorttitle = {{Evolutionary Computation with Islands}},
+  author = {Sánchez-Díaz, Xavier F. C. and Mengshoel, Ole Jakob},
+  year = {2023},
+  month = nov,
+  journal = {Norsk {IKT}-konferanse for forskning og utdanning},
+  number = {1},
+  issn = {1892-0721},
+  copyright = {Copyright (c) 2023 Norsk IKT-konferanse for forskning og utdanning},
 }
 ```
 
