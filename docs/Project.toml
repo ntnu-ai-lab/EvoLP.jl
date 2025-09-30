@@ -1,7 +1,9 @@
 [deps]
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 OrderedCollections = "bac558e1-5e72-5ebc-8fee-abe8a469f55d"
+MPI = "da04e1cc-30fd-572f-bb4f-1f8673147195"
 
 [compat]
 Documenter = "1.14"
 OrderedCollections = "1.6"
+MPI = "0.20.22"
