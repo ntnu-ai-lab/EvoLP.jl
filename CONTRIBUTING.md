@@ -16,7 +16,7 @@ There are many ways in which you can contribute to EvoLP!
 
 Having a clearer documentation benefits everyone. In this sense, you can help either fixing it or expanding it in multiple ways: with wording or clarification, reporting typos, adding corrections or even creating new pages on topics that could need further explanations.
 
-The manuals are written in Markdown, and are built using [Documenter.jl](https://github.com/JuliaDocs/Documenter.jl). All the source files of the documentation can be found [here](https://github.com/ntnu-ai-lab/EvoLP.jl/tree/main/docs).
+The manuals are written in Markdown, and are built using [Documenter.jl](https://github.com/JuliaDocs/Documenter.jl). All the source files of the documentation can be found at the docs [GitHub Page](https://github.com/ntnu-ai-lab/EvoLP.jl/tree/main/docs).
 
 If your submission is small (typos or one or two sentences) then probably using GitHub's online editor is the best idea.
 
@@ -46,7 +46,7 @@ Contributing code is also possible via fork & pull request:
 EvoLP follows the ColPrac: Contributor's Guide on Collaborative Practices for Community Packages guide from SciML.
 This guide is a collection of best practices when contributing to packages.
 
-You can read the full guide [here](https://github.com/SciML/ColPrac).
+You can read the full guide at SciML's [ColPrac repository](https://github.com/SciML/ColPrac).
 
 ## Code style guidelines
 
@@ -55,7 +55,7 @@ You can read the full guide [here](https://github.com/SciML/ColPrac).
 EvoLP follows Invenia's Blue code style guide.
 This is a set of style conventions for Julia code that are based on a series of grounding documents (like Julia's own style guide and PEP8).
 
-You can read the full guide [here](https://github.com/invenia/BlueStyle).
+You can read the full guide at Invenia's [Blue Style repository](https://github.com/invenia/BlueStyle).
 
 ## Source code organisation
 
@@ -65,6 +65,7 @@ The following table shows how the EvoLP code is organised:
 |:-------------:|:-------------:|
 | docs          | Documentation |
 | examples      | Examples      |
+| ext           | Extensions    |
 | src           | Source code   |
 | test          | Test suites   |
 

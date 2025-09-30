@@ -97,7 +97,7 @@ You can also cite EvoLPIslands, our MPI Extension, by citing the following [conf
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
-<table>
+<table align="center">
   <tbody>
     <tr>
       <td align="center" valign="top" width="14.28%">
@@ -105,20 +105,15 @@ You can also cite EvoLPIslands, our MPI Extension, by citing the following [conf
                 <img src="https://avatars.githubusercontent.com/u/5231167?v=4" width="100px;" alt=""/><br />
                 <sub><b>Xavier F. C. Sánchez-Díaz</b></sub>
             </a><br />
-            <a href="#question-saxarona" title="Answering Questions">💬</a> 
-            <a href="https://github.com/all-contributors/all-contributors/commits?author=saxarona" title="Documentation">📖</a> 
-            <a href="https://github.com/all-contributors/all-contributors/pulls?q=is%3Apr+reviewed-by%3Asaxarona" title="Reviewed Pull Requests">👀</a> 
-            <a href="#talk-saxarona" title="Talks">📢</a>
+            <a href="https://saxarona.github.io/" title="Website">📝</a> 
+            <a href="https://github.com/ntnu-ai-lab/EvoLP.jl/commits?author=saxarona" title="Documentation">📖</a> 
       </td>
       <td align="center" valign="top" width="14.28%">
         <a href="https://github.com/Jafagervik">
                     <img src="https://pbs.twimg.com/profile_images/1761848615432073216/gMycbhZv_400x400.jpg" width="100px;" alt="Jørgen A. Fagervik"/><br />
                     <sub><b>Jørgen Aleksander Fagervik</b></sub>
                 </a><br />
-                <a href="#question-Jafagervik" title="Answering Questions">💬</a> 
-                <a href="https://github.com/ntnu-ai-lab/EvoLP/commits?author=Jafagervik" title="Documentation">📖</a> 
-                <a href="https://github.com/ntnu-ai-lab/EvoLP/pulls?q=is%3Apr+reviewed-by%3AJafagervik" title="Reviewed Pull Requests">👀</a> 
-                <a href="#talk-Jafagervik" title="Talks">📢</a>
+                <a href="https://github.com/ntnu-ai-lab/EvoLP.jl/commits?author=Jafagervik" title="Documentation">📖</a> 
       </td>
     </tr>
   </tbody>
@@ -126,7 +121,6 @@ You can also cite EvoLPIslands, our MPI Extension, by citing the following [conf
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
-
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## Acknowledgements

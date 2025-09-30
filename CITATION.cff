@@ -6,9 +6,9 @@ authors:
     orcid: "https://orcid.org/0000-0003-2271-439X"
     affiliation: "Norwegian University of Science and Technology"
 title: "EvoLP.jl"
-version: 1.2.0
+version: 2.0.0
 license: MIT
-date-released: 2023-07-31
+date-released: 2025-09-30
 url: "https://github.com/ntnu-ai-lab/EvoLP.jl"
 preferred-citation:
   type: conference-paper
