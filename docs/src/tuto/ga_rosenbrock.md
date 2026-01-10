@@ -4,7 +4,7 @@ This tutorial details how to use the built-in Genetic Algorithm (GA) on a contin
 
 We start by importing EvoLP. We will compute some statistics using the [`Logbook`](@ref) so we need some additional modules as well:
 
-```julia
+```@example ros
 using Statistics
 using EvoLP
 using OrderedCollections
@@ -12,143 +12,82 @@ using OrderedCollections
 
 For this example we will use the **Rosenbrock** function, which is already included as a benchmark function in EvoLP. We can look at the documentation like so:
 
-```julia
-@doc rosenbrock
+```@docs; canonical=false
+rosenbrock
 ```
-
-```julia
-rosenbrock(x; b=100)
-```
-
-> The ``d``-dimensional **Rosenbrock** _banana_ benchmark function. With ``b=100``,
-> minimum is at ``f([1, \\dots, 1]) = 0``
->
-> ``f(x) = \\sum_{i=1}^{d-1} \\left[b(x_{i+1} - x_i^2)^2 + (x_i - 1)^2 \\right]``
 
 ## Implementing the solution
 
 Let's start creating the population. We can  use the [`normal_rand_vector_pop`](@ref) generator, which uses a normal distribution for initialisation:
 
-```julia
-@doc normal_rand_vector_pop
+```@docs; canonical=false
+normal_rand_vector_pop
 ```
 
-```text
-normal_rand_vector_pop(n, μ, Σ; rng=Random.GLOBAL_RNG)
-```
-
-> Generate a population of `n` vector individuals using a normal distribution with means `μ` and covariance `Σ`.
-> `μ` expects a vector of length *l* (i.e. length of an individual) while `Σ` expects an *l x l* matrix of covariances.
-
-The [`rosenbrock`](@ref) in our case is 2D, so we need a vector of 2 means, and a matrix of 2x2 covariances:
-
-```julia
+```@example ros
 pop_size = 50
 population = normal_rand_vector_pop(pop_size, [0, 0], [1 0; 0 1])
 first(population, 3)
-```
-
-```text
-3-element Vector{Vector{Float64}}:
- [-0.25289759101653736, 1.0150132241600427]
- [-0.9053394512418402, 0.6058801355483802]
- [0.5784934203305488, -0.20665678122470943]
 ```
 
 In a GA, we have *selection*, *crossover* and *mutation*.
 
 We can easily set up these operators using the built-ins provided by EvoLP. Let's use rank based selection and interpolation crossover with 0.5 as the scaling factor:
 
-```julia
-@doc InterpolationRecombinator
+```@docs; canonical=false
+InterpolationRecombinator
 ```
 
-> Interpolation crossover with scaling parameter ``λ``.
-
-```julia
+```@example ros
 S = RankBasedSelector()
 C = InterpolationRecombinator(0.5)
 ```
 
-```text
-InterpolationRecombinator(0.5)
-```
-
 For mutation, we can use Gaussian noise:
 
-```julia
-@doc GaussianMutator
+```@docs; canonical=false
+GaussianMutator
 ```
 
-> Gaussian mutation with standard deviation `σ`, which should be a real number.
-
-```julia
+```@example ros
 M = GaussianMutator(0.05)
-```
-
-```text
-GaussianMutator(0.05)
 ```
 
 Now we can set up the [`Logbook`](@ref) to record statistics about our run:
 
-```julia
+```@example ros
 statnames = ["mean_eval", "max_f", "min_f", "median_f"]
 fns = [mean, maximum, minimum, median]
 thedict = LittleDict(statnames, fns)
 thelogger = Logbook(thedict)
 ```
 
-```text
-Logbook(LittleDict{AbstractString, Function, Vector{AbstractString}, Vector{Function}}("mean_eval" => Statistics.mean, "max_f" => maximum, "min_f" => minimum, "median_f" => Statistics.median), NamedTuple{(:mean_eval, :max_f, :min_f, :median_f)}[])
-```
-
 And now we're ready to use the `GA` built-in algorithm:
 
-```julia
-@doc GA
+```@docs; canonical=false
+GA
 ```
 
-```text
-GA(f::Function, population, k_max, S, C, M)
-GA(logbook::Logbook, f::Function, population, k_max, S, C, M)
-```
-
-> Generational Genetic Algorithm.
->
-> **Arguments**
->
-  > * `f`: Objective function to minimise
-  > * `population`: a list of individuals.
-  > * `k_max`: maximum iterations
-  > * `S::Selector`: a selection method. See selection.
-  > * `C::Recombinator`: a crossover method. See crossover.
-  > * `M::Mutator`: a mutation method. See mutation.
->
-> Returns a [`Result`](@ref).
-
-```julia
+```@example ros
 result = GA(thelogger, rosenbrock, population, 300, S, C, M);
 ```
 
 The output was suppressed so that we can analyse each part of the result separately using functions instead:
 
-```julia
+```@example ros
 @show optimum(result)
-
-@show optimizer(result)
-
-@show f_calls(result)
-
-thelogger.records[end]
 ```
 
-```text
-optimum(result) = 0.00015325530365919114
-optimizer(result) = [0.9295343671510049, 0.9158201966396184]
-f_calls(result) = 25000
+```@example ros
+@show optimizer(result)
+```
 
-(mean_eval = 0.07544433008393486, max_f = 0.43255087263181813, min_f = 0.00015325530365919114, median_f = 0.0424343220731829)
+```@example ros
+@show f_calls(result)
+```
+
+```@example ros
+thelogger.records[end]
 ```
 
 The records in the `Logbook` are `NamedTuples`. This makes it easier to export and analyse using [DataFrames](https://dataframes.juliadata.org/stable/), for example:

@@ -25,7 +25,7 @@ We can solve this problem using a **Genetic Algorithm (GA)** that deals with the
 
 We will use the following modules:
 
-```julia
+```@example 8q
 using Statistics
 using EvoLP
 using OrderedCollections
@@ -42,33 +42,24 @@ Interestingly enough, the vertical and horizontal clashes can be dealt with by u
 
 For the phenotype above, the genotype representation would look like this:
 
-```julia
+```@example 8q
 x = [1, 3, 5, 2, 6, 4, 7, 8]
 ```
 
 The queen in the first column is in row 1. The queen in the second column is in row 3, and so on.
 
-EvoLP contains a convenient `permutation_vector_pop`:
+EvoLP contains a convenient [`permutation_vector_pop`](@ref):
 
-[`permutation_vector_pop`](@ref)
-
-```julia
-julia> @doc permutation_vector_pop
+```@docs; canonical=false
+permutation_vector_pop
 ```
 
 We can now use the generator to initialise our population:
 
-```julia
+```@example 8q
 pop_size = 100
 population = permutation_vector_pop(pop_size, 8, 1:8)
 first(population, 3)
-```
-
-```text
-3-element Vector{Vector{Int64}}:
-    [3, 7, 4, 8, 2, 1, 5, 6]
-    [5, 4, 7, 6, 2, 3, 1, 8]
-    [8, 6, 5, 1, 2, 3, 4, 7]
 ```
 
 To deal with the _diagonal_ constraints, we can use the **fitness function**.
@@ -87,7 +78,7 @@ We can then use this information to iterate in all directions and check how many
 
 If we do this **for every queen** ``q``, then we will count some of the clashes twice. It is a good idea to create a set of these clashes so that we can sum them afterwards.
 
-```julia
+```@example 8q
 function diag_constraints(x)
     # rows are values in x
     # columns are indices from 1:8
@@ -117,13 +108,9 @@ Using the same configuration as before, we have the following conflicting positi
 
 We can test our fitness function `diag_constraints` on this board and see the number of conflicts in total:
 
-```julia
+```@example 8q
 test = [1, 3, 5, 2, 6, 4, 7, 8]
 diag_constraints(test)
-```
-
-```text
-10
 ```
 
 Going through each queen ``q_i`` (with ``i`` being the column number), we have the following number of conflicts:
@@ -136,33 +123,21 @@ We now need to choose our evolutionary operators: what we will use for **selecti
 However, since we're dealing with permutations, we are restricted to use specific operators that do not end up destroying feasible solutions and therefore violate our constraints.
 EvoLP contains some operators that can deal with permutation-based individuals:
 
-```julia
-julia> @doc TournamentSelector
+```@docs; canonical=false
+TournamentSelector
 ```
 
-```text
-Tournament parent selection with tournament size ``k``.
+```@docs; canonical=false
+OX1Recombinator
 ```
 
-```julia
-julia> @doc OX1Recombinator
-```
-
-```text
-Order 1 crossover (OX1) for permutation-based individuals.
-```
-
-```julia
-julia> @doc SwapMutator
-```
-
-```text
-Swap mutation for permutation-based individuals.
+```@docs; canonical=false
+SwapMutator
 ```
 
 We can now _instantiate_ them and continue.
 
-```julia
+```@example 8q
 S = TournamentSelector(5);
 C = OX1Recombinator();
 M = SwapMutator();
@@ -172,15 +147,11 @@ M = SwapMutator();
 
 We can use the [`Logbook`](@ref) to record statistics about our run:
 
-```julia
+```@example 8q
 statnames = ["mean_eval", "max_f", "min_f", "median_f"]
 fns = [mean, maximum, minimum, median]
 thedict = LittleDict(statnames, fns)
 thelogger = Logbook(thedict)
-```
-
-```text
-Logbook(LittleDict{AbstractString, Function, Vector{AbstractString}, Vector{Function}}("mean_eval" => Statistics.mean, "max_f" => maximum, "min_f" => minimum, "median_f" => Statistics.median), NamedTuple{(:mean_eval, :max_f, :min_f, :median_f)}[])
 ```
 
 ### Constructing our own algorithm
@@ -202,11 +173,11 @@ Let's do a summary then:
 
 We can then build our algorithm in a function, and use EvoLP's [`Result`](@ref) type for the return:
 
-```julia
+```@example 8q
 function mySteadyGA(logbook, f, pop, k_max, S, C, M, mrate)
     n = length(pop)
     # Generation loop
-    for _ in 1:k_max
+    runtime = @elapsed for _ in 1:k_max
         fitnesses = f.(pop)
         parents = select(S, fitnesses)  # this will return 2 parents
         parents = vcat(parents, select(S, fitnesses))  # Extend the list with 2 more parents
@@ -239,39 +210,34 @@ function mySteadyGA(logbook, f, pop, k_max, S, C, M, mrate)
     # Result reporting
     best, best_i = findmin(f, pop)
     n_evals = 2 * k_max * n + n
-    result = Result(best, pop[best_i], pop, k_max, n_evals)
+    result = Result(best, pop[best_i], pop, k_max, n_evals, runtime)
     return result
 end
 ```
 
 To try our new algorithm, we just need to call its function with the appropriate arguments:
 
-```julia
-result  = mySteadyGA(thelogger, diag_constraints, population, 500, S, C, M, 0.8);
+```@example 8q
+result  = mySteadyGA(thelogger, diag_constraints, population, 50, S, C, M, 0.8);
 ```
 
 EvoLP provides convenient [functions](../man/results.md) that we can use to get information about a result:
 
-```julia
+```@example 8q
 @show optimum(result)
-@show optimizer(result)
-@show f_calls(result)
-thelogger.records[end]
 ```
 
-```text
-optimum(result) = 0
-optimizer(result) = Any[5, 1, 8, 6, 3, 7, 2, 4]
-f_calls(result) = 100100
+```@example 8q
+@show optimizer(result)
+```
 
-
-
-(mean_eval = 9.392156862745098, max_f = 20, min_f = 0, median_f = 8.0)
+```@example 8q
+@show f_calls(result)
 ```
 
 And this is just a helper function to visualise our result as a chess board:
 
-```julia
+```@example 8q
 function drawboard(x)
     b = fill("◻",8,8)
     for i in 1:2:8
@@ -289,17 +255,8 @@ function drawboard(x)
 end
 ```
 
-```julia
-drawboard(optimizer(result))
-```
+Then run the `drawboard` function:
 
-```text
-◻♛◻◼◻◼◻◼
-◼◻◼◻◼◻♛◻
-◻◼◻◼♛◼◻◼
-◼◻◼◻◼◻◼♛
-♛◼◻◼◻◼◻◼
-◼◻◼♛◼◻◼◻
-◻◼◻◼◻♛◻◼
-◼◻♛◻◼◻◼◻
+```@example 8q
+drawboard(optimizer(result))
 ```

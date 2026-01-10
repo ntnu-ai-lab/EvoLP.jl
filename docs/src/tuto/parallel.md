@@ -60,7 +60,7 @@ In such situations, the module needs to be loaded first to see the available exe
 $ module load mpi
 ```
 
-This will allow the `mpiexec` and `mpirun` commands&mdash;which are needed to execute Julia scripts in parallel&mdash;to become available in your shell.
+This will allow the `mpiexec` and `mpirun` commands—which are needed to execute Julia scripts in parallel—to become available in your shell.
 
 We highly suggest that you try first the [MPI.jl Basic Example](https://juliaparallel.org/MPI.jl/stable/usage/).
 
