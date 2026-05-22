@@ -16,7 +16,7 @@ If no argument is passed, the logbook is constructed with a set of commonly stat
 as minimum, mean, median, maximum and standard deviation; in that order.
 """
 mutable struct Logbook
-    S::LittleDict{AbstractString,Function}
+    S::LittleDict{AbstractString, Function}
     records::AbstractVector
 
     function Logbook(S::LittleDict)
@@ -87,14 +87,18 @@ function summarise(logger::Logbook)
     n = length(logger.records)
     for (i, eachstat) in enumerate(keys(logger.S))
         data = [logger.records[j][i] for j in 1:n]
-        printstyled("\n $(eachstat) \n"; bold=true)
-        print("max: $(maximum(data)) \n" *
-              "avg: $(mean(data))\n" *
-              "median: $(median(data)) \n" *
-              "min: $(minimum(data))\n" *
-              "std: $(std(data))\n")
-        plt = lineplot(data;
-            xlabel="it", ylabel=eachstat)
+        printstyled("\n $(eachstat) \n"; bold = true)
+        print(
+            "max: $(maximum(data)) \n" *
+                "avg: $(mean(data))\n" *
+                "median: $(median(data)) \n" *
+                "min: $(minimum(data))\n" *
+                "std: $(std(data))\n"
+        )
+        plt = lineplot(
+            data;
+            xlabel = "it", ylabel = eachstat
+        )
         print(plt)
     end
 
@@ -106,14 +110,18 @@ function summarise(notebooks::Vector{Logbook})
         n = length(eachnb.records)
         for (i, eachstat) in enumerate(keys(eachnb.S))
             data = [eachnb.records[j][i] for j in 1:n]
-            printstyled("\n $(eachstat) \n"; bold=true)
-            print("max: $(maximum(data)) \n" *
-                  "avg: $(mean(data))\n" *
-                  "median: $(median(data)) \n" *
-                  "min: $(minimum(data))\n" *
-                  "std: $(std(data))\n")
-            plt = lineplot(data;
-                xlabel="it", ylabel=eachstat)
+            printstyled("\n $(eachstat) \n"; bold = true)
+            print(
+                "max: $(maximum(data)) \n" *
+                    "avg: $(mean(data))\n" *
+                    "median: $(median(data)) \n" *
+                    "min: $(minimum(data))\n" *
+                    "std: $(std(data))\n"
+            )
+            plt = lineplot(
+                data;
+                xlabel = "it", ylabel = eachstat
+            )
             print(plt)
         end
     end

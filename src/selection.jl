@@ -27,7 +27,7 @@ end
 
 Select two parents which are the winners from two random tournaments of size `t.T`.
 """
-function select(t::TournamentSelector, y; rng=Random.GLOBAL_RNG)
+function select(t::TournamentSelector, y; rng = Random.GLOBAL_RNG)
     getparent() = begin
         p = randperm(rng, length(y))
         p[argmin(y[p[1:t.T]])]
@@ -48,7 +48,7 @@ end
 
 Select two random parents out from the top `t.k` in the population.
 """
-function select(t::TruncationSelector, y; rng=Random.GLOBAL_RNG)
+function select(t::TruncationSelector, y; rng = Random.GLOBAL_RNG)
     p = sortperm(y)
     return p[rand(rng, 1:t.k, 2)]
 end
@@ -63,7 +63,7 @@ struct RouletteWheelSelector <: ParentSelector end
 
 Select two random parents with probability proportional to their fitness.
 """
-function select(::RouletteWheelSelector, y; rng=Random.GLOBAL_RNG)
+function select(::RouletteWheelSelector, y; rng = Random.GLOBAL_RNG)
     y = maximum(y) .- y
     cat = Categorical(normalize(y, 1))
     return rand(rng, cat, 2)
@@ -79,8 +79,8 @@ struct RankBasedSelector <: ParentSelector end
 
 Select two random parents with probability proportional to their ranks.
 """
-function select(::RankBasedSelector, y; rng=Random.GLOBAL_RNG)
-    ranks = ordinalrank(y, rev=true)
+function select(::RankBasedSelector, y; rng = Random.GLOBAL_RNG)
+    ranks = ordinalrank(y, rev = true)
     cat = Categorical(normalize(ranks, 1))
     return rand(rng, cat, 2)
 end

@@ -40,9 +40,9 @@ struct SinglePointRecombinator <: NumericRecombinator end
 Single point crossover between parents `a` and `b`, at a
 random point in the chromosome.
 """
-function cross(::SinglePointRecombinator, a, b; rng=Random.GLOBAL_RNG)
+function cross(::SinglePointRecombinator, a, b; rng = Random.GLOBAL_RNG)
     i = rand(rng, eachindex(a))
-    return vcat(a[begin:i], b[i+1:end])
+    return vcat(a[begin:i], b[(i + 1):end])
 end
 
 """
@@ -56,14 +56,14 @@ struct TwoPointRecombinator <: NumericRecombinator end
 Two point crossover between parents `a` and `b`, at two
 random points in the chromosome.
 """
-function cross(::TwoPointRecombinator, a, b; rng=Random.GLOBAL_RNG)
+function cross(::TwoPointRecombinator, a, b; rng = Random.GLOBAL_RNG)
     i, j = rand(rng, eachindex(a), 2)
 
     if i > j
         i, j = j, i
     end
 
-    return vcat(a[begin:i], b[i+1:j], a[j+1:end])
+    return vcat(a[begin:i], b[(i + 1):j], a[(j + 1):end])
 end
 
 """
@@ -77,7 +77,7 @@ struct UniformRecombinator <: NumericRecombinator end
 Uniform crossover between parents `a` and `b`. Each gene
 of the chromosome is randomly selected from one of the parents.
 """
-function cross(::UniformRecombinator, a, b; rng=Random.GLOBAL_RNG)
+function cross(::UniformRecombinator, a, b; rng = Random.GLOBAL_RNG)
     child = similar(a)
 
     for i in eachindex(a)
@@ -117,20 +117,20 @@ Order 1 crossover between permutation parents `a` and `b`.
 A substring from `a` is copied directly to the offspring, and the
 remaining values are copied in the order they appear in `b`.
 """
-function cross(::OX1Recombinator, a, b; rng=Random.GLOBAL_RNG)
+function cross(::OX1Recombinator, a, b; rng = Random.GLOBAL_RNG)
     # NOTE: Slow
-    indices = sample(rng, 2:length(a)-1, 2, replace=false, ordered=true)
+    indices = sample(rng, 2:(length(a) - 1), 2, replace = false, ordered = true)
     # Selected part from `a`
     chosen = a[indices[1]:indices[2]]
     # Values not copied from `a`
-    rem_vals = vcat(a[begin:indices[1]-1], a[indices[2]+1:end])
+    rem_vals = vcat(a[begin:(indices[1] - 1)], a[(indices[2] + 1):end])
 
     # Using the same order as in `b`, copy those values in rem_vals
-    r = [v for v in vcat(b[indices[2]+1:end], b[begin:indices[2]]) if v in rem_vals]
+    r = [v for v in vcat(b[(indices[2] + 1):end], b[begin:indices[2]]) if v in rem_vals]
 
     # Break down into slices
-    s2 = r[begin:length(a)-indices[2]]
-    s1 = r[length(s2)+1:end]
+    s2 = r[begin:(length(a) - indices[2])]
+    s1 = r[(length(s2) + 1):end]
 
     # Returned individual is a concatenation of the slices and selected part from `a`
     return vcat(s1, chosen, s2)

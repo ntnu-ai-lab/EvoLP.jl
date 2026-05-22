@@ -30,7 +30,7 @@ r = \\frac{1}{2} + \\frac{1}{2} \\left(\\frac{2x_2}{1+x_2^2}\\right)
 @inline @fastmath function circle(x)
     Base.deepwarn(
         "The `circle` function will be removed from EvoLP in a future release." *
-        "It may be added back when multiobjective support is added."
+            "It may be added back when multiobjective support is added."
     )
     θ = first(x)
     r = 0.5 + 0.5 * (2 * x[2] / (1 + x[2]^2))
@@ -55,7 +55,7 @@ minimum due to `atan` bein undefined at ``[0, 0]``.
 f(x) = a\\lVert\\mathbb{x}\\rVert + b \\sin(c\\arctan(x_2, x_1))
 ```
 """
-@inline function flower(x; a=1, b=1, c=4)
+@inline function flower(x; a = 1, b = 1, c = 4)
     Base.deepwarn("The `flower` function will be removed from EvoLP in a future release.")
     return @fastmath a * norm(x) + b * sin(c * atan(x[2], x[1]))
 end
@@ -70,8 +70,8 @@ end
 function TournamentSelectionGenerational(t)
     depwarn(
         "The _Generational_ selectors will be deprecated in a future release. " *
-        "Please use `TournamentSelector(t)` instead of `TournamentSelectionGenerational(t)` " *
-        "and update your algorithm to use it for each individual in the population.",
+            "Please use `TournamentSelector(t)` instead of `TournamentSelectionGenerational(t)` " *
+            "and update your algorithm to use it for each individual in the population.",
         :TournamentSelectionGenerational,
     )
     return TournamentSelector(t)
@@ -80,7 +80,7 @@ end
 function TournamentSelectionSteady(t)
     depwarn(
         "The `TournamentSelectionSteady` type will be deprecated in a future release. " *
-        "Please use `TournamentSelector(k)` instead.",
+            "Please use `TournamentSelector(k)` instead.",
         :TournamentSelectionSteady,
     )
     return TournamentSelector(t)
@@ -91,7 +91,7 @@ end
 function TruncationSelectionSteady(k)
     depwarn(
         "The `TruncationSelectionSteady` type will be deprecated in a future release. " *
-        "Please use `TruncationSelector(k)` instead.",
+            "Please use `TruncationSelector(k)` instead.",
         :TournamentSelectionSteady,
     )
     return TruncationSelector(k)
@@ -100,8 +100,8 @@ end
 function TruncationSelectionGenerational(k)
     depwarn(
         "The _Generational_ selectors will be deprecated in a future release. " *
-        "Please use `TruncationSelector(k)` instead of `TruncationSelectionGenerational(k)` " *
-        "and update your algorithm to use it for each individual in the population.",
+            "Please use `TruncationSelector(k)` instead of `TruncationSelectionGenerational(k)` " *
+            "and update your algorithm to use it for each individual in the population.",
         :TruncationSelectionGenerational,
     )
     return TruncationSelector(k)
@@ -112,7 +112,7 @@ end
 function RouletteWheelSelectionSteady()
     depwarn(
         "The `RouletteWheelSelectionSteady` type will be deprecated in a future release. " *
-        "Please use `RouletteWheelSelector()` instead.",
+            "Please use `RouletteWheelSelector()` instead.",
         :RouletteWheelSelectionSteady,
     )
     return RouletteWheelSelector()
@@ -121,8 +121,8 @@ end
 function RouletteWheelSelectionGenerational()
     depwarn(
         "The _Generational_ selectors will be deprecated in a future release. " *
-        "Please use `RouletteWheelSelector()` instead of `RouletteWheelSelectionGenerational()` " *
-        "and update your algorithm to use it for each individual in the population.",
+            "Please use `RouletteWheelSelector()` instead of `RouletteWheelSelectionGenerational()` " *
+            "and update your algorithm to use it for each individual in the population.",
         :RouletteWheelSelectionGenerational,
     )
     return RouletteWheelSelector()
@@ -133,7 +133,7 @@ end
 function RankBasedSelectionSteady()
     depwarn(
         "The `RankBasedSelectionSteady` type will be deprecated in a future release. " *
-        "Please use `RankBasedSelector()` instead.",
+            "Please use `RankBasedSelector()` instead.",
         :RankBasedSelectionSteady,
     )
     return RankBasedSelector()
@@ -142,8 +142,8 @@ end
 function RankBasedSelectionGenerational()
     depwarn(
         "The _Generational_ selectors will be deprecated in a future release. " *
-        "Please use `RankBasedSelector()` instead of `RankBasedSelectionGenerational()` " *
-        "and update your algorithm to use it for each individual in the population.",
+            "Please use `RankBasedSelector()` instead of `RankBasedSelectionGenerational()` " *
+            "and update your algorithm to use it for each individual in the population.",
         :RankBasedSelectionGenerational,
     )
     return RankBasedSelector()
@@ -159,7 +159,7 @@ end
 function BitwiseMutation(λ)
     depwarn(
         "The `BitwiseMutation` type will be deprecated in a future release. " *
-        "Please use `BitwiseMutator(λ)` instead.",
+            "Please use `BitwiseMutator(λ)` instead.",
         :BitwiseMutation,
     )
     return BitwiseMutator(λ)
@@ -170,7 +170,7 @@ end
 function GaussianMutation(σ)
     depwarn(
         "The `GaussianMutation` type will be deprecated in a future release. " *
-        "Please use `GaussianMutator(σ)` instead.",
+            "Please use `GaussianMutator(σ)` instead.",
         :GaussianMutation,
     )
     return GaussianMutator(σ)
@@ -181,7 +181,7 @@ end
 function InsertMutation()
     depwarn(
         "The `InsertMutation` type will be deprecated in a future release. " *
-        "Please use `InsertionMutator()` instead.",
+            "Please use `InsertionMutator()` instead.",
         :InsertMutation,
     )
     return InsertionMutator()
@@ -192,7 +192,7 @@ end
 function InversionMutation()
     depwarn(
         "The `InversionMutation` type will be deprecated in a future release. " *
-        "Please use `InversionMutator()` instead.",
+            "Please use `InversionMutator()` instead.",
         :InversionMutation,
     )
     return InversionMutator()
@@ -203,7 +203,7 @@ end
 function ScrambleMutation()
     depwarn(
         "The `ScrambleMutation` type will be deprecated in a future release. " *
-        "Please use `ScrambleMutator()` instead.",
+            "Please use `ScrambleMutator()` instead.",
         :ScrambleMutation,
     )
     return ScrambleMutator()
@@ -214,7 +214,7 @@ end
 function SwapMutation()
     depwarn(
         "The `SwapMutation` type will be deprecated in a future release. " *
-        "Please use `SwapMutator()` instead.",
+            "Please use `SwapMutator()` instead.",
         :SwapMutation,
     )
     return SwapMutator()
@@ -230,7 +230,7 @@ end
 function SinglePointCrossover()
     depwarn(
         "The `SinglePointCrossover` type will be deprecated in a future release. " *
-        "Please use `SinglePointRecombinator()` instead.",
+            "Please use `SinglePointRecombinator()` instead.",
         :SinglePointCrossover,
     )
     return SinglePointRecombinator()
@@ -241,7 +241,7 @@ end
 function TwoPointCrossover()
     depwarn(
         "The `TwoPointCrossover` type will be deprecated in a future release. " *
-        "Please use `TwoPointRecombinator()` instead.",
+            "Please use `TwoPointRecombinator()` instead.",
         :TwoPointCrossover,
     )
     return TwoPointRecombinator()
@@ -252,7 +252,7 @@ end
 function UniformCrossover()
     depwarn(
         "The `UniformCrossover` type will be deprecated in a future release. " *
-        "Please use `UniformRecombinator()` instead.",
+            "Please use `UniformRecombinator()` instead.",
         :UniformCrossover,
     )
     return UniformRecombinator()
@@ -263,7 +263,7 @@ end
 function InterpolationCrossover(λ)
     depwarn(
         "The `InterpolationCrossover` type will be deprecated in a future release. " *
-        "Please use `InterpolationRecombinator(λ)` instead.",
+            "Please use `InterpolationRecombinator(λ)` instead.",
         :InterpolationCrossover,
     )
     return InterpolationRecombinator(λ)
@@ -274,7 +274,7 @@ end
 function OrderOneCrossover()
     depwarn(
         "The `OrderOneCrossover` type will be deprecated in a future release. " *
-        "Please use `OX1Recombinator()` instead.",
+            "Please use `OX1Recombinator()` instead.",
         :OrderOneCrossover,
     )
     return OX1Recombinator()
@@ -284,7 +284,7 @@ end
 
 # swarm.jl
 
-@deprecate PSO(logger::Logbook, f::Function, population::Vector{Particle}, k_max::Integer; w=1, c1=1, c2=1) PSO!(logger::Logbook, f::Function, population::Vector{Particle}, k_max::Integer; w=1, c1=1, c2=1)
+@deprecate PSO(logger::Logbook, f::Function, population::Vector{Particle}, k_max::Integer; w = 1, c1 = 1, c2 = 1) PSO!(logger::Logbook, f::Function, population::Vector{Particle}, k_max::Integer; w = 1, c1 = 1, c2 = 1)
 
 # ea.jl
 
@@ -295,4 +295,4 @@ end
 @deprecate GA(logbook::Logbook, f::Function, population::AbstractVector, k_max::Integer, S::ParentSelector, C::Recombinator, M::Mutator) GA!(logbook::Logbook, f::Function, population::AbstractVector, k_max::Integer, S::ParentSelector, C::Recombinator, M::Mutator)
 @deprecate GA(notebooks::Vector{Logbook}, f::Function, population::AbstractVector, k_max::Integer, S::ParentSelector, C::Recombinator, M::Mutator) GA!(notebooks::Vector{Logbook}, f::Function, population::AbstractVector, k_max::Integer, S::ParentSelector, C::Recombinator, M::Mutator)
 
-    # END EvoLP 2.X.Y deprecations
+# END EvoLP 2.X.Y deprecations

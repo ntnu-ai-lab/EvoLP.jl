@@ -16,13 +16,13 @@ Generational Genetic Algorithm.
 Returns a [`Result`](@ref).
 """
 function GA(
-    f::Function,
-    population::AbstractVector,
-    k_max::Integer,
-    S::ParentSelector,
-    C::Recombinator,
-    M::Mutator
-)
+        f::Function,
+        population::AbstractVector,
+        k_max::Integer,
+        S::ParentSelector,
+        C::Recombinator,
+        M::Mutator
+    )
     n = length(population)
 
     fitnesses = Vector{Float64}(undef, n)
@@ -43,14 +43,14 @@ end
 
 # Logbook version
 function GA!(
-    logbook::Logbook,
-    f::Function,
-    population::AbstractVector,
-    k_max::Integer,
-    S::ParentSelector,
-    C::Recombinator,
-    M::Mutator
-)
+        logbook::Logbook,
+        f::Function,
+        population::AbstractVector,
+        k_max::Integer,
+        S::ParentSelector,
+        C::Recombinator,
+        M::Mutator
+    )
     n = length(population)
 
     fitnesses = Vector{Float64}(undef, n)
@@ -73,14 +73,14 @@ end
 
 # 2-logbook version
 function GA!(
-    notebooks::Vector{Logbook},
-    f::Function,
-    population::AbstractVector,
-    k_max::Integer,
-    S::ParentSelector,
-    C::Recombinator,
-    M::Mutator
-)
+        notebooks::Vector{Logbook},
+        f::Function,
+        population::AbstractVector,
+        k_max::Integer,
+        S::ParentSelector,
+        C::Recombinator,
+        M::Mutator
+    )
     n = length(population)
 
     fitnesses = Vector{Float64}(undef, n)

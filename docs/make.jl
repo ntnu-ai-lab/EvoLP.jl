@@ -2,11 +2,11 @@ push!(LOAD_PATH, "../src/")
 
 using EvoLP, MPI, Documenter
 
-DocMeta.setdocmeta!(EvoLP, :DocTestSetup, :(using EvoLP); recursive=true)
+DocMeta.setdocmeta!(EvoLP, :DocTestSetup, :(using EvoLP); recursive = true)
 modules = [
-        EvoLP,
-        Base.get_extension(EvoLP, :EvoLPIslandsExt),
-    ]
+    EvoLP,
+    Base.get_extension(EvoLP, :EvoLPIslandsExt),
+]
 
 makedocs(
     modules = modules,
@@ -34,7 +34,7 @@ makedocs(
             "Optimisation test functions" => "man/testfunctions.md",
             "Reporting results" => "man/results.md",
             "Logging statistics" => "man/logbook.md",
-            "Custom operators"  => "man/extending.md",
+            "Custom operators" => "man/extending.md",
             "Island Models" => "man/islands.md",
         ],
         "Tutorials" => [

@@ -31,8 +31,8 @@ end
 
 # Logbook version
 function oneplusone!(
-    logger::Logbook, f::Function, ind::AbstractVector, k_max::Integer, M::Mutator
-)
+        logger::Logbook, f::Function, ind::AbstractVector, k_max::Integer, M::Mutator
+    )
     fx = Inf  # works only on minimisation problems
     runtime = @elapsed for _ in 1:k_max
         c = mutate(M, ind)

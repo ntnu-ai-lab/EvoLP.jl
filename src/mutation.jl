@@ -39,7 +39,7 @@ end
 
 Randomly flips each bit with a probability `λ`.
 """
-@inline function mutate(M::BitwiseMutator, ind; rng=Random.GLOBAL_RNG)
+@inline function mutate(M::BitwiseMutator, ind; rng = Random.GLOBAL_RNG)
     return [rand(rng) < M.λ ? !v : v for v in ind]
 end
 
@@ -57,7 +57,7 @@ end
 Randomly add Gaussian noise to the `ind` candidate solution, with a standard
 deviation of `σ`.
 """
-@inline function mutate(M::GaussianMutator, ind; rng=Random.GLOBAL_RNG)
+@inline function mutate(M::GaussianMutator, ind; rng = Random.GLOBAL_RNG)
     return @fastmath ind + randn(rng, length(ind)) * M.σ
 end
 
@@ -72,8 +72,8 @@ struct SwapMutator <: PermutationMutator end
 
 Randomly swap the position of two alleles in the `ind` candidate solution.
 """
-function mutate(::SwapMutator, ind; rng=Random.GLOBAL_RNG)
-    indices = sample(rng, 1:length(ind), 2, replace=false)
+function mutate(::SwapMutator, ind; rng = Random.GLOBAL_RNG)
+    indices = sample(rng, 1:length(ind), 2, replace = false)
     aux = ind[indices[1]]
     c = deepcopy(ind)
     c[indices[1]], c[indices[2]] = c[indices[2]], aux
@@ -91,8 +91,8 @@ struct InsertionMutator <: PermutationMutator end
 Randomly choose two positions `a` and `b` from `ind`,
 insert at `a`+1 the element at position `b``, and shift the rest of the elements.
 """
-function mutate(::InsertionMutator, ind; rng=Random.GLOBAL_RNG)
-    indices = sample(rng, 1:length(ind), 2, replace=false, ordered=true)
+function mutate(::InsertionMutator, ind; rng = Random.GLOBAL_RNG)
+    indices = sample(rng, 1:length(ind), 2, replace = false, ordered = true)
     removed = splice!(ind, indices[2])
     insert!(ind, indices[1] + 1, removed)
     return ind
@@ -109,8 +109,8 @@ struct ScrambleMutator <: PermutationMutator end
 
 Randomly scramble the subsequence between two random points in `ind`.
 """
-function mutate(::ScrambleMutator, ind; rng=Random.GLOBAL_RNG)
-    indices = sample(rng, 1:length(ind), 2, replace=false, ordered=true)
+function mutate(::ScrambleMutator, ind; rng = Random.GLOBAL_RNG)
+    indices = sample(rng, 1:length(ind), 2, replace = false, ordered = true)
     c = deepcopy(ind)
     shift = c[indices[1]:indices[2]]
     shuffle!(rng, shift)
@@ -128,8 +128,8 @@ struct InversionMutator <: PermutationMutator end
 
 Invert the subsequence between two random points in `ind`.
 """
-function mutate(::InversionMutator, ind; rng=Random.GLOBAL_RNG)
-    indices = sample(rng, 1:length(ind), 2, replace=false, ordered=true)
+function mutate(::InversionMutator, ind; rng = Random.GLOBAL_RNG)
+    indices = sample(rng, 1:length(ind), 2, replace = false, ordered = true)
     c = deepcopy(ind)
     shift = c[indices[1]:indices[2]]
     c[indices[1]:indices[2]] = shift[end:-1:1]
