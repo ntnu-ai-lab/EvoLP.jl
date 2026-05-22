@@ -8,14 +8,14 @@ myrng = StableRNG(123)
 @info "Testing generators"
 @testset verbose = true "Generator test" begin
     @testset "Binary vectors generator" begin
-        population = binary_vector_pop(50, 10, rng=myrng)
+        population = binary_vector_pop(50, 10, rng = myrng)
         @test length(population) == 50  # Size of the population matches
         @test length(population[1]) == 10  # Size of an individual matches
         @test typeof(population[1]) == BitVector  # Type of an individual matches
     end
 
     @testset "Permutation vectors generator" begin
-        population = permutation_vector_pop(30, 8, 1:8; replacement=false, rng=myrng)
+        population = permutation_vector_pop(30, 8, 1:8; replacement = false, rng = myrng)
         @test length(population) == 30  # Size of the population matches
         @test length(population[1]) == 8  # Length of an individual matches
         @test typeof(population[1]) <: Vector{Int64}  # Type of an individual matches
@@ -23,7 +23,7 @@ myrng = StableRNG(123)
     end
 
     @testset "Normal random vectors generator" begin
-        population = normal_rand_vector_pop(3000, [0, 0], [1 0; 0 1], rng=myrng)
+        population = normal_rand_vector_pop(3000, [0, 0], [1 0; 0 1], rng = myrng)
         @test length(population) == 3000  # Size of the population matches
         @test length(population[1]) == 2  # size of an individual matches
         @test typeof(population[1]) <: Vector{Float64}  # Type of an individual matches
@@ -31,7 +31,7 @@ myrng = StableRNG(123)
     end
 
     @testset "Uniformly random vectors generator" begin
-        population = unif_rand_vector_pop(3000, [0, 0], [1, 1], rng=myrng)
+        population = unif_rand_vector_pop(3000, [0, 0], [1, 1], rng = myrng)
         @test length(population) == 3000  # Size of the population matches
         @test length(population[1]) == 2 # Size of an individual matches
         @test typeof(population[1]) <: Vector{Float64} # Type of an individual matches
@@ -39,7 +39,7 @@ myrng = StableRNG(123)
     end
 
     @testset "Normal random particles generator" begin
-        population = normal_rand_particle_pop(3000, [0, 0], [1 0; 0 1], rng=myrng)
+        population = normal_rand_particle_pop(3000, [0, 0], [1 0; 0 1], rng = myrng)
         @test length(population) == 3000  # Size of the population matches
         @test length(population[1].x) == 2 # Dimensions of position matches
         @test typeof(population[1]) == Particle  # Type of individual matches
@@ -47,7 +47,7 @@ myrng = StableRNG(123)
     end
 
     @testset "Uniformly random particles generator" begin
-        population = unif_rand_particle_pop(3000, [0, 0], [1, 1], rng=myrng)
+        population = unif_rand_particle_pop(3000, [0, 0], [1, 1], rng = myrng)
         @test length(population) == 3000  # Size of the population matches
         @test length(population[1].x) == 2 # Dimensions of position matches
         @test typeof(population[1]) == Particle  # Type of individual matches

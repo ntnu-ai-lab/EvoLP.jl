@@ -1,6 +1,6 @@
-# How to contribute to EvoLP
+# How to contribute to EvoLP.jl
 
-This document describes some ways in which you can contribute to EvoLP.
+This document describes some ways in which you can contribute to EvoLP.jl.
 
 ## Why is it important to contribute?
 
@@ -10,7 +10,7 @@ This document describes some ways in which you can contribute to EvoLP.
 
 ## What can I do to contribute?
 
-There are many ways in which you can contribute to EvoLP!
+There are many ways in which you can contribute to EvoLP.jl!
 
 ### Improve the documentation
 
@@ -24,42 +24,42 @@ If your submission is big enough (spanning multiple files and adding or modifyin
 
 ### File a bug report
 
-Finding bugs is greatly appreciated, because that means that we can fix them (or you can also [help with that](#contribute-code-to-evolp)).
+Finding bugs is greatly appreciated, because that means that we can fix them (or you can also [help with that](#contribute-code-to-evolpjl)).
 
 For now, you can submit a new issue describing the problem in the [issue tracker](https://github.com/ntnu-ai-lab/EvoLP.jl/issues).
 
-### Contribute code to EvoLP
+### Contribute code to EvoLP.jl
 
 Contributing code is also possible via fork & pull request:
 
-1. Fork EvoLP
-2. Make changes (be sure to follow the [style guide](https://github.com/invenia/BlueStyle)).
+1. Fork EvoLP.jl
+2. Make changes (be sure to format your files using [Runic](https://github.com/fredrikekre/Runic.jl)).
 3. Make a unit test of your added functionality
 4. Test your code changes
 5. Document your code changes
-6. Push to your fork and make a pull request
+6. Push to your fork and make a pull request on EvoLP.jl
 
 ## Contributing guidelines
 
 [![ColPrac: Contributor's Guide on Collaborative Practices for Community Packages](https://img.shields.io/badge/ColPrac-Contributor's%20Guide-blueviolet)](https://github.com/SciML/ColPrac)
 
-EvoLP follows the ColPrac: Contributor's Guide on Collaborative Practices for Community Packages guide from SciML.
+EvoLP.jl follows the ColPrac: Contributor's Guide on Collaborative Practices for Community Packages guide from SciML.
 This guide is a collection of best practices when contributing to packages.
 
 You can read the full guide at SciML's [ColPrac repository](https://github.com/SciML/ColPrac).
 
 ## Code style guidelines
 
-[![Code Style: Blue](https://img.shields.io/badge/code%20style-blue-4495d1.svg)](https://github.com/invenia/BlueStyle)
+[![code style: runic](https://img.shields.io/badge/code_style-%E1%9A%B1%E1%9A%A2%E1%9A%BE%E1%9B%81%E1%9A%B2-black)](https://github.com/fredrikekre/Runic.jl)
 
-EvoLP follows Invenia's Blue code style guide.
-This is a set of style conventions for Julia code that are based on a series of grounding documents (like Julia's own style guide and PEP8).
+EvoLP.jl uses the Runic formatter.
+This is an automatic formatter made in Julia that is gaining popularity in recent years.
 
-You can read the full guide at Invenia's [Blue Style repository](https://github.com/invenia/BlueStyle).
+Previously, we used Invenia's [Blue Style repository](https://github.com/invenia/BlueStyle).
 
 ## Source code organisation
 
-The following table shows how the EvoLP code is organised:
+The following table shows how the EvoLP.jl code is organised:
 
 | **Directory** |  **Contents** |
 |:-------------:|:-------------:|
@@ -79,16 +79,16 @@ Examples in `.ipynb` form are placed here. This makes it easier for examples to 
 
 ### The `src` folder
 
-This folder contains all the functionality of EvoLP, spread over several files for clarity.
-All these files are included in `EvoLP.jl` which is the file  which defines the module itself.
+This folder contains all the functionality of EvoLP.jl, spread over several files for clarity.
+All these files are included in `EvoLP.jl` which is the file that defines the module itself.
 
-An additional subfolder for `algorithms` is present, to keep solvers and _blocks_ separated.
+An additional subfolder for `algorithms` is present, to keep solvers and _blocks_ on separate locations.
 
 ### The `test` folder
 
 This is where all tests reside.
 The main test suite `runtests.jl` includes functionality to run all other test suites.
-Each of these test suites cover all the different categories in EvoLP.
+Each of these test suites cover all the different categories in EvoLP.jl.
 
 New generators should be tested in the `generators.jl` test suite.
 New recombinators should be tested in the `crossover.jl` test suite.
@@ -99,6 +99,6 @@ Create a new implementation in a notebook, beautify and put in the `src/examples
 
 ### Get in touch
 
-Regardless of what you contribute or how big or small your contribution is, the help is always appreciated.
+Regardless of what you contribute or how big or small your contribution is, help is always appreciated.
 
 Get in touch; we will probably be able to help you through the contributing process.

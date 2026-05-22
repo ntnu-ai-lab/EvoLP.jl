@@ -21,9 +21,9 @@ using Test
         x = [1, 1, 1, 1, 1, 1, 0, 0, 1, 1]
         y = ones(10)
         z = [1, 1, 0, 0, 1, 0, 0, 0, 1, 1]
-        @test jumpk(x; k=3) == -8
+        @test jumpk(x; k = 3) == -8
         @test jumpk(y) == 10
-        @test jumpk(z; k=4) == 5
+        @test jumpk(z; k = 4) == 5
     end
 
     @testset "Ackley" begin
@@ -54,7 +54,7 @@ using Test
         y = [481.462894, 436.929541, 451.769713]
         z = [485.589834, 436.123707, 451.083199, 466.431218, 421.958519]
         # known optima
-        @test eggholder(x) ≈ -959.64066270 atol = 0.001
+        @test eggholder(x) ≈ -959.6406627 atol = 0.001
         @test eggholder(y) ≈ -1888.3213909 atol = 0.001
         @test eggholder(z) ≈ -3719.7248363 atol = 0.001
     end
@@ -62,7 +62,7 @@ using Test
     @testset "Michalewicz" begin
         x = [2.202906, 1.570796]
         y = [2.202906, 1.570796, 1.284992]
-        z = [2.202906, 1.570796, 1.284992, 1.923058, 1.720470]
+        z = [2.202906, 1.570796, 1.284992, 1.923058, 1.72047]
         # known optima
         @test michalewicz(x) ≈ -1.8013 atol = 0.001
         @test michalewicz(y) ≈ -2.7603 atol = 0.001

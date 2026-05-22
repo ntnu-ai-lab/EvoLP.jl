@@ -4,6 +4,7 @@ using Test
 
 const testfiles = (
     "generators.jl",
+    "selection.jl",
     "crossover.jl",
     "mutation.jl",
     "testfunctions.jl",
