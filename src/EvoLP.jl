@@ -55,7 +55,7 @@ export OX1Recombinator  # Permutation
 export cross
 
 # Optimisation test functions
-export onemax, leadingones, jumpk  # Pseudoboolean
+export onemax, leadingones, jumpk, triangle  # Pseudoboolean
 export booth, branin, rosenbrock, wheeler  # Continuous unimodal
 export ackley, eggholder, michalewicz, rana # Continuous multimodal
 

@@ -1,4 +1,5 @@
 using EvoLP
+using Random
 using Test
 
 @info "Testing Benchmark functions"
@@ -24,6 +25,21 @@ using Test
         @test jumpk(x; k = 3) == -8
         @test jumpk(y) == 10
         @test jumpk(z; k = 4) == 5
+    end
+
+    @testset "Triangle" begin
+        m = 1
+        s = 4
+        x = ones(16)
+        y = zeros(16)
+        z1 = [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        z2 = shuffle(z1)
+        z3 = shuffle(z2)
+        @test triangle(x, m, s) == 0
+        @test triangle(y, m, s) == 0
+        @test triangle(z1, m, s) == 4
+        @test triangle(z2, m, s) == 4
+        @test triangle(z3, m, s) == 4
     end
 
     @testset "Ackley" begin

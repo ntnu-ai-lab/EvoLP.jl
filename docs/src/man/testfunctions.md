@@ -9,6 +9,7 @@ Unless otherwise specified, every function is of the form ``f(x)``.
 onemax
 leadingones
 jumpk
+triangle
 ```
 
 ## Continuous functions

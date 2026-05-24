@@ -58,8 +58,50 @@ For an individual of length ``n``, maximum is achieved with ``n`` ones.
 """
 onemax(x) = sum(x)
 
-# Real-valued functions
+"""
+    triangle(x, m, s)
 
+The _triangular positive wave_, or **Triangle**, is a synthetic test function
+introduced in Estimating the Number of Local Optima in Multimodal Pseudo-Boolean
+Functions: Validation via Landscapes of Triangles (Sánchez-Díaz & Mengshoel, 2024).
+
+Triangle uses two parameters, `m` and `s`, which modify the number of optima
+in the search space.
+The fitness depends on the number of ones in a bitstring, ``\\boldsymbol{b}`` (an individual `x`):
+
+```math
+\\text{Triangle}(\\boldsymbol{b}, m, s) = \\begin{cases}
+      g(\\boldsymbol{b}), \\; \\text{ if } \\; \\left\\lceil \\frac{\\Vert\\boldsymbol{b}\\Vert}{s} \\right\\rceil \\mod 2 = 1 \\\\
+      m\\left(\\left\\lceil \\frac{\\Vert\\boldsymbol{b}\\Vert}{s} \\right\\rceil \\cdot s - \\Vert\\boldsymbol{b}\\Vert\\right) \\; \\text{otherwise}
+    \\end{cases}
+```
+
+where
+
+```math
+g(\\boldsymbol{b}) = \\begin{cases}
+        m  \\cdot s, \\; \\text{ if } \\; \\Vert\\boldsymbol{b}\\Vert \\mod s = 0 \\\\
+        m (\\Vert\\boldsymbol{b}\\Vert \\mod s) \\; \\text{otherwise.}
+        \\end{cases} 
+```
+"""
+function triangle(x, m, s)::Int
+    n_ones = sum(x)
+    i = ceil(n_ones / s)
+    if i % 2 == 1
+        if n_ones % s == 0
+            r = m * s
+        else
+            r = m * (n_ones % s)
+        end
+    else
+        r = m * (i * s - n_ones)
+    end
+    return r
+end
+
+
+# Real-valued functions
 
 """
     ackley(x; a=20, b=0.2, c=2π)
@@ -150,8 +192,8 @@ end
     rana(x::Vector{T} where {T<:Real})
 
 A ``d``-dimensional function which is highly rugged and symmetrical.
-For ``d=2``, the global minimum ``f(\\mathbf{x}^*)\\approx -511.73288 with
-optimiser ``\\mathbf{x}^* = `(-488.632577, 512)`.
+For ``d=2``, the global minimum ``f(\\mathbf{x}^*)\\approx -511.73288`` with
+optimiser ``\\mathbf{x}^* = (-488.632577, 512)``.
 """
 @inline function rana(x::Vector{T} where {T <: Real})
     n = length(x)
