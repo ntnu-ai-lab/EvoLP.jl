@@ -3,13 +3,17 @@
 EvoLP includes some test functions to benchmark your algorithms.
 Unless otherwise specified, every function is of the form ``f(x)``.
 
-## Pseudo boolean functions
+## Pseudo-Boolean functions
 
 ```@docs
 onemax
 leadingones
+peakedLO
 jumpk
+trailingzeros
 triangle
+twomax
+zeromax
 ```
 
 ## Continuous functions

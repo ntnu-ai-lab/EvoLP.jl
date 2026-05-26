@@ -2,7 +2,7 @@
 Optimisation test functions
 """
 
-# Pseudo boolean functions
+# Pseudo boolean functions ----------------
 
 """
     jumpk(x; k=6)
@@ -21,7 +21,7 @@ is with a _perfect flip_ of ``k`` bits, which is considered extremely difficult.
 where ``\\lVert x \\rVert_1 = \\sum_{i=1}^n x_i`` is the number of 1-bits in
 ``x \\in \\{0, 1\\}^n``.
 """
-function jumpk(x; k = 6)::Int
+@inline function jumpk(x; k = 6)::Int
     s = sum(x)
     n = length(x)
     return s ∈ (1:(n - k)) ∪ n ? s : -s
@@ -34,7 +34,7 @@ the chromosome. The maximum is achieved with ``n`` ones, but the landscape is a 
 difficult to traverse.
 
 ```math
-\\text{LO}(\\mathbf{x}) = \\sum_{i=1}^n \\prod_j^i x_j
+\\text{LO}(\\boldsymbol{x}) = \\sum_{i=1}^n \\prod_j^i x_j
 ```
 """
 @inline function leadingones(x)::Int
@@ -53,39 +53,81 @@ The **OneMax** function returns the sum of the individual.
 For an individual of length ``n``, maximum is achieved with ``n`` ones.
 
 ```math
-\\text{OneMax}(\\mathbf{x}) = \\sum_{i=1}^n x_i
+\\text{OneMax}(\\boldsymbol{x}) = \\sum_{i=1}^n x_i
 ```
 """
-onemax(x) = sum(x)
+@inline onemax(x) = sum(x)
+
+
+"""
+The **PeakedLO** function is a deceptive benchmark function,
+with a peak at the start and [`leadingones`](@ref) otherwise. Originally introduced in
+_Self-adaptation of Mutation Rates in Non-elitist Populations_ (Dang & Lehre, 2016).
+
+```math
+\\text{PeakedLO}(\\mathbf{x}) = \\begin{cases}
+    & m & \\text{if } x = 0^n \\\\
+    & \\sum_{i=1}^n \\prod_{j=1}^i x_j & \\text{otherwise}.
+\\end{cases}
+```
+"""
+function peakedLO(x; m = length(x) - 1)
+    if all(iszero, x)
+        return m
+    else
+        return leadingones(x)
+    end
+end
+
+
+"""
+An _inverse_ version of [`leadingones`](@ref). **TrailingZeros** returns the length
+of the longest suffix that consists only of 0-bits.
+The optimum is achieved by an individual with ``n`` zeros.
+
+```math
+\\text{TZ}(\\boldsymbol{x}) = \\sum_{i=1}^n \\prod_{j=i}^n (1 - x_i)
+```
+"""
+@inline function trailingzeros(x)::Int
+    s = 0
+    m = 1
+    @inbounds for val in reverse(x)
+        m *= 1 - val
+        s += m
+    end
+    return s
+end
+
 
 """
     triangle(x, m, s)
 
 The _triangular positive wave_, or **Triangle**, is a synthetic test function
-introduced in Estimating the Number of Local Optima in Multimodal Pseudo-Boolean
-Functions: Validation via Landscapes of Triangles (Sánchez-Díaz & Mengshoel, 2024).
+introduced in _Estimating the Number of Local Optima in Multimodal Pseudo-Boolean
+Functions: Validation via Landscapes of Triangles_ (Sánchez-Díaz & Mengshoel, 2024).
 
 Triangle uses two parameters, `m` and `s`, which modify the number of optima
 in the search space.
-The fitness depends on the number of ones in a bitstring, ``\\boldsymbol{b}`` (an individual `x`):
+The fitness depends on the number of ones in a bitstring, ``\\boldsymbol{x}`` (an individual `x`):
 
 ```math
-\\text{Triangle}(\\boldsymbol{b}, m, s) = \\begin{cases}
-      g(\\boldsymbol{b}), \\; \\text{ if } \\; \\left\\lceil \\frac{\\Vert\\boldsymbol{b}\\Vert}{s} \\right\\rceil \\mod 2 = 1 \\\\
-      m\\left(\\left\\lceil \\frac{\\Vert\\boldsymbol{b}\\Vert}{s} \\right\\rceil \\cdot s - \\Vert\\boldsymbol{b}\\Vert\\right) \\; \\text{otherwise}
+\\text{Triangle}(\\boldsymbol{x}, m, s) = \\begin{cases}
+      g(\\boldsymbol{x}), \\; \\text{ if } \\; \\left\\lceil \\frac{\\Vert\\boldsymbol{x}\\Vert}{s} \\right\\rceil \\mod 2 = 1 \\\\
+      m\\left(\\left\\lceil \\frac{\\Vert\\boldsymbol{x}\\Vert}{s} \\right\\rceil \\cdot s - \\Vert\\boldsymbol{x}\\Vert\\right) \\; \\text{otherwise}
     \\end{cases}
 ```
 
 where
 
 ```math
-g(\\boldsymbol{b}) = \\begin{cases}
-        m  \\cdot s, \\; \\text{ if } \\; \\Vert\\boldsymbol{b}\\Vert \\mod s = 0 \\\\
-        m (\\Vert\\boldsymbol{b}\\Vert \\mod s) \\; \\text{otherwise.}
+g(\\boldsymbol{x}) = \\begin{cases}
+        m  \\cdot s, \\; \\text{ if } \\; \\Vert\\boldsymbol{x}\\Vert \\mod s = 0 \\\\
+        m (\\Vert\\boldsymbol{x}\\Vert \\mod s) \\; \\text{otherwise.}
         \\end{cases} 
 ```
 """
-function triangle(x, m, s)::Int
+@inline function triangle(x, m, s)::Int
     n_ones = sum(x)
     i = ceil(n_ones / s)
     if i % 2 == 1
@@ -101,7 +143,34 @@ function triangle(x, m, s)::Int
 end
 
 
-# Real-valued functions
+"""
+    twomax(x)
+
+Two modal version of [`onemax`](@ref) function, where optima are at either full ones or full zeros.
+
+```math
+\\text{TwoMax}(\\boldsymbol{x}) = \\max\\left\\{\\sum_{i=1}^n x_i, n-\\sum_{i=1}^n x_i\\right\\}
+```
+"""
+@inline function twomax(x)::Int
+    return max(sum(x), length(x) - sum(x))
+end
+
+
+"""
+An _inverse_ version of [`onemax`](@ref), where the optimum is achieved by an individual with
+``n`` zeros.
+
+```math
+\\text{ZeroMax}(\\boldsymbol{x}) = n - \\sum_{i=1}^n x_i
+```
+"""
+@inline function zeromax(x)::Int
+    return length(x) - sum(x)
+end
+
+
+# Real-valued functions -------------------
 
 """
     ackley(x; a=20, b=0.2, c=2π)
@@ -158,8 +227,8 @@ end
     eggholder(x::Vector{T} where {T<:Real})
 
 A ``d``-dimensional function which draws its name due to its highly rugged landscape.
-For the 2-dimensional version, the optimum ``f(\\mathbf{x}^*)\\approx-959.64066``
-with optimiser ``\\mathbf{x}^* = (512, 404.231805)``.
+For the 2-dimensional version, the optimum ``f(\\boldsymbol{x}^*)\\approx-959.64066``
+with optimiser ``\\boldsymbol{x}^* = (512, 404.231805)``.
 """
 function eggholder(x::Vector{T} where {T <: Real})
     n = length(x)
@@ -192,8 +261,8 @@ end
     rana(x::Vector{T} where {T<:Real})
 
 A ``d``-dimensional function which is highly rugged and symmetrical.
-For ``d=2``, the global minimum ``f(\\mathbf{x}^*)\\approx -511.73288`` with
-optimiser ``\\mathbf{x}^* = (-488.632577, 512)``.
+For ``d=2``, the global minimum ``f(\\boldsymbol{x}^*)\\approx -511.73288`` with
+optimiser ``\\boldsymbol{x}^* = (-488.632577, 512)``.
 """
 @inline function rana(x::Vector{T} where {T <: Real})
     n = length(x)

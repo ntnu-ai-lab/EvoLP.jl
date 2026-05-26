@@ -34,6 +34,7 @@ makedocs(
             "Optimisation test functions" => "man/testfunctions.md",
             "Reporting results" => "man/results.md",
             "Logging statistics" => "man/logbook.md",
+            "Utilities" => "man/utils.md",
             "Custom operators" => "man/extending.md",
             "Island Models" => "man/islands.md",
         ],

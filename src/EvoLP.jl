@@ -17,6 +17,7 @@ include("mutation.jl")
 include("result.jl")
 include("selection.jl")
 include("testfunctions.jl")
+include("utils.jl")
 
 include("algorithms/ga.jl")
 include("algorithms/ea.jl")
@@ -55,7 +56,9 @@ export OX1Recombinator  # Permutation
 export cross
 
 # Optimisation test functions
-export onemax, leadingones, jumpk, triangle  # Pseudoboolean
+export zeromax, onemax, twomax  # Pseudo-Boolean simple
+export leadingones, trailingzeros  # Pseudo-Boolean linked
+export jumpk, triangle, peakedLO  # Pseudo-Boolean complex
 export booth, branin, rosenbrock, wheeler  # Continuous unimodal
 export ackley, eggholder, michalewicz, rana # Continuous multimodal
 
@@ -67,6 +70,13 @@ export optimum, optimizer, iterations, f_calls, population, runtime
 export Logbook
 export compute!
 export summarise
+
+# Utilities
+export force_boolean
+export global_entropy
+export ind2dec, ind2str
+export dec2ind, str2ind
+export get_neighbourhood, get_neighbourhood_ixs
 
 # |=== EvoLPIslands extension ===|
 # Island types

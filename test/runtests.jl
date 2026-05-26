@@ -8,6 +8,7 @@ const testfiles = (
     "crossover.jl",
     "mutation.jl",
     "testfunctions.jl",
+    "utils.jl",
     "deprecated.jl",
 )
 

@@ -31,16 +31,16 @@ abstract type PermutationMutator <: Mutator end
 Bitwise mutation with probability `λ` of flipping each bit.
 """
 struct BitwiseMutator <: BinaryMutator
-    λ
+    λ  # TODO: Change λ for χ
 end
 
 """
     mutate(M::BitwiseMutator, ind)
 
-Randomly flips each bit with a probability `λ`.
+Randomly flips each bit with a probability `λ`. # TODO: Change λ for χ
 """
 @inline function mutate(M::BitwiseMutator, ind; rng = Random.GLOBAL_RNG)
-    return [rand(rng) < M.λ ? !v : v for v in ind]
+    return [rand(rng) < M.λ ? !v : v for v in ind] # TODO: Change λ for χ
 end
 
 # For continuous individuals
