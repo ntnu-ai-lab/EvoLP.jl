@@ -5,8 +5,8 @@ using StableRNGs
 myrng = StableRNG(123)
 fits = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-@info "Testing Selectors"
-@testset verbose = true "Selector test" begin
+@info "Testing selectors"
+@testset verbose = true "Parent selector test" begin
     @testset "Tournament Selector" begin
         T = TournamentSelector(5)
         s = select(T, fits; rng = myrng) # randperm twice = [1, 1]
@@ -34,4 +34,7 @@ fits = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         @test s == [5, 4]
         @test length(s) == 2
     end
+    # TODO: Uniform Selector
 end;
+
+# TODO: Survival Selectors

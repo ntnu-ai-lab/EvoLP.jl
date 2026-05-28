@@ -2,7 +2,7 @@ using EvoLP
 using Random
 using Test
 
-@info "Testing Benchmark functions"
+@info "Testing benchmark functions"
 @testset verbose = true "Test functions" begin
     @testset "ZeroMax" begin
         n = rand(1:128)

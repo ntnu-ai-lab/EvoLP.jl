@@ -4,7 +4,7 @@ using StableRNGs
 
 myrng = StableRNG(123)
 
-@info "Testing Recombinators"
+@info "Testing recombinators"
 @testset verbose = true "Crossover test" begin
     @testset "Single point crossover" begin
         S = SinglePointRecombinator()

@@ -1,19 +1,24 @@
-# Parent selection operators
+# Abstract supertype for selectors
 # ==========================
-# All selectors perform a single operation, as in a steady-state GA.
-# Each selector returns a list of two indices.
-# An array of fitnesses `y` is passed as a parameter and is used to obtain a pair of
-# parents' indices (to be sliced from the population later in your algorithms)
 
 """
 Abstract Selector for either Parent or Deme selection methods.
 """
 abstract type Selector end
 
+
+# Parent selection operators
+# ==========================
+# All parent selectors perform a single operation, as in a steady-state GA.
+# Each selector returns a list of two indices.
+# An array of fitnesses `y` is passed as a parameter and is used to obtain a pair of
+# parents' indices (to be sliced from the population later in your algorithms)
+
 """
 Abstract Parent Selector
 """
 abstract type ParentSelector <: Selector end
+
 
 """
 Tournament parent selection with tournament size `T`.
@@ -25,16 +30,17 @@ end
 """
     select(t::TournamentSelector, y)
 
-Select two parents which are the winners from two random tournaments of size `t.T`.
+Select `N` parents which are the winners from `N` random tournaments of size `t.T`.
 """
-function select(t::TournamentSelector, y; rng = Random.GLOBAL_RNG)
+function select(t::TournamentSelector, y, N::Int = 2; rng = Random.GLOBAL_RNG)
     getparent() = begin
         p = randperm(rng, length(y))
         p[argmin(y[p[1:t.T]])]
     end
 
-    return [getparent(), getparent()]
+    return [getparent() for _ in 1:N]
 end
+
 
 """
 Truncation selection for selecting top `k` possible parents in the population.
@@ -44,14 +50,15 @@ struct TruncationSelector <: ParentSelector
 end
 
 """
-    select(t::TruncationSelector, y)
+    select(t::TruncationSelector, y, N::Int = 2; rng = Random.GLOBAL_RNG)
 
-Select two random parents out from the top `t.k` in the population.
+Select `N` random parent indices out from the top `t.k` in the population.
 """
-function select(t::TruncationSelector, y; rng = Random.GLOBAL_RNG)
-    p = sortperm(y)
-    return p[rand(rng, 1:t.k, 2)]
+function select(t::TruncationSelector, y, N::Int = 2; rng = Random.GLOBAL_RNG)
+    top_k_indices = _select_top_k(y, t.k)
+    return rand(rng, top_k_indices, N)
 end
+
 
 """
 Roulette wheel parent selection.
@@ -59,15 +66,16 @@ Roulette wheel parent selection.
 struct RouletteWheelSelector <: ParentSelector end
 
 """
-    select(::RouletteWheelSelector, y)
+    select(::RouletteWheelSelector, y, N::Int = 2; rng = Random.GLOBAL_RNG)
 
-Select two random parents with probability proportional to their fitness.
+Select `N` random parent indices with probability proportional to their fitness.
 """
-function select(::RouletteWheelSelector, y; rng = Random.GLOBAL_RNG)
+function select(::RouletteWheelSelector, y, N::Int = 2; rng = Random.GLOBAL_RNG)
     y = maximum(y) .- y
     cat = Categorical(normalize(y, 1))
-    return rand(rng, cat, 2)
+    return rand(rng, cat, N)
 end
+
 
 """
 Rank-based parent selection.
@@ -75,15 +83,88 @@ Rank-based parent selection.
 struct RankBasedSelector <: ParentSelector end
 
 """
-	select(::RankBasedSelector, y)
+	select(::RankBasedSelector, y, N::Int = 2; rng = Random.GLOBAL_RNG)
 
-Select two random parents with probability proportional to their ranks.
+Select `N` random parent indices with probability proportional to their ranks.
 """
-function select(::RankBasedSelector, y; rng = Random.GLOBAL_RNG)
+function select(::RankBasedSelector, y, N::Int = 2; rng = Random.GLOBAL_RNG)
     ranks = ordinalrank(y, rev = true)
     cat = Categorical(normalize(ranks, 1))
-    return rand(rng, cat, 2)
+    return rand(rng, cat, N)
 end
+
+
+"""
+Uniform parent selection for ES and EAs.
+"""
+struct UniformSelector <: ParentSelector end
+
+"""
+    select(::UniformSelector, y, N::Int = 2; rng = Random.GLOBAL_RNG)
+
+Select `N` parent indices uniformly at random with replacement.
+Useful for (μ, λ)-ES and EAs.
+"""
+function select(::UniformSelector, y, N::Int = 2; rng = Random.GLOBAL_RNG)
+    return rand(rng, 1:length(y), N)
+end
+
+
+# Survival Selectors
+# ==============
+# Survival selectors are meant for selecting the entire population for the next generation.
+# These selectors get the relevant fitnesses and return a set of indices to be sliced
+# from the population in your algorithms.
+# These selectors are deterministic.
+
+"""
+Abstract Survival Selector
+"""
+abstract type SurvivalSelector <: Selector end
+
+
+"""
+    CommaSelector(μ::Int)
+
+``(\\mu, \\lambda)`` survival selection.
+Selects the indices of the best `μ` individuals exclusively from the offspring population.
+"""
+struct CommaSelector <: SurvivalSelector
+    μ::Int
+end
+
+"""
+    select(S::CommaSelector, y_λ)
+
+Return the indices of the best `μ` offspring.
+"""
+function select(S::CommaSelector, y_λ)
+    # Comma selection chooses μ from λ fitnesses
+    return _select_top_k(y_λ, S.μ)
+end
+
+
+"""
+    PlusSelector(μ::Int)
+
+``(\\mu + \\lambda)`` survival selection.
+Selects the indices of the best `μ` individuals from the combined pool of parents and offspring.
+"""
+struct PlusSelector <: SurvivalSelector
+    μ::Int
+end
+
+"""
+    select(S::PlusSelector, y_μ, y_λ)
+
+Return the indices of the best `μ` individuals from both parents and offspring.
+"""
+function select(S::PlusSelector, y_μ, y_λ)
+    # Plus selection chooses μ from both μ + λ fitnesses
+    y = vcat(y_μ, y_λ)
+    return _select_top_k(y, S.μ)
+end
+
 
 # Deme Selectors
 # ==============
@@ -107,4 +188,15 @@ Deme selector for obtaining the worst `k` individuals
 """
 struct WorstDemeSelector <: DemeSelector
     k::Integer
+end
+
+
+# Helpers
+# ==============
+
+function _select_top_k(y::AbstractArray{<:Real}, k::Int)
+    if k > length(y)
+        throw(ArgumentError("Cannot select $k individuals from a pool of $(length(y))."))
+    end
+    return partialsortperm(y, 1:k)
 end

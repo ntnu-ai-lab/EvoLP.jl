@@ -1,6 +1,6 @@
 name = "EvoLP"
 uuid = "71f1f4bb-392f-41f8-8452-d535d061e0f4"
-version = "2.0.1"
+version = "2.1.0"
 authors = ["Xavier Sánchez Díaz <5231167+saxarona@users.noreply.github.com>"]
 
 [deps]

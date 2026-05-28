@@ -37,16 +37,21 @@ export oneplusone, oneplusone!
 export PSO, PSO!
 
 # Selection
+#-- Parent
 export RankBasedSelector
 export RouletteWheelSelector
 export TournamentSelector
 export TruncationSelector
+export UniformSelector
+#-- Survival
+export CommaSelector
+export PlusSelector
 export select
 
 # Mutation
-export BitwiseMutator # Binary
-export GaussianMutator # Continous
-export InsertionMutator, InversionMutator, ScrambleMutator, SwapMutator
+export BitwiseMutator  # Binary
+export GaussianMutator  # Continous
+export InsertionMutator, InversionMutator, ScrambleMutator, SwapMutator  # Permutation
 export mutate
 
 # Crossover
