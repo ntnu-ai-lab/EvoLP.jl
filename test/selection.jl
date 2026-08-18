@@ -44,10 +44,42 @@ fits = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     end
 end;
 
+@testset verbose = true "Parent batch selector test" begin
+    @testset "Tournament Selector" begin
+        T = TournamentSelector(5)
+        s = select(T, fits, 5; rng = myrng)
+        @test length(s) == 5  # check length of return
+    end
+
+    @testset "Truncation Selector" begin
+        T = TruncationSelector(3)
+        s = select(T, fits, 15; rng = myrng)
+        @test length(s) == 15  # check length of return
+    end
+
+    @testset "Roulette wheel Selector" begin
+        T = RouletteWheelSelector()
+        s = select(T, fits, 16; rng = myrng)
+        @test length(s) == 16  # check length of return
+    end
+
+    @testset "Rank based Selector" begin
+        T = RankBasedSelector()
+        s = select(T, fits, 8; rng = myrng)
+        @test length(s) == 8  # check length of return
+    end
+
+    @testset "Uniform Selector" begin
+        T = UniformSelector()
+        s = select(T, fits, 10; rng = myrng)
+        @test length(s) == 10  # check length of return
+    end
+end
+
 @testset verbose = true "Survival selector test" begin
     y_μ = [0.1, 0.2, 0.5, 0.8, 0.9]  # Parents fx
     y_λ = [0.05, 0.15, 0.3, 0.4, 0.7, 0.85, 0.95, 0.99]  # offspring fx
-    
+
     @testset "Comma Selector (μ, λ)" begin
         S = CommaSelector(3)
         s = select(S, y_λ)

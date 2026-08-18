@@ -34,6 +34,9 @@ Survival selectors are derived from the [`EvoLP.SurvivalSelector`](@ref), and as
 
 For [`PlusSelector`](@ref), the returned indices refer to a concatenated array of `vcat(parents, offspring)`.
 
+!!! info "Deterministic Behaviour"
+    Unlike Parent Selectors, which rely on stochastic sampling to generate a mating pool, Survival Selectors in EvoLP model strict environmental truncation. Their `select` methods do not accept or require a Random Number Generator (`rng`) parameter because they deterministically extract the top `μ` individuals.
+
 ```@docs
 CommaSelector
 PlusSelector

@@ -88,7 +88,7 @@ function cross(::UniformRecombinator, a, b; rng = Random.GLOBAL_RNG)
 end
 
 """
-Interpolation crossover with scaling parameter `λ`.
+Interpolation crossover with scaling parameter `λ`.  #TODO: change λ for something else
 """
 struct InterpolationRecombinator <: ContinuousRecombinator
     λ
@@ -99,7 +99,7 @@ end
 
 Linear Interpolation crossover between parents `a` and `b`.
 The resulting individual is the addition of a scaled version of
-each of the parents, using `C.λ` as a control parameter.
+each of the parents, using `C.λ` as a control parameter. #TODO: change λ for something else
 """
 @inline cross(C::InterpolationRecombinator, a, b) = @fastmath (1 - C.λ) * a + C.λ * b
 

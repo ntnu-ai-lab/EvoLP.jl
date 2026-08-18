@@ -60,9 +60,11 @@ For an individual of length ``n``, maximum is achieved with ``n`` ones.
 
 
 """
-The **PeakedLO** function is a deceptive benchmark function,
-with a peak at the start and [`leadingones`](@ref) otherwise. Originally introduced in
-_Self-adaptation of Mutation Rates in Non-elitist Populations_ (Dang & Lehre, 2016).
+    peakedLO(x; m = length(x) - 1)
+
+The **PeakedLO** function is a deceptive benchmark function, with a peak with fitness `m`
+(by default ``m = n - 1`` at the start and [`leadingones`](@ref) otherwise. Originally introduced
+in _Self-adaptation of Mutation Rates in Non-elitist Populations_ (Dang & Lehre, 2016).
 
 ```math
 \\text{PeakedLO}(\\mathbf{x}) = \\begin{cases}

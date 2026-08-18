@@ -28,7 +28,7 @@ struct TournamentSelector <: ParentSelector
 end
 
 """
-    select(t::TournamentSelector, y)
+    select(t::TournamentSelector, y, N::Int = 2; rng = Random.GLOBAL_RNG)
 
 Select `N` parents which are the winners from `N` random tournaments of size `t.T`.
 """
