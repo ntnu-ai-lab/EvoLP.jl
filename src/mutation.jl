@@ -28,26 +28,26 @@ abstract type PermutationMutator <: Mutator end
 
 # For binary individuals
 """
-Bitwise mutation with probability `λ` of flipping each bit.
+Bitwise mutation with probability `χ` of flipping each bit.
 """
-struct BitwiseMutator <: BinaryMutator
-    λ  # TODO: Change λ for χ
+Base.@kwdef struct BitwiseMutator <: BinaryMutator
+    χ::Real
 end
 
 """
     mutate(M::BitwiseMutator, ind)
 
-Randomly flips each bit with a probability `λ`. # TODO: Change λ for χ
+Randomly flips each bit with a probability `χ`.
 """
 @inline function mutate(M::BitwiseMutator, ind; rng = Random.GLOBAL_RNG)
-    return [rand(rng) < M.λ ? !v : v for v in ind] # TODO: Change λ for χ
+    return [rand(rng) < M.χ ? !v : v for v in ind]
 end
 
 # For continuous individuals
 """
-Gaussian mutation with standard deviation `σ`, which should be a real number.
+Gaussian mutation with standard deviation `σ`, which must be a real number.
 """
-struct GaussianMutator <: ContinuousMutator
+Base.@kwdef struct GaussianMutator <: ContinuousMutator
     σ::Real
 end
 

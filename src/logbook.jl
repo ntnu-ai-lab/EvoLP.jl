@@ -128,3 +128,11 @@ function summarise(notebooks::Vector{Logbook})
 
     return nothing
 end
+
+"""
+    summarize(logger::Logbook)
+    summarize(notebooks::Vector{Logbook})
+
+Alias for [`summarise`](@ref). Print and plot descriptive statistics.
+"""
+const summarize = summarise

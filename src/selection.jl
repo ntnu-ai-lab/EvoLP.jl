@@ -23,7 +23,7 @@ abstract type ParentSelector <: Selector end
 """
 Tournament parent selection with tournament size `T`.
 """
-struct TournamentSelector <: ParentSelector
+Base.@kwdef struct TournamentSelector <: ParentSelector
     T::Int
 end
 
@@ -45,7 +45,7 @@ end
 """
 Truncation selection for selecting top `k` possible parents in the population.
 """
-struct TruncationSelector <: ParentSelector
+Base.@kwdef struct TruncationSelector <: ParentSelector
     k
 end
 
@@ -129,7 +129,7 @@ abstract type SurvivalSelector <: Selector end
 ``(\\mu, \\lambda)`` survival selection.
 Selects the indices of the best `μ` individuals exclusively from the offspring population.
 """
-struct CommaSelector <: SurvivalSelector
+Base.@kwdef struct CommaSelector <: SurvivalSelector
     μ::Int
 end
 
@@ -150,7 +150,7 @@ end
 ``(\\mu + \\lambda)`` survival selection.
 Selects the indices of the best `μ` individuals from the combined pool of parents and offspring.
 """
-struct PlusSelector <: SurvivalSelector
+Base.@kwdef struct PlusSelector <: SurvivalSelector
     μ::Int
 end
 
@@ -179,14 +179,14 @@ abstract type DemeSelector <: EvoLP.Selector end
 """
 Deme selector for obtaining a random sample of size `k`
 """
-struct RandomDemeSelector <: DemeSelector
+Base.@kwdef struct RandomDemeSelector <: DemeSelector
     k::Integer
 end
 
 """
 Deme selector for obtaining the worst `k` individuals
 """
-struct WorstDemeSelector <: DemeSelector
+Base.@kwdef struct WorstDemeSelector <: DemeSelector
     k::Integer
 end
 

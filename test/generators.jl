@@ -7,11 +7,27 @@ myrng = StableRNG(123)
 
 @info "Testing generators"
 @testset verbose = true "Generator test" begin
-    @testset "Binary vectors generator" begin
+    @testset "Random Binary vectors generator" begin
         population = binary_vector_pop(50, 10, rng = myrng)
         @test length(population) == 50  # Size of the population matches
         @test length(population[1]) == 10  # Size of an individual matches
         @test typeof(population[1]) == BitVector  # Type of an individual matches
+    end
+
+    @testset "All ones generator" begin
+        population = all_ones(50, 10)
+        @test length(population) == 50  # Size of the population matches
+        @test length(population[1]) == 10  # Size of an individual matches
+        @test typeof(population[1]) == BitVector  # Type of an individual matches
+        @test all(population[rand(1:50)])  # Individual is made of only 1s
+    end
+
+    @testset "All zeros generator" begin
+        population = all_zeros(50, 10)
+        @test length(population) == 50  # Size of the population matches
+        @test length(population[1]) == 10  # Size of an individual matches
+        @test typeof(population[1]) == BitVector  # Type of an individual matches
+        @test !all(population[rand(1:50)])  # Individual is made of only 0s
     end
 
     @testset "Permutation vectors generator" begin

@@ -5,10 +5,12 @@ Population generators.
 # Vector-based populations
 
 ## Discrete domains
-"""
-    binary_vector_pop(n, l; rng=Random.GLOBAL_RNG)
 
-Generate a population of `n` vector binary individuals, each of length `l`.
+### Optimized BitVector implementations
+"""
+    binary_vector_pop(μ, n; rng=Random.GLOBAL_RNG)
+
+Generate a population of `μ` vector binary individuals, each of length `n`.
 
 # Examples
 
@@ -21,12 +23,42 @@ julia> binary_vector_pop(2, 5)
  [0, 1, 0, 0, 0]
 ```
 """
-@inline binary_vector_pop(n, l; rng = Random.GLOBAL_RNG) = [bitrand(rng, l) for _ in 1:n]
+@inline binary_vector_pop(μ::Int, n::Int; rng = Random.GLOBAL_RNG) = [bitrand(rng, n) for _ in 1:μ]
 
 """
-    permutation_vector_pop(n, d, pool; replacement=false, rng=Random.GLOBAL_RNG)
+    zeros_population(μ::Int, n::Int)
 
-Generate a population of `n` permutation vector individuals, of size `d`
+Generate a population of `μ` individuals, each being an all-zeros Boolean vector of length `n`.
+Designed for testing theoretical worst-case initializations in pseudo-Boolean optimization.
+"""
+@inline zeros_population(μ::Int, n::Int) = [falses(n) for _ in 1:μ]
+
+"""
+    all_zeros(μ::Int, n::Int) 
+
+Alias for [`zeros_population`](@ref). Create `μ` individuals of length `n` with all bits set to 0.
+"""
+const all_zeros = zeros_population
+
+"""
+    ones_population(μ::Int, n::Int)
+
+Generate a population of `μ` individuals, each being an all-ones Boolean vector of length `n`.
+Designed for testing theoretical edge-case initializations.
+"""
+@inline ones_population(μ::Int, n::Int) = [trues(n) for _ in 1:μ]
+
+"""
+    all_ones(μ::Int, n::Int) 
+
+Alias for [`ones_population`](@ref). Create `μ` individuals of length `n` with all bits set to 1.
+"""
+const all_ones = ones_population
+
+"""
+    permutation_vector_pop(μ, d, pool; replacement=false, rng=Random.GLOBAL_RNG)
+
+Generate a population of `μ` permutation vector individuals, of size `d`
 and with values sampled from `pool`. Usually `d` would be equal to `length(pool)`.
 
 Sampling is **without replacement** by default (generating permutations if `pool` is a set).
@@ -45,15 +77,15 @@ julia> permutation_vector_pop(2, 5, ["a", "b", "c", "d", "e"]; replacement=false
  ["b", "d", "a", "e", "c"]
 ```
 """
-function permutation_vector_pop(n, d, pool; replacement = false, rng = Random.GLOBAL_RNG)
-    return [sample(rng, pool, d, replace = replacement, ordered = false) for _ in 1:n]
+function permutation_vector_pop(μ, d, pool; replacement = false, rng = Random.GLOBAL_RNG)
+    return [sample(rng, pool, d, replace = replacement, ordered = false) for _ in 1:μ]
 end
 
 ## Continuous domains
 """
-    unif_rand_vector_pop(n, lb, ub; rng=Random.GLOBAL_RNG)
+    unif_rand_vector_pop(μ, lb, ub; rng=Random.GLOBAL_RNG)
 
-Generate a population of `n` vector individuals using a uniformly random distribution
+Generate a population of `μ` vector individuals using a uniformly random distribution
 between lower bounds `lb` and upper bounds `ub`.
 
 Both `lb` and `ub` must be arrays of the same dimensions.
@@ -68,18 +100,18 @@ julia> unif_rand_vector_pop(3, [-1, -1], [1, 1])
  [-0.377090051761797, -0.28434454028992096]
 ```
 """
-@inline function unif_rand_vector_pop(n, lb, ub; rng = Random.GLOBAL_RNG)
+@inline function unif_rand_vector_pop(μ, lb, ub; rng = Random.GLOBAL_RNG)
     d = length(lb)
-    return [lb + rand(rng, d) .* (ub - lb) for _ in 1:n]
+    return [lb + rand(rng, d) .* (ub - lb) for _ in 1:μ]
 end
 
 """
-    normal_rand_vector_pop(n, μ, Σ; rng=Random.GLOBAL_RNG)
+    normal_rand_vector_pop(μ, m, C; rng=Random.GLOBAL_RNG)
 
-Generate a population of `n` vector individuals using a normal distribution with means `μ`
-and covariance `Σ`.
+Generate a population of `μ` vector individuals using a normal distribution with means `m`
+and covariance `C`.
 
-`μ` expects a vector of length _l_ (i.e. length of an individual) while `Σ` expects an
+`m` expects a vector of length _l_ (i.e. length of an individual) while `C` expects an
 _l x l_ matrix of covariances.
 
 # Examples
@@ -92,9 +124,9 @@ julia> normal_rand_vector_pop(3, [0, 0], [1 0; 0 1])
  [-0.5384758126777555, -0.8141702145510666]
 ```
 """
-@inline function normal_rand_vector_pop(n, μ, Σ; rng = Random.GLOBAL_RNG)
-    D = MvNormal(μ, Σ)
-    return [rand(rng, D) for _ in 1:n]
+@inline function normal_rand_vector_pop(μ, m, C; rng = Random.GLOBAL_RNG)
+    D = MvNormal(m, C)
+    return [rand(rng, D) for _ in 1:μ]
 end
 
 # Particles
@@ -114,9 +146,9 @@ mutable struct Particle
 end
 
 """
-    unif_rand_particle_pop(n, lb, ub; rng=Random.GLOBAL_RNG)
+    unif_rand_particle_pop(μ, lb, ub; rng=Random.GLOBAL_RNG)
 
-Generate a population of `n` [`Particle`](@ref) individuals using a uniformly random
+Generate a population of `μ` [`Particle`](@ref) individuals using a uniformly random
 distribution between lower bounds `lb` and upper bounds `ub`.
 
 Both `lb` and `ub` must be arrays of the same dimensions.
@@ -131,13 +163,13 @@ julia> unif_rand_particle_pop(3, [-1, -1], [1, 1])
  Particle([1.732268523018161, 0.32172551959160556], [0, 0], Inf, [1.732268523018161, 0.32172551959160556], Inf)
 ```
 """
-function unif_rand_particle_pop(n, lb, ub; rng = Random.GLOBAL_RNG)
+function unif_rand_particle_pop(μ, lb, ub; rng = Random.GLOBAL_RNG)
     d = length(lb)
-    population = Vector{Particle}(undef, n)
+    population = Vector{Particle}(undef, μ)
     y = Inf
 
     # TODO: Use another macro for inbounds repeat
-    for i in 1:n
+    for i in 1:μ
         x_pos = rand(rng, d) .* (ub - lb)
         @inbounds population[i] = Particle(x_pos, fill(0, d), y, x_pos, y)
     end
@@ -146,12 +178,12 @@ function unif_rand_particle_pop(n, lb, ub; rng = Random.GLOBAL_RNG)
 end
 
 """
-    normal_rand_particle_pop(n, μ, Σ; y=Inf, rng=Random.GLOBAL_RNG)
+    normal_rand_particle_pop(μ, m, C; y=Inf, rng=Random.GLOBAL_RNG)
 
-Generate a population of `n` [`Particle`](@ref) using a normal distribution with means `μ``
-and covariance `Σ`.
+Generate a population of `μ` [`Particle`](@ref) using a normal distribution with means `m``
+and covariance `C`.
 
-`μ` expects a vector of length _l_ (i.e. number of dimensions) while `Σ` expects an _l x l_
+`m` expects a vector of length _l_ (i.e. number of dimensions) while `C` expects an _l x l_
 matrix of covariances.
 
 `y` is the evaluation and current best value. `y` is set to `Inf` by default.
@@ -166,13 +198,13 @@ julia> normal_rand_particle_pop(3, [0, 0], [1 0; 0 1])
  Particle([0.5687241357408321, -0.7406267072113427], [0.0, 0.0], Inf, [0.5687241357408321, -0.7406267072113427], Inf)
 ```
 """
-function normal_rand_particle_pop(n, μ, Σ; y = Inf, rng = Random.GLOBAL_RNG)
-    D = MvNormal(μ, Σ)
-    pop = Vector{Particle}(undef, n)
+function normal_rand_particle_pop(μ, m, C; y = Inf, rng = Random.GLOBAL_RNG)
+    D = MvNormal(m, C)
+    pop = Vector{Particle}(undef, μ)
 
-    for i in 1:n
+    for i in 1:μ
         x_pos = rand(rng, D)
-        @inbounds pop[i] = Particle(x_pos, zeros(size(μ)), y, x_pos, y)
+        @inbounds pop[i] = Particle(x_pos, zeros(size(m)), y, x_pos, y)
     end
 
     return pop

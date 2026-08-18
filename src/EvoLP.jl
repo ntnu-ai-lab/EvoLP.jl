@@ -27,6 +27,8 @@ include("deprecated.jl")
 
 # Random population generators
 export binary_vector_pop  # Binary vectors
+export ones_population, all_ones  # Binary vectors of 1s
+export zeros_population, all_zeros  # Binary vectors of 0s
 export normal_rand_vector_pop, unif_rand_vector_pop  # Continuous vectors
 export permutation_vector_pop  # Permutation vectors
 export Particle, normal_rand_particle_pop, unif_rand_particle_pop  # Particles
@@ -69,12 +71,12 @@ export ackley, eggholder, michalewicz, rana # Continuous multimodal
 
 # Results
 export Result
-export optimum, optimizer, iterations, f_calls, population, runtime
+export optimum, optimizer, optimiser, iterations, f_calls, population, runtime
 
 # Logbook
 export Logbook
 export compute!
-export summarise
+export summarise, summarize
 
 # Utilities
 export force_boolean

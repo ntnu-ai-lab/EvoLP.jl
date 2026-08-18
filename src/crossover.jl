@@ -88,20 +88,21 @@ function cross(::UniformRecombinator, a, b; rng = Random.GLOBAL_RNG)
 end
 
 """
-Interpolation crossover with scaling parameter `λ`.  #TODO: change λ for something else
+Interpolation crossover with scaling parameter `α`.
 """
-struct InterpolationRecombinator <: ContinuousRecombinator
-    λ
+Base.@kwdef struct InterpolationRecombinator <: ContinuousRecombinator
+    α::Real
 end
 
 """
 	cross(C::InterpolationRecombinator, a, b)
 
-Linear Interpolation crossover between parents `a` and `b`.
-The resulting individual is the addition of a scaled version of
-each of the parents, using `C.λ` as a control parameter. #TODO: change λ for something else
+Linear Interpolation crossover between parents `a` and `b`. The resulting individual is the addition of
+a scaled version of each of the parents, using `C.α` as a control parameter. Standard interpolation
+occurs when `α ∈ [0, 1]`. Values outside this range are mathematically permitted and result in
+extrapolation, allowing the offspring to explore outside the bounds of the parents.
 """
-@inline cross(C::InterpolationRecombinator, a, b) = @fastmath (1 - C.λ) * a + C.λ * b
+@inline cross(C::InterpolationRecombinator, a, b) = @fastmath (1 - C.α) * a + C.α * b
 
 # For permutation vector individuals
 

@@ -41,7 +41,7 @@ julia> thelogger = Logbook(thedict)
 Logbook(LittleDict{AbstractString, Function, Vector{AbstractString}, Vector{Function}}("mean_eval" => Statistics.mean, "max_f" => maximum, "min_f" => minimum, "median_f" => Statistics.median), NamedTuple{(:mean_eval, :max_f, :min_f, :median_f)}[])
 ```
 
-If no `LittleDict` is provided, then the logbook includes a default set of descriptive statistics: minimum, mean, median, maximum and standard deviation&mdash;in that order.
+If no `LittleDict` is provided, then the logbook includes a default set of descriptive statistics: minimum, mean, median, maximum and standard deviation—in that order.
 
 ## Computing statistics
 
@@ -62,6 +62,7 @@ If you prefer to have a quick overview of your Logbook, you can do so using the 
 
 ```@docs
 summarise
+summarize
 ```
 
 `summarise` will go through each of the statistics and present a summary and a Unicode plot:
