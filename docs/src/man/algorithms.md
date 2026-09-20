@@ -10,6 +10,13 @@ The basic 1+1 EA starts with a _vector_ individual and slowly finds its way to a
 oneplusone
 ```
 
+Population-based extensions to the 1+1-EA include the _comma selection_ and the _plus selection_ variants.
+
+```@docs
+mucommalambda!
+mupluslambda!
+```
+
 ## Genetic Algorithms (GA)
 
 In a GA a population of _vector_ solutions is simulated, where individuals get selected, recombined, and mutated.

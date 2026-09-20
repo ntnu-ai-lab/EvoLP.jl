@@ -10,6 +10,10 @@ For EAs and GAs.
 
 ```@docs
 binary_vector_pop
+ones_population
+zeros_population
+all_ones
+all_zeros
 permutation_vector_pop
 ```
 

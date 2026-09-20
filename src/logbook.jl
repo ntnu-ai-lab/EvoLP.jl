@@ -76,6 +76,13 @@ function compute!(notebooks::Vector{Logbook}, data::AbstractVector)
     return nothing
 end
 
+"""
+    compute!(::Nothing, data)
+
+No-op fallback for when algorithms are run without a logbook.
+"""
+compute!(::Nothing, data) = nothing
+
 
 """
     summarise(logger::Logbook)

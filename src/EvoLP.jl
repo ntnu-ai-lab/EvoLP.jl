@@ -36,6 +36,7 @@ export Particle, normal_rand_particle_pop, unif_rand_particle_pop  # Particles
 # Algorithms
 export GA, GA!
 export oneplusone, oneplusone!
+export mucommalambda!, mupluslambda!
 export PSO, PSO!
 
 # Selection
