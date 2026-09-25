@@ -35,6 +35,13 @@ Returns solution found ``x^*``.
 optimizer(res::Result) = res.xstar
 
 """
+    optimiser(result)
+
+Alias for [`optimizer`](@ref). Returns the solution found ``x^*``.
+"""
+const optimiser = optimizer
+
+"""
     iterations(res::Result)
 
 Returns the number of iterations of a result.

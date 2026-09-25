@@ -10,7 +10,7 @@
 [![GitHub](https://img.shields.io/github/license/ntnu-ai-lab/EvoLP)](https://github.com/ntnu-ai-lab/EvoLP/blob/main/LICENSE)
 [![All Contributors](https://img.shields.io/badge/all_contributors-2-red)](#contributors)
 
-[![Code Style: Blue](https://img.shields.io/badge/code%20style-blue-blue.svg)](https://github.com/invenia/BlueStyle)
+[![code style: runic](https://img.shields.io/badge/code_style-%E1%9A%B1%E1%9A%A2%E1%9A%BE%E1%9B%81%E1%9A%B2-black)](https://github.com/fredrikekre/Runic.jl)
 [![ColPrac: Contributor's Guide on Collaborative Practices for Community Packages](https://img.shields.io/badge/ColPrac-Contributor's%20Guide-blueviolet)](https://github.com/SciML/ColPrac)
 
 </div>
@@ -134,3 +134,6 @@ You can also cite EvoLPIslands, our MPI Extension, by citing the following [conf
 </p>
 
 EvoLP.jl started as a toolbox for internal use by PhD students of [NTNU's Open AI Lab](https://www.ntnu.edu/ailab/ai-lab), and whose funding is provided by [Project no. 311284](https://prosjektbanken.forskningsradet.no/en/project/FORISS/311284) by [The Research Council of Norway](https://www.forskningsradet.no/). EvoLP is licensed under the [MIT License](https://github.com/ntnu-ai-lab/EvoLP/blob/main/LICENSE) which makes it **free and open source**.
+
+EvoLP.jl expands on the formalisation proposed by Kochenderfer and Wheeler's Algorithm for Optimization. We encourage everyone to take a look at their book!
+> Kochenderfer, M. J., & Wheeler, T. A. (2019). Algorithms for optimization. Mit Press. https://algorithmsbook.com/optimization/

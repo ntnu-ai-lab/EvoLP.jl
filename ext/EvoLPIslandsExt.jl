@@ -18,7 +18,7 @@ or inside [`reinsert!`](@ref) to select individuals to be replaced.
 """
 function EvoLP.select(S_M::EvoLP.RandomDemeSelector, y)
     n = length(y)
-    return sample(1:n, S_M.k, replace=false, ordered=true)
+    return sample(1:n, S_M.k, replace = false, ordered = true)
 end
 
 """
@@ -29,7 +29,7 @@ Used inside [`drift`](@ref) to select individuals to be sent to another island,
 or inside [`reinsert!`](@ref) to select individuals to be replaced.
 """
 function EvoLP.select(S_M::EvoLP.WorstDemeSelector, y)
-    worst = partialsortperm(y, 1:S_M.k; rev=true)
+    worst = partialsortperm(y, 1:S_M.k; rev = true)
     return sort(worst)
 end
 
@@ -43,7 +43,7 @@ according to the deme selector `S_M` and considering their fitnesses `y`.
 
 Returns a 2-tuple containing the sent deme, and its `MPI_Request`.
 """
-function EvoLP.drift(S_M::EvoLP.DemeSelector, population, y, dest; comm=MPI.COMM_WORLD)
+function EvoLP.drift(S_M::EvoLP.DemeSelector, population, y, dest; comm = MPI.COMM_WORLD)
     M = Vector{Vector{Float64}}(undef, S_M.k)
     #select here
     chosen = EvoLP.select(S_M, y)
@@ -52,7 +52,7 @@ function EvoLP.drift(S_M::EvoLP.DemeSelector, population, y, dest; comm=MPI.COMM
     end
     encoded_M = reduce(vcat, M)
     #MPI SEND TO DESTINATION
-    s_req = MPI.Send(encoded_M, comm; dest=dest)
+    s_req = MPI.Send(encoded_M, comm; dest = dest)
     return M, s_req
 end
 
@@ -64,13 +64,13 @@ The deme selector `S_M` is used to decode the received information.
 
 Returns a 2-tuple containing the received deme, and its `MPI_Request`.
 """
-function EvoLP.strand(S_M::EvoLP.DemeSelector, d, src; comm=MPI.COMM_WORLD)
+function EvoLP.strand(S_M::EvoLP.DemeSelector, d, src; comm = MPI.COMM_WORLD)
     #MPI RECEIVE FROM SOURCE
     encoded_M = Array{Float64}(undef, S_M.k * d)
-    r_req = MPI.Recv!(encoded_M, comm; source=src)
+    r_req = MPI.Recv!(encoded_M, comm; source = src)
     M = []
     for i in 1:d:length(encoded_M)
-        push!(M, encoded_M[i:i+d-1])
+        push!(M, encoded_M[i:(i + d - 1)])
     end
     return M, r_req
 end
@@ -127,37 +127,37 @@ Generational genetic algorithm with islands.
 - `comm::MPI.Comm`: an MPI communicator. Usually `MPI.COMM_WORLD`.
 """
 function EvoLP.islandGA!(
-    logbook::Logbook,
-    f::Function,
-    population::AbstractVector,
-    max_it::Integer,
-    S_P::EvoLP.Selector,
-    X::EvoLP.Recombinator,
-    Mut::EvoLP.Mutator,
-    μ::Integer,
-    S_M::EvoLP.DemeSelector,
-    R_M::EvoLP.DemeSelector,
-    src::Integer,
-    dest::Integer,
-    comm::MPI.Comm
-)
+        logbook::Logbook,
+        f::Function,
+        population::AbstractVector,
+        max_it::Integer,
+        S_P::EvoLP.Selector,
+        X::EvoLP.Recombinator,
+        Mut::EvoLP.Mutator,
+        μ::Integer,
+        S_M::EvoLP.DemeSelector,
+        R_M::EvoLP.DemeSelector,
+        src::Integer,
+        dest::Integer,
+        comm::MPI.Comm
+    )
     n = length(population)
     d = length(population[1])
     fitnesses = Vector{Float64}(undef, n)
 
-	runtime = @elapsed for i in 1:max_it  # main loop
-		parents = [select(S_P, f.(population)) for _ in eachindex(population)] # O(max_it * n)
-		offspring = [cross(X, population[p[1]], population[p[2]]) for p in parents]
-		population .= mutate.(Ref(Mut), offspring) # whole population is replaced
+    runtime = @elapsed for i in 1:max_it  # main loop
+        parents = [select(S_P, f.(population)) for _ in eachindex(population)] # O(max_it * n)
+        offspring = [cross(X, population[p[1]], population[p[2]]) for p in parents]
+        population .= mutate.(Ref(Mut), offspring) # whole population is replaced
 
         fitnesses = f.(population) # O(max_it * n)
 
         if i % μ == 0  # migration time
             # Migration
             # 1. Select, encode and send deme
-            _, s_req = EvoLP.drift(S_M, population, fitnesses, dest; comm=MPI.COMM_WORLD)
+            _, s_req = EvoLP.drift(S_M, population, fitnesses, dest; comm = MPI.COMM_WORLD)
             # 2. Receive and decode deme
-            M, r_req = EvoLP.strand(S_M, d, src; comm=MPI.COMM_WORLD)
+            M, r_req = EvoLP.strand(S_M, d, src; comm = MPI.COMM_WORLD)
             # 3. Append new deme into population
             fated = EvoLP.reinsert!(population, fitnesses, R_M, M)
             # 4. Delete old deme
@@ -169,15 +169,15 @@ function EvoLP.islandGA!(
             MPI.Barrier(comm)
         end
         compute!(logbook, fitnesses)  # Save stats
-	end
+    end
 
     # xi, f(xi)
     best_i = argmin(fitnesses)
     best = population[best_i]
-	n_evals = 2 * max_it * n
+    n_evals = 2 * max_it * n
 
     # result of this island!
-	return Result(fitnesses[best_i], best, population, max_it, n_evals, runtime)
+    return Result(fitnesses[best_i], best, population, max_it, n_evals, runtime)
 end
 
 end # module

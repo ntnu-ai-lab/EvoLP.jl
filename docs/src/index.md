@@ -4,7 +4,7 @@ Welcome to the documentation for EvoLP!
 
 [![GitHub source](https://img.shields.io/badge/GitHub-source-green.svg?logo=github)](https://github.com/ntnu-ai-lab/EvoLP.jl)
 [![Julia version](https://img.shields.io/badge/Julia-1.9+-blueviolet.svg?logo=julia)](https://julialang.org)
-[![Code Style: Blue](https://img.shields.io/badge/code%20style-blue-blue.svg)](https://github.com/invenia/BlueStyle)
+[![code style: runic](https://img.shields.io/badge/code_style-%E1%9A%B1%E1%9A%A2%E1%9A%BE%E1%9B%81%E1%9A%B2-black)](https://github.com/fredrikekre/Runic.jl)
 [![ColPrac: Contributor's Guide on Collaborative Practices for Community Packages](https://img.shields.io/badge/ColPrac-Contributor's%20Guide-blueviolet)](https://github.com/SciML/ColPrac)
 
 ## What is EvoLP?
@@ -14,12 +14,12 @@ Welcome to the documentation for EvoLP!
 ### Features
 
 - Random [population generators](man/generators.md) (vectors and particles)
-- Parent [selection operators](man/selection.md)
+- Parent and Survival [selection operators](man/selection.md)
 - Several [crossover](man/cross.md) and [mutation](man/mutation.md) methods
 - [Test functions](man/testfunctions.md) for benchmarking
-- Convenient [result reporting](man/results.md) and a [statistics logbook](man/logbook.md)
+- Convenient [result reporting](man/results.md), a [statistics logbook](man/logbook.md), and extra [utilities](man/utils.md)
 
-Combine these blocks to make your own algorithms or use some of the [included](man/algorithms.md) _minimisers_: GA, 1+1EA and PSO.
+Combine these blocks to make your own algorithms or use some of the [included](man/algorithms.md) _minimisers_: GA, (1+1)-EA and PSO.
 Additionally, you can extend EvoLP to create [new operators](man/extending.md).
 
 ## Getting started
@@ -73,6 +73,9 @@ You can also cite EvoLPIslands, our MPI Extension, by citing the following [conf
 ## Acknowledgements
 
 EvoLP started as a toolbox for internal use by PhD students of [NTNU's Open AI Lab](https://www.ntnu.edu/ailab/ai-lab), and whose funding is provided by [Project no. 311284](https://prosjektbanken.forskningsradet.no/en/project/FORISS/311284) by [The Research Council of Norway](https://www.forskningsradet.no/).
+
+EvoLP.jl expands on the formalisation proposed by Kochenderfer and Wheeler's Algorithm for Optimization. We encourage everyone to take a look at their book:
+> Kochenderfer, M. J., & Wheeler, T. A. (2019). Algorithms for optimization. Mit Press. [https://algorithmsbook.com/optimization/](https://algorithmsbook.com/optimization/)
 
 ## License
 

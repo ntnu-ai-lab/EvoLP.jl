@@ -12,6 +12,7 @@ Some _getter_ functions are also included to obtain specific information about t
 ```@docs
 optimum
 optimizer
+optimiser
 population
 iterations
 f_calls

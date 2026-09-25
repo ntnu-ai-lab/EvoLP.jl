@@ -2,7 +2,7 @@
 Optimisation test functions
 """
 
-# Pseudo boolean functions
+# Pseudo boolean functions ----------------
 
 """
     jumpk(x; k=6)
@@ -21,10 +21,10 @@ is with a _perfect flip_ of ``k`` bits, which is considered extremely difficult.
 where ``\\lVert x \\rVert_1 = \\sum_{i=1}^n x_i`` is the number of 1-bits in
 ``x \\in \\{0, 1\\}^n``.
 """
-function jumpk(x; k=6)::Int
+@inline function jumpk(x; k = 6)::Int
     s = sum(x)
     n = length(x)
-    return s ∈ (1:n-k) ∪ n ? s : -s
+    return s ∈ (1:(n - k)) ∪ n ? s : -s
 end
 
 
@@ -34,7 +34,7 @@ the chromosome. The maximum is achieved with ``n`` ones, but the landscape is a 
 difficult to traverse.
 
 ```math
-\\text{LO}(\\mathbf{x}) = \\sum_{i=1}^n \\prod_j^i x_j
+\\text{LO}(\\boldsymbol{x}) = \\sum_{i=1}^n \\prod_j^i x_j
 ```
 """
 @inline function leadingones(x)::Int
@@ -53,13 +53,126 @@ The **OneMax** function returns the sum of the individual.
 For an individual of length ``n``, maximum is achieved with ``n`` ones.
 
 ```math
-\\text{OneMax}(\\mathbf{x}) = \\sum_{i=1}^n x_i
+\\text{OneMax}(\\boldsymbol{x}) = \\sum_{i=1}^n x_i
 ```
 """
-onemax(x) = sum(x)
+@inline onemax(x) = sum(x)
 
-# Real-valued functions
 
+"""
+    peakedLO(x; m = length(x) - 1)
+
+The **PeakedLO** function is a deceptive benchmark function, with a peak with fitness `m`
+(by default ``m = n - 1`` at the start and [`leadingones`](@ref) otherwise. Originally introduced
+in _Self-adaptation of Mutation Rates in Non-elitist Populations_ (Dang & Lehre, 2016).
+
+```math
+\\text{PeakedLO}(\\mathbf{x}) = \\begin{cases}
+    & m & \\text{if } x = 0^n \\\\
+    & \\sum_{i=1}^n \\prod_{j=1}^i x_j & \\text{otherwise}.
+\\end{cases}
+```
+"""
+function peakedLO(x; m = length(x) - 1)
+    if all(iszero, x)
+        return m
+    else
+        return leadingones(x)
+    end
+end
+
+
+"""
+An _inverse_ version of [`leadingones`](@ref). **TrailingZeros** returns the length
+of the longest suffix that consists only of 0-bits.
+The optimum is achieved by an individual with ``n`` zeros.
+
+```math
+\\text{TZ}(\\boldsymbol{x}) = \\sum_{i=1}^n \\prod_{j=i}^n (1 - x_i)
+```
+"""
+@inline function trailingzeros(x)::Int
+    s = 0
+    m = 1
+    @inbounds for val in reverse(x)
+        m *= 1 - val
+        s += m
+    end
+    return s
+end
+
+
+"""
+    triangle(x, m, s)
+
+The _triangular positive wave_, or **Triangle**, is a synthetic test function
+introduced in _Estimating the Number of Local Optima in Multimodal Pseudo-Boolean
+Functions: Validation via Landscapes of Triangles_ (Sánchez-Díaz & Mengshoel, 2024).
+
+Triangle uses two parameters, `m` and `s`, which modify the number of optima
+in the search space.
+The fitness depends on the number of ones in a bitstring, ``\\boldsymbol{x}`` (an individual `x`):
+
+```math
+\\text{Triangle}(\\boldsymbol{x}, m, s) = \\begin{cases}
+      g(\\boldsymbol{x}), \\; \\text{ if } \\; \\left\\lceil \\frac{\\Vert\\boldsymbol{x}\\Vert}{s} \\right\\rceil \\mod 2 = 1 \\\\
+      m\\left(\\left\\lceil \\frac{\\Vert\\boldsymbol{x}\\Vert}{s} \\right\\rceil \\cdot s - \\Vert\\boldsymbol{x}\\Vert\\right) \\; \\text{otherwise}
+    \\end{cases}
+```
+
+where
+
+```math
+g(\\boldsymbol{x}) = \\begin{cases}
+        m  \\cdot s, \\; \\text{ if } \\; \\Vert\\boldsymbol{x}\\Vert \\mod s = 0 \\\\
+        m (\\Vert\\boldsymbol{x}\\Vert \\mod s) \\; \\text{otherwise.}
+        \\end{cases} 
+```
+"""
+@inline function triangle(x, m, s)::Int
+    n_ones = sum(x)
+    i = ceil(n_ones / s)
+    if i % 2 == 1
+        if n_ones % s == 0
+            r = m * s
+        else
+            r = m * (n_ones % s)
+        end
+    else
+        r = m * (i * s - n_ones)
+    end
+    return r
+end
+
+
+"""
+    twomax(x)
+
+Two modal version of [`onemax`](@ref) function, where optima are at either full ones or full zeros.
+
+```math
+\\text{TwoMax}(\\boldsymbol{x}) = \\max\\left\\{\\sum_{i=1}^n x_i, n-\\sum_{i=1}^n x_i\\right\\}
+```
+"""
+@inline function twomax(x)::Int
+    return max(sum(x), length(x) - sum(x))
+end
+
+
+"""
+An _inverse_ version of [`onemax`](@ref), where the optimum is achieved by an individual with
+``n`` zeros.
+
+```math
+\\text{ZeroMax}(\\boldsymbol{x}) = n - \\sum_{i=1}^n x_i
+```
+"""
+@inline function zeromax(x)::Int
+    return length(x) - sum(x)
+end
+
+
+# Real-valued functions -------------------
 
 """
     ackley(x; a=20, b=0.2, c=2π)
@@ -72,10 +185,10 @@ f(x) = -a \\exp\\left(-b\\sqrt{\\frac{1}{d} \\sum_{i=1}^d x_i^2}\\right)
 - \\exp\\left(\\frac{1}{d} \\sum_{i=1}{d} \\cos (cx_i) \\right) + a + \\exp(1)
 ```
 """
-@inline function ackley(x::Vector{T} where {T<:Real}; a=20, b=0.2, c=2π)
+@inline function ackley(x::Vector{T} where {T <: Real}; a = 20, b = 0.2, c = 2π)
     d = length(x)
     return @fastmath -a * exp(-b * sqrt(sum(x .^ 2) / d)) -
-                     exp(sum(cos.(c * xi) for xi in x) / d) + a + exp(1)
+        exp(sum(cos.(c * xi) for xi in x) / d) + a + exp(1)
 end
 
 """
@@ -86,7 +199,7 @@ The **Booth** function is a 2-dimensional quadratic function with global minimum
 f(x) = (x_1 + 2x_2 - 7)^2 + (2 x_1 + x_2 - 5)^2
 ```
 """
-@inline function booth(x::Vector{T} where {T<:Real})
+@inline function booth(x::Vector{T} where {T <: Real})
     return @fastmath (x[1] + 2 * x[2] - 7)^2 + (2 * x[1] + x[2] - 5)^2
 end
 
@@ -104,8 +217,10 @@ with ``f(x^*) \\approx 0.397887``.
 f(x) = a(x_2 - bx_1^2 + cx_1 - r)^2 + s(1 - t)\\cos(x_1) + s
 ```
 """
-@inline function branin(x::Vector{T} where {T<:Real};
-    a=1, b=5.1 / (4π^2), c=5 / π, r=6, s=10, t=1 / (8π))
+@inline function branin(
+        x::Vector{T} where {T <: Real};
+        a = 1, b = 5.1 / (4π^2), c = 5 / π, r = 6, s = 10, t = 1 / (8π)
+    )
     return @fastmath a * (x[2] - b * x[1]^2 + c * x[1] - r)^2 + s * (1 - t) * cos(x[1]) + s
 end
 
@@ -114,13 +229,17 @@ end
     eggholder(x::Vector{T} where {T<:Real})
 
 A ``d``-dimensional function which draws its name due to its highly rugged landscape.
-For the 2-dimensional version, the optimum ``f(\\mathbf{x}^*)\\approx-959.64066``
-with optimiser ``\\mathbf{x}^* = (512, 404.231805)``.
+For the 2-dimensional version, the optimum ``f(\\boldsymbol{x}^*)\\approx-959.64066``
+with optimiser ``\\boldsymbol{x}^* = (512, 404.231805)``.
 """
-function eggholder(x::Vector{T} where {T<:Real})
+function eggholder(x::Vector{T} where {T <: Real})
     n = length(x)
-    return -sum([(x[i+1] + 47) * sin(sqrt(abs(x[i+1] + 47 + x[i] / 2))) +
-                 x[i] * sin(sqrt(abs(x[i] - (x[i+1] + 47)))) for i in 1:n-1])
+    return -sum(
+        [
+            (x[i + 1] + 47) * sin(sqrt(abs(x[i + 1] + 47 + x[i] / 2))) +
+                x[i] * sin(sqrt(abs(x[i] - (x[i + 1] + 47)))) for i in 1:(n - 1)
+        ]
+    )
 end
 
 
@@ -135,7 +254,7 @@ where `m` controls the steepness. `m` is usually set at 10. For 2 dimensions,
 f(x) = -\\sum_{i=1}^{d}\\sin(x_i) \\sin^{2m}\\left(\\frac{ix_i^2}{\\pi}\\right)
 ```
 """
-@inline function michalewicz(x::Vector{T} where {T<:Real}; m=10)
+@inline function michalewicz(x::Vector{T} where {T <: Real}; m = 10)
     return @fastmath -sum(sin(v) * sin(i * v^2 / π)^(2m) for (i, v) in enumerate(x))
 end
 
@@ -144,14 +263,18 @@ end
     rana(x::Vector{T} where {T<:Real})
 
 A ``d``-dimensional function which is highly rugged and symmetrical.
-For ``d=2``, the global minimum ``f(\\mathbf{x}^*)\\approx -511.73288 with
-optimiser ``\\mathbf{x}^* = `(-488.632577, 512)`.
+For ``d=2``, the global minimum ``f(\\boldsymbol{x}^*)\\approx -511.73288`` with
+optimiser ``\\boldsymbol{x}^* = (-488.632577, 512)``.
 """
-@inline function rana(x::Vector{T} where {T<:Real})
+@inline function rana(x::Vector{T} where {T <: Real})
     n = length(x)
-    return @fastmath sum([x[i] * cos(sqrt(abs(x[i+1] + x[i] + 1))) * sin(sqrt(abs(x[i+1] - x[i] + 1))) +
-                          (1 + x[i+1]) * sin(sqrt(abs(x[i+1] + x[i] + 1))) * cos(sqrt(abs(x[i+1] - x[i] + 1)))
-                          for i in 1:n-1])
+    return @fastmath sum(
+        [
+            x[i] * cos(sqrt(abs(x[i + 1] + x[i] + 1))) * sin(sqrt(abs(x[i + 1] - x[i] + 1))) +
+                (1 + x[i + 1]) * sin(sqrt(abs(x[i + 1] + x[i] + 1))) * cos(sqrt(abs(x[i + 1] - x[i] + 1)))
+                for i in 1:(n - 1)
+        ]
+    )
 end
 
 
@@ -171,9 +294,9 @@ minimum is at ``f([1, \\dots, 1]) = 0``
 f(x) = \\sum_{i=1}^{d-1} \\left[b(x_{i+1} - x_i^2)^2 + (x_i - 1)^2 \\right]
 ```
 """
-@inline function rosenbrock(x::Vector{T} where {T<:Real}; b=100)
+@inline function rosenbrock(x::Vector{T} where {T <: Real}; b = 100)
     n = length(x)
-    return @fastmath sum([b * (x[i+1] - x[i]^2)^2 + (x[i] - 1)^2 for i in 1:n-1])
+    return @fastmath sum([b * (x[i + 1] - x[i]^2)^2 + (x[i] - 1)^2 for i in 1:(n - 1)])
 end
 
 
@@ -187,6 +310,6 @@ With ``a`` (by default at 1.5) ``x^* = [1, 1.5]``, with ``f(x^*) = -1``.
 f(x) = - \\exp(- (x_1 x_2 - a)^2 - (x_2 - a)^2 )
 ```
 """
-@inline function wheeler(x::Vector{T} where {T<:Real}; a=1.5)
+@inline function wheeler(x::Vector{T} where {T <: Real}; a = 1.5)
     return @fastmath -exp(-(x[1] * x[2] - a)^2 - (x[2] - a)^2)
 end

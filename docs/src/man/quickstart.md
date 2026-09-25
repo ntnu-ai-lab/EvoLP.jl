@@ -47,6 +47,6 @@ A common workflow in EvoLP is somewhat similar to this:
     - Evaluate your population.
     - Use [`select`](@ref) and [`cross`](@ref) to generate new solutions.
     - Stochastically alter new solutions using [`mutate`](@ref).
-    - Evaluate the new population members and select the survivors.
+    - Evaluate the new population members and [`select`](@ref) the survivors.
     - Optionally compute statistic and log them in the [Logbook](logbook.md).
     - Return the [results](results.md).
