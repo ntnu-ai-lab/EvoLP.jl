@@ -43,6 +43,7 @@ myrng = StableRNG(123)
         c = mutate(I, x; rng = myrng) # sample(myrng, 1:8, 2, replace=false, ordered=true)
         # results in [4, 6]
         @test c == [1, 2, 3, 4, 6, 5, 7, 8]
+        @test x == [1, 2, 3, 4, 5, 6, 7, 8]  # input not modified
     end
 
     @testset "Scramble" begin

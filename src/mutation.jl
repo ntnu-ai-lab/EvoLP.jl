@@ -93,9 +93,10 @@ insert at `a`+1 the element at position `b``, and shift the rest of the elements
 """
 function mutate(::InsertionMutator, ind; rng = Random.GLOBAL_RNG)
     indices = sample(rng, 1:length(ind), 2, replace = false, ordered = true)
-    removed = splice!(ind, indices[2])
-    insert!(ind, indices[1] + 1, removed)
-    return ind
+    c = deepcopy(ind)
+    removed = splice!(c, indices[2])
+    insert!(c, indices[1] + 1, removed)
+    return c
 end
 
 """
